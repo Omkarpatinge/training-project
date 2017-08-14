@@ -1,0 +1,389 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Reporting App API",
+		"_postman_id": "bbfb8a1e-1c91-66c4-d1b5-002fdfb0a436",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get List of dimensions",
+			"request": {
+				"url": "http://172.16.202.75:8001/api/v1/metadata/HB Rendered Ad/dimensions",
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "16568b41-4870-467a-a46a-d233c4e3547b",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-GROUPS",
+						"value": "TRAINING-PROJECT",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-USER",
+						"value": "rohan.ka",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "`datasource_alias` contains the dimension name, which is required for all other requests."
+			},
+			"response": []
+		},
+		{
+			"name": "Get List of Metrics",
+			"request": {
+				"url": "http://172.16.202.75:8001/api/v1/metadata/HB Rendered Ad/metrics",
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "16568b41-4870-467a-a46a-d233c4e3547b",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-GROUPS",
+						"value": "TRAINING-PROJECT",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-USER",
+						"value": "rohan.ka",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "`alias` contains the measure name, which is required for all other requests."
+			},
+			"response": []
+		},
+		{
+			"name": "Query without dimensions (Totals)",
+			"request": {
+				"url": "http://172.16.202.75:8001/api/v1/query",
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "16568b41-4870-467a-a46a-d233c4e3547b",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-GROUPS",
+						"value": "TRAINING-PROJECT",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-USER",
+						"value": "rohan.ka",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": {
+					  "metrics": [
+					    "Impressions Delivered (HB Rendered Ad)"
+					  ],
+					  "startTime": "2017-08-09 07:40:37",
+					  "endTime": "2017-08-09 13:40:38",
+					  "namespace": "Header Bidder",
+					  "orderingMetric": "Impressions Delivered (HB Rendered Ad)"
+					}
+				},
+				"description": "Only aggregates"
+			},
+			"response": []
+		},
+		{
+			"name": "Request for 1 split , past 6HRS Impression delivered",
+			"request": {
+				"url": "http://172.16.202.75:8001/api/v1/query",
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "16568b41-4870-467a-a46a-d233c4e3547b",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-GROUPS",
+						"value": "TRAINING-PROJECT",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-USER",
+						"value": "rohan.ka",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": {
+					  "namespace": "Header Bidder",
+					  "metrics": [
+					    "Impressions Delivered (HB Rendered Ad)"
+					  ],
+					  "dimensionObjectList": [
+					    {
+					      "dimension": "Customer Name",
+					      "threshold": "10"
+					    }
+					  ],
+					  "orderingMetric": "Impressions Delivered (HB Rendered Ad)",
+					  "startTime": "2017-08-09 07:47:23",
+					  "endTime": "2017-08-09 13:47:24"
+					}
+				},
+				"description": "FILTER [Time (6H)]
+					SPLIT [customer name (10)]
+					Values [Impression Delivered]
+					"
+			},
+			"response": []
+		},
+		{
+			"name": "Last 6Hr data for Customer name, country code on Impression delivered",
+			"request": {
+				"url": "http://172.16.202.75:8001/api/v1/query",
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "16568b41-4870-467a-a46a-d233c4e3547b",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-GROUPS",
+						"value": "TRAINING-PROJECT",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-USER",
+						"value": "rohan.ka",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": {
+					  "namespace": "Header Bidder",
+					  "metrics": [
+					    "Impressions Delivered (HB Rendered Ad)"
+					  ],
+					  "dimensionObjectList": [
+					    {
+					      "dimension": "Customer Name",
+					      "threshold": "10"
+					    },
+					    {
+					      "dimension": "Country Code",
+					      "threshold": 5
+					    }
+					  ],
+					  "orderingMetric": "Impressions Delivered (HB Rendered Ad)",
+					  "startTime": "2017-08-09 07:51:02",
+					  "endTime": "2017-08-09 13:51:03"
+					}
+				},
+				"description": "FILTERS [Time (6H)]
+					SPLIT [Customer Name (10)][Country Code (5)]
+					Values [Impressions Delivered]"
+			},
+			"response": []
+		},
+		{
+			"name": "Split on customer name with filter",
+			"request": {
+				"url": "http://172.16.202.75:8001/api/v1/query",
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "16568b41-4870-467a-a46a-d233c4e3547b",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-GROUPS",
+						"value": "TRAINING-PROJECT",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-USER",
+						"value": "rohan.ka",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": {
+					  "namespace": "Header Bidder",
+					  "filters": [
+					    {
+					      "dimension": "Customer Name",
+					      "values": [
+					        "Forbes.com (Mobile)",
+					        "Forbes PE Project"
+					      ],
+					      "type": "in"
+					    }
+					  ],
+					  "metrics": [
+					    "Impressions Delivered (HB Rendered Ad)"
+					  ],
+					  "dimensionObjectList": [
+					    {
+					      "dimension": "Customer Name",
+					      "threshold": "10"
+					    }
+					  ],
+					  "orderingMetric": "Impressions Delivered (HB Rendered Ad)",
+					  "startTime": "2017-08-09 07:55:34",
+					  "endTime": "2017-08-09 13:55:35"
+					}
+				},
+				"description": "FILTERS [Time (6h)][Customer Name <Forbes.com (mobile), Forbes PE Project>]
+					SPLIT [Customer Name (10)]
+					VALUES [Impression Delivered]"
+			},
+			"response": []
+		},
+		{
+			"name": "Query with time in split (mainly for line charts)",
+			"request": {
+				"url": "http://172.16.202.75:8001/api/v1/query",
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "16568b41-4870-467a-a46a-d233c4e3547b",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-GROUPS",
+						"value": "TRAINING-PROJECT",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-USER",
+						"value": "rohan.ka",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": {
+					  "namespace": "Header Bidder",
+					  "granularity": 3600000,
+					  "filters": [
+					    {
+					      "dimension": "Customer Name",
+					      "values": [
+					        "Forbes.com (Mobile)",
+					        "Forbes PE Project"
+					      ],
+					      "type": "in"
+					    }
+					  ],
+					  "metrics": [
+					    "Impressions Delivered (HB Rendered Ad)"
+					  ],
+					  "dimensionObjectList": [
+					    {
+					      "dimension": "Time",
+					      "threshold": 5
+					    }
+					  ],
+					  "orderingMetric": "Impressions Delivered (HB Rendered Ad)",
+					  "startTime": "2017-08-09 08:00:14",
+					  "endTime": "2017-08-09 14:00:15"
+					}
+				},
+				"description": "FILTERS [Time (6H)][Customer Name (2)]
+					SPLIT [Time (Hourly)]
+					VALUES [Impressions Delivered]"
+			},
+			"response": []
+		},
+		{
+			"name": "Query to populate filter values",
+			"request": {
+				"url": "http://172.16.202.75:8001/api/v1/query",
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "16568b41-4870-467a-a46a-d233c4e3547b",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-GROUPS",
+						"value": "TRAINING-PROJECT",
+						"description": ""
+					},
+					{
+						"key": "X-KONOM-USER",
+						"value": "rohan.ka",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": {
+					  "namespace": "Header Bidder",
+					  "metrics": [
+					    "Impressions Delivered (HB Rendered Ad)"
+					  ],
+					  "dimensionObjectList": [
+					    {
+					      "dimension": "Customer Name",
+					      "threshold": 200
+					    }
+					  ],
+					  "orderingMetric": "Impressions Delivered (HB Rendered Ad)",
+					  "startTime": "2017-08-09 07:47:23",
+					  "endTime": "2017-08-09 13:47:24"
+					}
+				},
+				"description": "FILTER [Time (6H)]
+					Values [Impression Delivered]
+					"
+			},
+			"response": []
+		}
+	]
+}
