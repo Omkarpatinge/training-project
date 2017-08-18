@@ -1,0 +1,10 @@
+<div class="total">	<!-- <button ui-sref="sample">Pres</button> -->
+	<div ng-bind-html="totals"></div>
+	<ul>
+		<li ng-repeat="(key, value) in metricVal">
+			<h3 class="totName">{{key|removeText:"(HB Rendered Ad)"}}</h3>
+			<h1 class="totVal">{{value|numberSuffix:2}}</h1>
+		</li>
+	</ul>
+	<button style="text-align: center;margin: auto" ui-sref="chart">Charts</button>
+</div>

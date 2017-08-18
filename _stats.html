@@ -1,0 +1,11 @@
+<div class="stat">
+	<button ui-sref=total>Totals</button><button ui-sref=splitTable>SpiltData</button>
+	<div ng-switch="status">
+		<span ng-switch-when="0">Split By Time</span>
+		<ul ng-switch-when="1">
+			<li ng-repeat="m in metrics" google-chart chart="chart[{{$index}}]"></li>
+		</ul>
+		<span ng-switch-when="2">Too Many Split</span>	
+		<span ng-switch-when="3">Some Error Occured</span>	
+	</div>
+</div>

@@ -1,0 +1,12 @@
+<div class="split">
+	<table>
+		<thead>
+			<tr>
+				<th><span ng-repeat="d in dimensions">{{d}}<i ng-if="!$last"> ,</i></span></th>
+				<th ng-repeat="m in metrics">{{m|removeText:"(HB Rendered Ad)"}}</th>
+			</tr>	
+		</thead>
+		<tbody split-tab></tbody>
+		
+	</table>
+</div>

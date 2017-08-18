@@ -1,8 +1,8 @@
 'use strict';
 
-define(['app', 'jquery'], function (app, $) {
+define(['app'], function (app) {
 	console.log("SampleController");
 	app.controller('SampleController', ['$scope', function ($scope) {
-		$('h1').text("Iam SampleController");
+		$scope.tex = "I am SampleController";
 	}]);
 });

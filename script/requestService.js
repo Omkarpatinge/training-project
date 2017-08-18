@@ -1,0 +1,240 @@
+'use strict';
+
+define(['app', 'jquery'], function (app, $) {
+	//console.log(app);
+	app.service('requestService', function () {
+		var requestedJSON = {
+			"namespace": "Header Bidder",
+			"granularity": 3600000,
+			"filters": [{
+				"dimension": "Customer Name",
+				"values": ["Forbes.com (Mobile)", "Forbes PE Project"],
+				"type": "in"
+			}],
+			"metrics": ["Impressions Delivered (HB Rendered Ad)", "Cookie Present (HB Rendered Ad)", "Adjustment1 (HB Rendered Ad)"],
+			"dimensionObjectList": [{
+				"dimension": "Cookie Flag",
+				"threshold": 5
+			}, {
+				"dimension": "Time",
+				"threshold": 5
+			}],
+			"orderingMetric": "Impressions Delivered (HB Rendered Ad)",
+			"startTime": "2017-08-09 08:00:14",
+			"endTime": "2017-08-09 14:00:15"
+		};
+		var result = {
+			"split": [{
+				"Cookie Flag": "1",
+				"split": [{
+					"Impressions Delivered (HB Rendered Ad)": "145289.0",
+					"Cookie Present (HB Rendered Ad)": "145289.0",
+					"Timestamp": "2017-08-09T13:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "87953.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "138370.0",
+					"Cookie Present (HB Rendered Ad)": "138370.0",
+					"Timestamp": "2017-08-09T12:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "83302.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "117605.0",
+					"Cookie Present (HB Rendered Ad)": "117605.0",
+					"Timestamp": "2017-08-09T11:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "69450.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "81268.0",
+					"Cookie Present (HB Rendered Ad)": "81268.0",
+					"Timestamp": "2017-08-09T10:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "39650.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "51356.0",
+					"Cookie Present (HB Rendered Ad)": "51356.0",
+					"Timestamp": "2017-08-09T09:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "28200.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "44822.0",
+					"Cookie Present (HB Rendered Ad)": "44822.0",
+					"Timestamp": "2017-08-09T08:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "25608.0"
+				}],
+				"Impressions Delivered (HB Rendered Ad)": "578710.0",
+				"Cookie Present (HB Rendered Ad)": "578710.0",
+				"Adjustment1 (HB Rendered Ad)": "334163.0"
+			}, {
+				"Cookie Flag": "null",
+				"split": [{
+					"Impressions Delivered (HB Rendered Ad)": "135570.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T13:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "420960.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "127626.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T12:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "453100.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "101810.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T11:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "436340.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "79153.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T10:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "386920.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "59815.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T09:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "348100.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "51899.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T08:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "318560.0"
+				}],
+				"Impressions Delivered (HB Rendered Ad)": "555873.0",
+				"Cookie Present (HB Rendered Ad)": "0.0",
+				"Adjustment1 (HB Rendered Ad)": "2363980.0"
+			}, {
+				"Cookie Flag": "0",
+				"split": [{
+					"Impressions Delivered (HB Rendered Ad)": "27935.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T13:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "2760.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "27299.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T12:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "3572.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "18450.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T11:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "3567.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "13031.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T10:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "2799.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "7902.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T09:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "2807.0"
+				}, {
+					"Impressions Delivered (HB Rendered Ad)": "6353.0",
+					"Cookie Present (HB Rendered Ad)": "0.0",
+					"Timestamp": "2017-08-09T08:00:00.000Z",
+					"Adjustment1 (HB Rendered Ad)": "2199.0"
+				}],
+				"Impressions Delivered (HB Rendered Ad)": "100970.0",
+				"Cookie Present (HB Rendered Ad)": "0.0",
+				"Adjustment1 (HB Rendered Ad)": "17704.0"
+			}],
+			"Impressions Delivered (HB Rendered Ad)": "1235553.0",
+			"Cookie Present (HB Rendered Ad)": "578710.0",
+			"Adjustment1 (HB Rendered Ad)": "2715847.0"
+		};
+		this.getReq = function () {
+			return requestedJSON;
+		};
+		this.setReq = function (data) {
+			requestedJSON = data;
+		};
+		this.getDataTable = function (result, metric, dimension) {
+			var data = [];
+			var col = [{ type: 'datetime', label: 'Timestamp', id: 'Timestamp' }];
+			var timeArr;
+			console.log(result);
+			if (dimension) {
+				timeArr = result.split[0].split;
+			} else {
+				timeArr = result.split;
+				col.push({ type: 'number' });
+			}
+			for (var i = 0; i < timeArr.length; i++) {
+				if (dimension) {
+					data.push([new Date(timeArr[i]["Timestamp"])]);
+				} else {
+					data.push([new Date(timeArr[i]["Timestamp"]), parseFloat(timeArr[i][metric])]);
+				}
+			}
+			if (dimension) {
+				var s = result.split;
+				for (var i = 0; i < s.length; i++) {
+					col.push({ type: "number", label: s[i][dimension], id: s[i][dimension] });
+					console.log(s);
+					var s2 = s[i]["split"];
+					for (var j = 0; j < s2.length; j++) {
+						data[j].push(parseFloat(s2[j][metric]));
+					}
+				}
+			}
+			data.unshift(col);
+			return data;
+		};
+		function tab(val) {
+			var t = '';
+			for (var i = 0; i < val; i++) {
+				t += '&emsp;&emsp;&emsp;';
+			}
+			return t;
+		}
+		var template = "";
+		this.setTemp = function (x) {
+			template = '<tr>' + '<td>Total</td>' + '<td ng-repeat="m in metrics">{{result[m]|numberSuffix:2}}</td>' + '</tr>' + x;
+		};
+		this.getTemp = function () {
+			return template;
+		};
+		this.createSplit = function (split, dimension, htmlElm, depth) {
+			var temp = "";
+			for (var i = 0; i < split.length; i++) {
+				var currElm = split[i];
+				var newHtml = htmlElm + '[' + i + ']';
+				temp += '<tr>' + '<td>' + tab(depth) + split[i][dimension[depth]] + '</td>' + '<td ng-repeat="m in metrics">{{' + newHtml + '[m]|numberSuffix:2}}</td>' + '</tr>';
+				if (currElm.split) {
+					temp += this.createSplit(currElm.split, dimension, newHtml + ".split", depth + 1);
+				}
+			}
+			return temp;
+		};
+		//(function() {console.log(this)})();
+	});
+	//console.log("JFKK")
+});
+/*var data =[];
+var col=[]
+col.push({type:'datetime', label:'Timestamp',id:'Timestamp'});
+if($scope.dimension){
+	
+	for(dim in $scope.result.split.split){
+		col.push({type:'number',label:x[$scope.dimension]},id:x[$scope.dimension]}) ;      					
+	}
+}
+else{
+	col.addColumn({type:'number',label:metric,id:metric});
+}
+data.push(col);
+for(var i=0;i<x.split.length;i++)
+{
+    var ref=.split[i];
+    console.log(ref);
+    var temp=[];
+    temp.push(ref["Timestamp"]);
+    if(ref.split){
+        for(var j=0;j<ref.split.length;j++){
+            var ref2=ref.split[j];
+            var measures=Object.keys(ref2);
+            measures.forEach(function(element){
+               temp.push(parseFloat(ref2["Impressions Delivered (HB Rendered Ad)"]));       
+            })
+        }
+    }
+    else{
+        temp.push(parseFloat(ref["Impressions Delivered (HB Rendered Ad)"]));       
+    }
+    y.push(temp);   
+}*/

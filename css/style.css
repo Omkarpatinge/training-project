@@ -1,2 +1,32 @@
-body {
-  width: 80%; }
+.total ul {
+  list-style-type: none;
+  text-align: center;
+  padding: 5%; }
+  .total ul li {
+    display: inline-block;
+    margin: 10px; }
+  .total ul .totName {
+    color: #888;
+    font-size: 10px;
+    text-weight: light; }
+  .total ul .totVal {
+    font-size: 18px; }
+
+.stat ul {
+  height: 100%; }
+
+.stat li {
+  list-style-type: none;
+  text-align: center;
+  margin: auto;
+  padding: 10px; }
+
+.split table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 8px; }
+  .split table, .split table td, .split table tr, .split table th {
+    text-align: left;
+    border: .5px solid #aaa; }
+  .split table td, .split table th {
+    padding: 1%; }

@@ -1,3 +1,48 @@
 body{
-	width: 80%;
+}
+.total{
+	ul{
+		list-style-type: none;
+		text-align: center;
+		padding: 5%;
+		li{
+			display: inline-block;
+			margin: 10px;
+		}
+		.totName{
+			color:#888;
+			font-size: 10px;
+			text-weight:light;
+		}
+		.totVal{
+			font-size: 18px;	
+		}	
+	}	
+}
+.stat{
+	ul{
+		height: 100%;
+	}
+	li{
+		list-style-type: none;
+		text-align: center;
+		margin:auto;
+		
+		padding: 10px;
+	}
+}
+.split{
+	table{
+		border-collapse:collapse;
+		width: 100%;
+		font-size: 8px;
+		&,td,tr,th{
+			text-align: left;
+			border: .5px solid #aaa;
+		}
+		td,th{
+
+			padding: 1%;
+		}
+	}
 }

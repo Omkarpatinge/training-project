@@ -11,26 +11,35 @@ require.config({
 			"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min"
 		],
 		'angular':[
-			"lib/angular",
-			"https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min"
+			"lib/angular.min",
+			"https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular"
 		],
 		'uiRouter':[
-			"lib/angular-ui-router",
-			"https://ajax.googleapis.com/ajax/libs/angular-ui-router/1.0.0-rc.1/angular-ui-router.min"
+			"lib/angular-ui-router.min",
+			"https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router"
 		],
-		'angularResource':[
-			"lib/angular-resource.min.js"
+		'googleChart':[
+			'lib/ng-google-chart.min',
+			'https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.min'
 		],
 		'angularAMD':'lib/angularAMD.min',
-		'ang_config':'ang_config',
-		'MainController':'MainController',
-		'SampleController':'SampleController'
+		'requestService':'requestService',//Service
+		'dataFactory':'dataFactory',//Factory
+		'apiConst':'apiConst',//Constant
+		'removeText':'removeText',//Filter
+		'numberSuffix':'numberSuffix',//Filter
+		'splitTab':'splitTab'
 	},
 	shim:{
 		'angular':{
 			export:'angular'
 		},
-		'angularAMD': ['angular']
+		'uiRouter':['angularAMD'],
+		'angularAMD': ['angular'],
+		'googleChart':{
+			deps:['angular']
+		}
+
 	}
 });
 require(['app']);
