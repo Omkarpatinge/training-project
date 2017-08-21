@@ -1,6 +1,6 @@
 //app.js
-define(['angularAMD','uiRouter','googleChart'],function(angularAMD){
-	var app = angular.module('sam',["ui.router","googlechart"]);
+define(['angularAMD','uiRouter','googleChart','dnd','angulardate'],function(angularAMD){
+	var app = angular.module('sam',["ui.router","googlechart",'dndLists','daterangepicker']);
 	app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
 		$stateProvider
 		.state('total',angularAMD.route({

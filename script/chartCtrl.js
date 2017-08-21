@@ -25,8 +25,9 @@ define(['app', 'requestService', 'dataFactory', 'numberSuffix', 'apiConst'], fun
 			dataFactory.getLineData(req).then(function (response) {
 				//console.log(response)
 				$scope.response = response;
-				googleChartApiPromise.then(loadCharts);
+				loadCharts();
 			}, function () {
+				$scope.response = googleChartApiPromise.then(loadCharts);
 				$scope.status = 3;
 			});
 		}
