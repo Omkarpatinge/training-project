@@ -6,8 +6,7 @@
 
 body {
   background-color: #e1e1e1;
-  box-sizing: border-box;
-  height: 100vh; }
+  box-sizing: border-box; }
 
 a {
   text-decoration: none; }
@@ -15,21 +14,11 @@ a {
 a:hover {
   text-decoration: none; }
 
-.resultsView {
-  background-color: #fff;
-  overflow-y: scroll;
-  height: 60vh;
-  box-sizing: content-box;
-  margin-top: 10px;
-  width: 100%; }
-
 #container-fluid {
   padding: 2%; }
   #container-fluid #dimensions, #container-fluid #measures {
     background-color: white;
-    min-height: 100%;
-    height: 90vh;
-    overflow-x: scroll; }
+    min-height: 100%; }
   #container-fluid li {
     list-style: none;
     padding: 1%; }
@@ -47,33 +36,18 @@ a:hover {
   #container-fluid #searchicon {
     font-size: 2rem; }
   #container-fluid #viewcontainer {
-    padding: 0% 2%;
-    height: 90vh; }
+    padding: 0% 2%; }
     #container-fluid #viewcontainer #filterwrapper {
-      height: 25vh;
+      height: 200px;
       padding: 2%; }
     #container-fluid #viewcontainer .row {
       background-color: white; }
     #container-fluid #viewcontainer .rules {
-      display: table-cell;
-      height: 30%;
-      padding: 1% 2%; }
-      #container-fluid #viewcontainer .rules .row {
-        display: flex;
-        flex-direction: rows;
-        justify-content: center; }
-      #container-fluid #viewcontainer .rules label {
-        width: initial;
-        height: 10%;
-        margin: auto 1px;
-        text-align: right; }
+      height: 50px;
+      padding: 2%; }
       #container-fluid #viewcontainer .rules ul {
-        min-width: 50%;
-        vertical-align: middle;
-        margin: 0px;
-        min-height: 5vh;
-        padding: 0px 1%;
-        border: 1px solid #777; }
+        margin: -5px;
+        height: 40px; }
       #container-fluid #viewcontainer .rules li {
         display: inline-block;
         background-color: #ddd;
@@ -110,56 +84,3 @@ a:hover {
             background-color: aqua; }
       #container-fluid #viewcontainer .rules ul li span i {
         right: 5px; }
-
-.total ul {
-  list-style-type: none;
-  text-align: center;
-  padding: 5%; }
-  .total ul li {
-    display: inline-block;
-    margin: 10px; }
-  .total ul .totName {
-    color: #888;
-    font-size: 1.5em;
-    text-weight: light; }
-  .total ul .totVal {
-    font-size: 2em; }
-
-.stat {
-  width: 100%;
-  height: 100%; }
-  .stat .status {
-    display: table;
-    width: 100%;
-    height: 100%; }
-  .stat span {
-    display: table-cell;
-    text-align: center;
-    font-size: 2em;
-    vertical-align: middle; }
-  .stat ul {
-    height: 100%; }
-  .stat li {
-    list-style-type: none;
-    text-align: center;
-    margin: auto;
-    padding: 10px; }
-  .stat .gChart {
-    height: 400px; }
-
-.split {
-  padding: 1%; }
-  .split table {
-    border-collapse: collapse;
-    width: 100%; }
-    .split table tr {
-      text-align: left;
-      border-bottom: .5px solid #aaa; }
-    .split table th {
-      position: sticky;
-      top: 0px;
-      box-shadow: 0px 2px 15px #aaa;
-      background-color: #fff;
-      z-index: 20; }
-    .split table td, .split table th {
-      padding: 1%; }

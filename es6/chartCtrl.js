@@ -1,7 +1,11 @@
 define(['app','requestService','dataFactory','numberSuffix','apiConst'],function(app) {
-	app.controller('chartCtrl', ['$scope','requestService','dataFactory','googleChartApiPromise','numberSuffixFilter','api',
-		function($scope,requestService,dataFactory,googleChartApiPromise,numberSuffixFilter,api){
-		var req = requestService.getReq();
+	app.controller('chartCtrl', ['$scope','requestService','dataFactory','numberSuffixFilter','api','$stateParams',
+		function($scope,requestService,dataFactory,numberSuffixFilter,api,$stateParams){
+		var x=JSON.parse($stateParams.req);
+	   		//dataFactory.ga
+		//console.log(x);
+		var req = dataFactory.generateRequest(x);
+		//console.log("res:",req)
 		$scope.status=0;
 		var time=req["dimensionObjectList"].some(function(elem) {
 			return elem["dimension"]==="Time";
@@ -23,12 +27,12 @@ define(['app','requestService','dataFactory','numberSuffix','apiConst'],function
     	buildChart();
 	   	function buildChart() {
 			dataFactory.getLineData(req).then(function(response) {
-				//console.log(response)
+				console.log("res:",response)
+
 				$scope.response=response;
-				googleChartApiPromise.then(loadCharts)
+				loadCharts();
 			}, function() {
 				$scope.status=3;
-
 			})
 	   	}
 		function loadCharts() {
@@ -36,12 +40,12 @@ define(['app','requestService','dataFactory','numberSuffix','apiConst'],function
 			for(var i=0;i<$scope.metrics.length;i++){	
 				var m=$scope.metrics[i];
 				var title=m.replace("(HB Rendered Ad)",numberSuffixFilter(result[m],2));
-				var data=requestService.getDataTable(result,m,dimension);
-				console.log(data,"here");
+				var data=dataFactory.getDataTable(result,m,dimension);
+				//console.log(data,"here");
 				//debugger;
 				//var dataTable=new google.visualization.arrayToDataTable(data);
 	   			var chart=JSON.parse(JSON.stringify(JSONChart));
-	   			console.log(chart);
+	   			//console.log(chart);
 				chart["options"].title=title;
 				chart.data=data;
 				$scope.chart[i]=chart;

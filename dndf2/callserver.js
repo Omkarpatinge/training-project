@@ -1,5 +1,5 @@
-define(["app"],function(app) {
-	app.factory('callserver',function($http) {
+define(["app","urls"],function(app) {
+	app.factory('callserver',function($http,urls) {
 		return {
 	        calldim: function() {
 	           /*$http.get(urls.dim).then(function(response) {

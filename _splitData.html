@@ -1,12 +1,16 @@
 <div class="split">
-	<table>
+<button ui-sref=main.total>Totals</button><button ui-sref=main.splitTable>SpiltData</button><button ui-sref=main.chart>Charts</button>
+	<div ng-switch="status">
+	<table ng-switch-when="0">
 		<thead>
 			<tr>
 				<th><span ng-repeat="d in dimensions">{{d}}<i ng-if="!$last"> ,</i></span></th>
-				<th ng-repeat="m in metrics">{{m|removeText:"(HB Rendered Ad)"}}</th>
+				<th ng-repeat="m in metrics">{{m|removeText:" (HB Rendered Ad)"}}</th>
 			</tr>	
 		</thead>
 		<tbody split-tab></tbody>
-		
 	</table>
+	<span ng-switch-when="1">
+		Atleat One Split required
+	</span>
 </div>

@@ -1,4 +1,4 @@
-define(["app","moment","callserver","thingTest","<searching>		</searching>"],function(app,moment) {
+define(["app","moment","callserver","thingTest","searching"],function(app,moment) {
 	app.controller('MainCtrl', function($scope,$http,callserver){
 	   	$scope.datePicker = { date: {startDate:null,endDate: null} };
 	    $scope.request={   	
