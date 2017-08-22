@@ -63,11 +63,12 @@ a:hover {
         flex-direction: rows;
         justify-content: center; }
       #container-fluid #viewcontainer .rules label {
-        width: initial;
+        width: 10%;
         height: 10%;
         margin: auto 1px;
         text-align: right; }
       #container-fluid #viewcontainer .rules ul {
+        float: right;
         min-width: 50%;
         vertical-align: middle;
         margin: 0px;

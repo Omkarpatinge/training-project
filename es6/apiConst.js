@@ -73,9 +73,6 @@ define(['app'],function(app){
 							"units": {
 								"days": {
 									"format": ["MMM dd"]
-								},
-								"hours": {
-									"format": ["h:mm aa", "ha"]
 								}
 							}
 						},

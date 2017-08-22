@@ -82,12 +82,13 @@ a:hover{
 			height: 30%;
 			padding: 1% 2%;
 			label{
-				width: initial;
+				width: 10%;
 				height: 10%;
 				margin:auto 1px;
 				text-align: right;
 			}
 			ul{
+				float: right;
 				min-width: 50%;
 				vertical-align: middle;
 				margin: 0px;
