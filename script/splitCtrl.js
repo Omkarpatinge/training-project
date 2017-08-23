@@ -1,24 +1,27 @@
 'use strict';
 
 define(['app', 'requestService', 'dataFactory', 'removeText', 'numberSuffix', 'splitTab'], function (app) {
-	app.controller('splitCtrl', ['$scope', 'requestService', 'dataFactory', '$stateParams', function ($scope, requestService, dataFactory, $stateParams) {
+	app.controller('splitCtrl', ['$scope', 'requestService', 'dataFactory', '$state', '$stateParams', function ($scope, requestService, dataFactory, $state, $stateParams) {
+		var obj = this;
+		obj.param = { req: $stateParams.req };
 		var x = JSON.parse($stateParams.req);
 		var req = dataFactory.generateRequest(x);
-		$scope.metrics = req["metrics"];
-		$scope.dimensions = [];
+		obj.metrics = req["metrics"];
+		var dimensions = [];
 		req["dimensionObjectList"].forEach(function (elm) {
 			if (elm.dimension !== "Time") {
-				$scope.dimensions.push(elm["dimension"]);
+				dimensions.push(elm["dimension"]);
 			} else {
-				$scope.dimensions.push("Timestamp");
+				dimensions.push("Timestamp");
 			}
 		});
-
+		obj.dimensions = dimensions;
 		if (req['dimensionObjectList'].length == 0) {
-			$scope.status = 1;
+			obj.status = 1;
 		} else {
-			$scope.status = 0;
+			obj.status = 0;
 		}
+		$scope.split = obj;
 		/*	$scope.getSplit=function(deep) {
   		var splt;
   		splt=$scope.result.spilt	

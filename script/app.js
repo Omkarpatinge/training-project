@@ -7,21 +7,25 @@ define(['angularAMD', 'uiRouter', 'googleChart', 'dnd', 'angulardate'], function
 		$stateProvider.state('main', angularAMD.route({
 			templateUrl: 'main.html',
 			controller: "MainCtrl",
+			controllerAs: "cntr",
 			controllerUrl: "MainCtrl"
 		})).state('main.total', angularAMD.route({
 			url: '/totals:req',
 			templateUrl: '_total.html',
 			controller: "totalCounterCtrl",
+			controllerAs: "counter",
 			controllerUrl: "totalCounterCtrl"
 		})).state('main.chart', angularAMD.route({
 			url: '/chart:req',
 			templateUrl: '_stats.html',
-			controller: "chartCtrl",
+			controller: "chartCtrl as chart",
+			//controllerAs:"chart",
 			controllerUrl: "chartCtrl"
 		})).state('main.splitTable', angularAMD.route({
 			url: '/splitTable:req',
 			templateUrl: '_splitData.html',
 			controller: "splitCtrl",
+			controllerAs: "split",
 			controllerUrl: "splitCtrl"
 		})).state('sample', angularAMD.route({
 			url: '/sample',

@@ -14,7 +14,7 @@ define(['app', "moment", 'apiConst', 'angulardate', 'daterangepicker'], function
 			var data = [];
 			var col = [{ type: 'datetime', label: 'Timestamp', id: 'Timestamp' }];
 			var timeArr;
-			console.log(result);
+			//console.log(result);
 			if (dimension) {
 				timeArr = result.split[0].split;
 			} else {
@@ -51,10 +51,11 @@ define(['app', "moment", 'apiConst', 'angulardate', 'daterangepicker'], function
 		}
 		con.createSplit = function (split, dimension, htmlElm, depth) {
 			var temp = "";
+			console.log("here");
 			for (var i = 0; i < split.length; i++) {
 				var currElm = split[i];
 				var newHtml = htmlElm + '[' + i + ']';
-				temp += '<tr>' + '<td>' + tab(depth) + split[i][dimension[depth]] + '</td>' + '<td ng-repeat="m in metrics">{{' + newHtml + '[m]|numberSuffix:2}}</td>' + '</tr>';
+				temp += '<tr>' + '<td>' + tab(depth) + split[i][dimension[depth]] + '</td>' + '<td ng-repeat="m in split.metrics">{{' + newHtml + '[m]|numberSuffix:2}}</td>' + '</tr>';
 				if (currElm.split) {
 					temp += this.createSplit(currElm.split, dimension, newHtml + ".split", depth + 1);
 				}

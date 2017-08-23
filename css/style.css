@@ -17,6 +17,7 @@ a:hover {
 
 .resultsView {
   background-color: #fff;
+  position: relative;
   overflow-y: scroll;
   height: 60vh;
   box-sizing: content-box;
@@ -38,6 +39,10 @@ a:hover {
     border-bottom: 1px solid #eee; }
     #container-fluid #dimensions li:hover, #container-fluid #measures li:hover {
       background-color: #e1e1e1; }
+    #container-fluid #dimensions li a, #container-fluid #measures li a {
+      color: #545A6A; }
+      #container-fluid #dimensions li a:hover, #container-fluid #measures li a:hover {
+        color: #52ACEE; }
   #container-fluid ul {
     padding: 0; }
   #container-fluid #searchicon i {
@@ -48,19 +53,19 @@ a:hover {
     font-size: 2rem; }
   #container-fluid #viewcontainer {
     padding: 0% 2%;
-    height: 90vh; }
+    height: 90vh;
+    display: table; }
     #container-fluid #viewcontainer #filterwrapper {
-      height: 25vh;
+      height: max-content;
       padding: 2%; }
     #container-fluid #viewcontainer .row {
       background-color: white; }
     #container-fluid #viewcontainer .rules {
       display: table-cell;
-      height: 30%;
-      padding: 1% 2%; }
+      padding: 0% 2%; }
       #container-fluid #viewcontainer .rules .row {
         display: flex;
-        flex-direction: rows;
+        flex-direction: row;
         justify-content: center; }
       #container-fluid #viewcontainer .rules label {
         width: 10%;
@@ -74,21 +79,23 @@ a:hover {
         margin: 0px;
         min-height: 5vh;
         padding: 0px 1%;
-        border: 1px solid #777; }
+        border: 1px solid #d3d3d3; }
       #container-fluid #viewcontainer .rules li {
         display: inline-block;
-        background-color: #ddd;
+        background-color: #e7e7e7;
         padding: 10px;
-        width: 200px;
+        width: max-content;
         overflow: hidden;
         margin: 5px;
         border-radius: 50px; }
         #container-fluid #viewcontainer .rules li i {
           float: right;
-          padding-top: 2px; }
+          padding-top: 2px;
+          margin-left: 5px; }
         #container-fluid #viewcontainer .rules li .dialog {
           background-color: #fff;
           z-index: 3;
+          box-shadow: 1px 1px 5px #aaa;
           position: absolute;
           padding: 20px;
           margin: 10px;
@@ -103,12 +110,22 @@ a:hover {
             display: none; }
           #container-fluid #viewcontainer .rules li .dialog .radio-toolbar label {
             display: inline-block;
-            background-color: #ddd;
+            background-color: #fff;
+            color: #8A91A5;
             font-family: Arial;
+            padding: 2px 10px;
             font-size: 12px;
+            width: initial;
+            border: 1px solid #aaa;
+            border-radius: 3px;
             cursor: pointer; }
+          #container-fluid #viewcontainer .rules li .dialog .radio-toolbar form {
+            padding: 0px;
+            margin: 1% auto;
+            width: max-content; }
           #container-fluid #viewcontainer .rules li .dialog .radio-toolbar input[type="radio"]:checked + label {
-            background-color: aqua; }
+            background-color: #8A91A5;
+            color: white; }
       #container-fluid #viewcontainer .rules ul li span i {
         right: 5px; }
 
@@ -133,11 +150,15 @@ a:hover {
     display: table;
     width: 100%;
     height: 100%; }
-  .stat span {
-    display: table-cell;
-    text-align: center;
-    font-size: 2em;
-    vertical-align: middle; }
+    .stat .status span {
+      display: table-cell;
+      text-align: center;
+      font-size: 2em;
+      vertical-align: middle; }
+    .stat .status a {
+      font-size: .75em; }
+      .stat .status a:hover {
+        text-decoration: underline; }
   .stat ul {
     height: 100%; }
   .stat li {
@@ -153,6 +174,15 @@ a:hover {
   .split table {
     border-collapse: collapse;
     width: 100%; }
+    .split table .status {
+      display: table;
+      width: 100%;
+      height: 100%; }
+      .split table .status > span {
+        display: table-cell;
+        text-align: center;
+        font-size: 2em;
+        vertical-align: middle; }
     .split table tr {
       text-align: left;
       border-bottom: .5px solid #aaa; }

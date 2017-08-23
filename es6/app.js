@@ -6,6 +6,7 @@ define(['angularAMD','uiRouter','googleChart','dnd','angulardate'],function(angu
 		.state('main',angularAMD.route({
 				templateUrl:'main.html',
 				controller:"MainCtrl",
+				controllerAs:"cntr",
 				controllerUrl:"MainCtrl"
 			})
 		)
@@ -13,20 +14,23 @@ define(['angularAMD','uiRouter','googleChart','dnd','angulardate'],function(angu
 				url:'/totals:req',
 				templateUrl:'_total.html',
 				controller:"totalCounterCtrl",
+				controllerAs:"counter",
 				controllerUrl:"totalCounterCtrl"
 			})
 		)
 		.state('main.chart',angularAMD.route({
-				url:'/chart:req',
-				templateUrl:'_stats.html',
-				controller:"chartCtrl",
-				controllerUrl:"chartCtrl"
-			})
+					url:'/chart:req',
+					templateUrl:'_stats.html',
+					controller:"chartCtrl as chart",
+					//controllerAs:"chart",
+					controllerUrl:"chartCtrl"
+				})
 		)
 		.state('main.splitTable',angularAMD.route({
 				url:'/splitTable:req',
 				templateUrl:'_splitData.html',
 				controller:"splitCtrl",
+				controllerAs:"split",
 				controllerUrl:"splitCtrl"
 			})
 		)

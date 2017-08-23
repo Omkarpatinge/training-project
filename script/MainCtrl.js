@@ -1,9 +1,11 @@
 "use strict";
 
 define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'], function (app, moment, $) {
-	app.controller('MainCtrl', function ($scope, $http, callserver, $stateParams, $state, $location) {
-		$scope.datePicker = { date: { startDate: '2017-08-09 07:51:02', endDate: '2017-08-19 07:51:02' } };
-		$scope.request = {
+	app.controller('MainCtrl', function ($scope, $http, callserver, $stateParams, $state, $location, $rootScope) {
+
+		var scope = this;
+		scope.datePicker = { date: { startDate: '2017-08-09 07:51:02', endDate: '2017-08-19 07:51:02' } };
+		scope.request = {
 			namespace: "Header Bidder",
 			granularity: "3600000",
 			metrics: [],
@@ -19,8 +21,8 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 			endTime: "2017-08-19 13:51:03"
 		};
 
-		$scope.jreq = JSON.stringify($scope.request);
-		$scope.dimensions = [{
+		scope.jreq = JSON.stringify(scope.request);
+		scope.dimensions = [{
 			label: "Dimensions",
 			allowedTypes: ['dimensions'],
 			people: [
@@ -28,7 +30,7 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 			]
 		}];
 
-		$scope.measures = [{
+		scope.measures = [{
 			label: "Measures",
 			allowedTypes: ['Measures'],
 			people: []
@@ -37,7 +39,7 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 		callserver.calldim().then(function (response) {
 			for (var i = 0; i < response.data.result.length; i++) {
 
-				$scope.dimensions[0].people.push({ name: response.data.result[i].dimensionName, type: "dimensions", threshold: 5, thresholdselect: false, filterselect: false, filteroptions: [], filtertype: 'in' });
+				scope.dimensions[0].people.push({ name: response.data.result[i].dimensionName, type: "dimensions", threshold: 5, thresholdselect: false, filterselect: false, filteroptions: [], filtertype: 'in' });
 			}
 		}, function (response) {
 			console.log(response);
@@ -47,17 +49,17 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 
 			for (var i = 0; i < response.data.result.length; i++) {
 
-				$scope.measures[0].people.push({ name: response.data.result[i].alias.replace(' (HB Rendered Ad)', ''), type: "Measures" });
+				scope.measures[0].people.push({ name: response.data.result[i].alias.replace(' (HB Rendered Ad)', ''), type: "Measures" });
 			}
 		}, function (response) {
 			console.log(response);
 		});
 
 		if ($state.params.req) {
-			$scope.lists = JSON.parse($state.params.req);
+			scope.lists = JSON.parse($state.params.req);
 		} else {
 
-			$scope.lists = [{
+			scope.lists = [{
 				label: "Filters",
 				allowedTypes: ['dimensions'],
 				people: [{ name: "Time", type: 'dimensions', threshold: 5, filterselect: false, filtertype: 'Relative', filteroptions: [/*{fname:'',selected:true}*/], filtersearch: '6H' }]
@@ -72,7 +74,11 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 			}];
 		}
 
-		$scope.filterclickok = function ($event, person, list) {
+		$rootScope.$on("changed", function (event, args) {
+			scope.lists = JSON.parse(args);
+		});
+
+		scope.filterclickok = function ($event, person, list) {
 			if (person.filtertype != 'regex') {
 				var flag = 1; //Non selected	
 				for (var i = 0; i < person.filteroptions.length; i++) {
@@ -87,21 +93,21 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 					}
 				} else {
 					console.log('from ok filters in');
-					$state.go($state.current.name, { req: JSON.stringify($scope.lists) });
+					$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
 				}
 			} else {
 				console.log('state.go from filter regex');
-				$state.go($state.current.name, { req: JSON.stringify($scope.lists) });
+				$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
 			}
 			person.filterselect = false;
 		};
 
-		$scope.setspecificdate = function (person) {
+		scope.setspecificdate = function (person) {
 			person.filteroptions = [];
-			//console.log($scope.datePicker.date);
+			//console.log(scope.datePicker.date);
 			try {
 				person.filteroptions.push({
-					startDate: moment($scope.datePicker.date.startDate).format('YYYY-MM-DD HH:mm:ss'), endDate: moment($scope.datePicker.date.endDate).format('YYYY-MM-DD HH:mm:ss')
+					startDate: moment(scope.datePicker.date.startDate).format('YYYY-MM-DD HH:mm:ss'), endDate: moment(scope.datePicker.date.endDate).format('YYYY-MM-DD HH:mm:ss')
 				});
 				person.filterselect = false;
 				person.filtersearch = "";
@@ -110,9 +116,9 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 			}
 		};
 
-		$scope.filterclickcan = function ($event, person, list) {};
+		scope.filterclickcan = function ($event, person, list) {};
 
-		$scope.splitfilterclicked = function (event, list, peopleValue) {
+		scope.splitfilterclicked = function (event, list, peopleValue) {
 			if (list.label == "Split") {
 				list.people[$(event.target).closest('li').index()].thresholdselect = true;
 			} else if (list.label == "Filters") {
@@ -123,12 +129,12 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 					if (peopleValue.filtertype == 'Specific') {
 						peopleValue.filteroptions = [];
 						peopleValue.filteroptions.push({
-							startDate: $scope.datePicker.date.startDate.format('YYYY-MM-DD HH:mm:ss'), endDate: $scope.datePicker.date.endDate.format('YYYY-MM-DD HH:mm:ss')
+							startDate: scope.datePicker.date.startDate.format('YYYY-MM-DD HH:mm:ss'), endDate: scope.datePicker.date.endDate.format('YYYY-MM-DD HH:mm:ss')
 						});
 					}
 				}
 
-				if ($scope.lists[2].people.length > 0 && peopleValue.name != 'Time') {
+				if (scope.lists[2].people.length > 0 && peopleValue.name != 'Time') {
 					peopleValue.filterselect = true;
 					var requestforfilter = {
 						"namespace": "Header Bidder",
@@ -146,34 +152,34 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 							"dimension": peopleValue.name,
 							"threshold": 200
 						}],
-						"orderingMetric": $scope.lists[2].people[0].name.concat(' (HB Rendered Ad)'),
-						"startTime": $scope.request.startTime,
-						"endTime": $scope.request.endTime
+						"orderingMetric": scope.lists[2].people[0].name.concat(' (HB Rendered Ad)'),
+						"startTime": scope.request.startTime,
+						"endTime": scope.request.endTime
 					};
-					for (var i = 0; i < $scope.lists[2].people.length; i++) {
-						requestforfilter.metrics.push($scope.lists[2].people[i].name.concat(" (HB Rendered Ad)"));
+					for (var i = 0; i < scope.lists[2].people.length; i++) {
+						requestforfilter.metrics.push(scope.lists[2].people[i].name.concat(" (HB Rendered Ad)"));
 					}
 					for (var i = 0; i < $(event.target).closest('li').index(); i++) {
 
-						if ($scope.lists[0].people[i].name != 'Time') {
+						if (scope.lists[0].people[i].name != 'Time') {
 							var obj = {
-								dimension: $scope.lists[0].people[i].name,
+								dimension: scope.lists[0].people[i].name,
 								values: [],
 								pattern: "",
-								type: $scope.lists[0].people[i].filtertype
+								type: scope.lists[0].people[i].filtertype
 							};
-							if ($scope.lists[0].people[i].filtertype == 'regex') {
+							if (scope.lists[0].people[i].filtertype == 'regex') {
 								delete obj.values;
-								obj.pattern = $scope.lists[0].people[i].filtersearch;
+								obj.pattern = scope.lists[0].people[i].filtersearch;
 								requestforfilter.filters.push(obj);
 							} else {
 								var count = 0;
 								delete obj.pattern;
-								for (var j = 0; j < $scope.lists[0].people[i].filteroptions.length; j++) {
+								for (var j = 0; j < scope.lists[0].people[i].filteroptions.length; j++) {
 
-									if ($scope.lists[0].people[i].filteroptions[j].selected) {
+									if (scope.lists[0].people[i].filteroptions[j].selected) {
 										count++;
-										obj.values.push($scope.lists[0].people[i].filteroptions[j].fname);
+										obj.values.push(scope.lists[0].people[i].filteroptions[j].fname);
 									}
 								}
 								if (obj.values.length > 0 && count != 0) {
@@ -212,12 +218,12 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 					});
 				}
 			}
-			//$scope.liststhresholdselect
+			//scope.liststhresholdselect
 		};
 
-		$scope.dropCallback = function (index, item, external, type, list) {
+		scope.dropCallback = function (index, item, external, type, list) {
 
-			var indexes = $scope.containsObject(list.people, item);
+			var indexes = scope.containsObject(list.people, item);
 			indexes.splice(indexes.indexOf(index), 1);
 
 			if (indexes.length > 0) {
@@ -226,7 +232,7 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 			}
 		};
 
-		$scope.containsObject = function (values, item) {
+		scope.containsObject = function (values, item) {
 			var valueArr = values.map(function (item) {
 				return item.name;
 			});
@@ -240,23 +246,36 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 			});
 			return indexes;
 		};
+		scope.buttonsclicked = function (type) {
+			if (type === 'totals') {
+				scope.lists[1].people = [];
+				//$state.go('main.total',{req:JSON.stringify(scope.lists)});
+				$location.path("/totals" + JSON.stringify(scope.lists));
+			} else if (type === 'splitdata') {
+				$state.go('main.splitTable', { req: JSON.stringify(scope.lists) });
+			} else {
+				$state.go('main.chart', { req: JSON.stringify(scope.lists) });
+			}
+		};
 
-		$scope.$watch('lists[0]', function (lists, old) {
-			$scope.request.filters = [];
-			for (var i = 0; i < $scope.lists[0].people.length; i++) {
-				if ($scope.lists[0].people[i].name == 'Time') {
-					var oldstart = $scope.request.startTime;
-					var oldend = $scope.request.endTime;
-					if ($scope.lists[0].people[i].filtertype == 'Specific') {
+		$scope.$watch(function () {
+			return scope.lists[0];
+		}, function (lists, old) {
+			scope.request.filters = [];
+			for (var i = 0; i < scope.lists[0].people.length; i++) {
+				if (scope.lists[0].people[i].name == 'Time') {
+					var oldstart = scope.request.startTime;
+					var oldend = scope.request.endTime;
+					if (scope.lists[0].people[i].filtertype == 'Specific') {
 						try {
-							$scope.request.startTime = $scope.lists[0].people[i].filteroptions[0].startDate;
-							$scope.request.endTime = $scope.lists[0].people[i].filteroptions[0].endDate;
+							scope.request.startTime = scope.lists[0].people[i].filteroptions[0].startDate;
+							scope.request.endTime = scope.lists[0].people[i].filteroptions[0].endDate;
 						} catch (e) {
-							$scope.request.startTime = moment($scope.datePicker.date.startDate).format('YYYY-MM-DD HH:mm:ss');
-							$scope.request.endTime = moment($scope.datePicker.date.endDate).format('YYYY-MM-DD HH:mm:ss');
+							scope.request.startTime = moment(scope.datePicker.date.startDate).format('YYYY-MM-DD HH:mm:ss');
+							scope.request.endTime = moment(scope.datePicker.date.endDate).format('YYYY-MM-DD HH:mm:ss');
 						}
-					} else if ($scope.lists[0].people[i].filtertype == 'Relative') {
-						var option = $scope.lists[0].people[i].filtersearch;
+					} else if (scope.lists[0].people[i].filtertype == 'Relative') {
+						var option = scope.lists[0].people[i].filtersearch;
 						var startTime = '';
 						var endTime = moment().format('YYYY-MM-DD HH:mm:ss');;
 						if (option == '1H') {
@@ -278,52 +297,82 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 							endTime = moment().subtract(7, 'days').format('YYYY-MM-DD 00:00:00');
 							startTime = moment().subtract(14, 'days').format('YYYY-MM-DD 00:00:00');
 						}
-						$scope.request.startTime = startTime;
-						$scope.request.endTime = endTime;
+						scope.request.startTime = startTime;
+						scope.request.endTime = endTime;
 					}
-					if (!(oldstart === $scope.request.startTime && oldend === $scope.request.endTime)) {
+					if (!(oldstart === scope.request.startTime && oldend === scope.request.endTime)) {
 						console.log('satte.go from filter time');
-						$state.go($state.current.name, { req: JSON.stringify($scope.lists) });
+						$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
 					}
 				} else {
 					var obj = {
-						dimension: $scope.lists[0].people[i].name,
+						dimension: scope.lists[0].people[i].name,
 						values: [],
 						pattern: "",
-						type: $scope.lists[0].people[i].filtertype
+						type: scope.lists[0].people[i].filtertype
 					};
-					if ($scope.lists[0].people[i].filtertype == 'regex') {
+					if (scope.lists[0].people[i].filtertype == 'regex') {
 						delete obj.values;
-						obj.pattern = $scope.lists[0].people[i].filtersearch;
-						$scope.request.filters.push(obj);
+						obj.pattern = scope.lists[0].people[i].filtersearch;
+						scope.request.filters.push(obj);
 					} else {
 						var count = 0;
 						delete obj.pattern;
-						for (var j = 0; j < $scope.lists[0].people[i].filteroptions.length; j++) {
-							if ($scope.lists[0].people[i].filteroptions[j].selected) {
+						for (var j = 0; j < scope.lists[0].people[i].filteroptions.length; j++) {
+							if (scope.lists[0].people[i].filteroptions[j].selected) {
 								count++;
-								obj.values.push($scope.lists[0].people[i].filteroptions[j].fname);
+								obj.values.push(scope.lists[0].people[i].filteroptions[j].fname);
 							}
 						}
 						if (obj.values.length > 0 && count != 0) {
-							$scope.request.filters.push(obj);
+							scope.request.filters.push(obj);
 						}
 					}
 				}
 			}
 		}, true);
 
-		$scope.$watch('lists[1]', function (lists, old) {
-
+		$scope.$watch(function () {
+			return scope.lists[1];
+		}, function (lists, old) {
 			console.log('from dimensions');
-			//console.log($state)
-			//$state.params="somthing";
-			$state.go($state.current.name, { req: JSON.stringify($scope.lists) });
+
+			if ($state.current.name === 'main.total' && old.people.length == 0 && lists.people.length > 0) {
+				console.log('redicreting to splitdata');
+
+				$state.go('main.splitTable', { req: JSON.stringify(scope.lists) });
+			} else {
+				//console.log($state)
+				//$state.params="somthing";
+				//console.log($state.current.name);
+				if ($state.current.name == 'main.chart') {
+
+					for (var i = 0; i < scope.lists[1].people.length; i++) {
+						if (scope.lists[1].people[i].name == 'Time' && i != 1) {
+							var timeobj = JSON.parse(JSON.stringify(lists.people[i]));
+							scope.lists[1].people.splice(i, 1);
+							scope.lists[1].people.splice(1, 0, timeobj);
+							break;
+						}
+					}
+				}
+
+				$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
+			}
 		}, true);
 
-		$scope.$watch('lists[2]', function (lists, old) {
-			console.log('from measures');
-			$state.go($state.current.name, { req: JSON.stringify($scope.lists) });
+		$scope.$watch(function () {
+			return scope.lists[2];
+		}, function (lists, old) {
+			console.log('from measures 2');
+			$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
 		}, true);
+
+		/*$scope.$watch('scope.lists[2]',function(lists,old) {
+  
+  	       console.log('from measures 2');
+      	  		$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+  
+  },true);*/
 	});
 });

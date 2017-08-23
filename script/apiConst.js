@@ -71,8 +71,17 @@ define(['app'], function (app) {
 					"gridlines": {
 						"count": -1,
 						"units": {
+							"years": {
+								"format": ["YYYY"]
+							},
+							"months": {
+								"format": ["MMM"]
+							},
 							"days": {
 								"format": ["MMM dd"]
+							},
+							"hours": {
+								"format": ["h:mm aa", "ha"]
 							}
 						}
 					},
