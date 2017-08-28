@@ -2,6 +2,24 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 	app.controller('MainCtrl', function($scope,$http,callserver,$stateParams,$state,$location,$rootScope){
 
 	var scope=this;
+    $rootScope.$on("check", function(event){	
+		var cur = $state.current.name;
+		if(cur==="main.total"){
+			scope.total=true;
+			scope.chart=false;	
+			scope.split=false;
+		}
+		else if(cur==="main.chart"){
+			scope.total=false;
+			scope.chart=true;	
+			scope.split=false;
+		}
+		else if(cur==="main.splitTable"){
+			scope.total=false;
+			scope.chart=false;	
+			scope.split=true;
+		}
+	});
 	scope.datePicker = { date: {startDate:'2017-08-09 07:51:02',endDate: '2017-08-19 07:51:02'}};
     scope.request={
 		namespace: "Header Bidder",
@@ -15,8 +33,8 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 		    }*/
 		  ],
 		  orderingMetric: "",
-		  startTime: "2017-08-09 07:51:02",
-		  endTime: "2017-08-19 13:51:03"
+		  startTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+		  endTime: moment().format('YYYY-MM-DD HH:mm:ss')
      };
 
      scope.jreq=JSON.stringify(scope.request);
@@ -38,8 +56,7 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 
 		callserver.calldim().then(function(response) {
 			for (var i=0;i<response.data.result.length;i++) {
-				
-					scope.dimensions[0].people.push({name:response.data.result[i].dimensionName,type:"dimensions",threshold:5,thresholdselect:false,filterselect:false,filteroptions:[],filtertype:'in'});
+					scope.dimensions[0].people.push({name:response.data.result[i].dimensionName,type:"dimensions",threshold:5,thresholdselect:false,filterselect:false,clickok:false,filteroptions:[],filtertype:'in'});
 				}	
 		},function(response) {
 			console.log(response);
@@ -57,7 +74,7 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 		});
 
 	if($state.params.req){
-		scope.lists=JSON.parse($state.params.req)
+		scope.lists=JSON.parse($state.params.req);
 	}
 	else{
 
@@ -66,7 +83,7 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 	            label: "Filters",
 	            allowedTypes: ['dimensions'],
 	            people: [
-	                {name: "Time", type: 'dimensions',threshold:5,filterselect:false,filtertype:'Relative',filteroptions:[/*{fname:'',selected:true}*/],filtersearch:'6H'}
+	                {name: "Time", type: 'dimensions',threshold:5,filterselect:false,filtertype:'Relative',filteroptions:[/*{fname:'',selected:true}*/],filtersearch:'6H',clickok:false}
 	            ]
 	        },
 	        {
@@ -88,11 +105,31 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 	    ];
 	}
 
-	$rootScope.$on("changed", function(event,args){
-		scope.lists=JSON.parse(args);	
-	});
 
+	$rootScope.$on("changed", function(event,args){
+		scope.lists=JSON.parse(args);
+	});
+/*
+	scope.removething = function(person){
+		console.log(person);
+	}*/
+	
+	scope.cancelfilterclicked= function(person,list){
+		if (person.clickok==true){
+			scope.lists=JSON.parse($state.params.req);
+			for(var i=0;i<scope.lists[0].people.length;i++){
+					scope.lists[0].people[i].filterselect=false;
+			}
+		}
+		else{
+			for(var i = 0; i < list.people.length; i++) {
+	    		if(list.people[i].name==person.name)
+	    			list.people.splice(i,1);	
+	    	}
+		}
+	}
     scope.filterclickok =function($event,person,list){
+    	person.clickok=true;
 	    if(person.filtertype!='regex'){
 	    var flag=1;	//Non selected	
 	    	for(var i=0;i<person.filteroptions.length;i++){
@@ -110,19 +147,15 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 	    	else{
 	    		console.log('from ok filters in');
      	  		$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
-
 	    	}
-
-	    	
 	    }
 	    else{
 	    	console.log('state.go from filter regex');
+
      	  	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
 	    }
 	    person.filterselect=false; 
-	    
     }
-
     scope.setspecificdate= function(person){
     	person.filteroptions=[];
     	//console.log(scope.datePicker.date);
@@ -136,17 +169,14 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
     	catch(e){
     		alert('select some date');
     	}
-
     }
-
-    scope.filterclickcan= function($event,person,list){
-
-    }
-    
-    scope.splitfilterclicked = function(event,list,peopleValue){
-    	if (list.label=="Split") {
+    scope.splitfilterclicked = function(list,peopleValue,event,indexlatest){
+    	if (list.label==="Split"&&event!=null) {
+    		console.log('in plitf');
+    		console.log(arguments);
     		list.people[$(event.target).closest('li').index()].thresholdselect=true;
     	}
+
     	else if (list.label=="Filters") {
 
     		if (peopleValue.name=='Time') {
@@ -155,13 +185,13 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
     			if(peopleValue.filtertype=='Specific'){
 	    			peopleValue.filteroptions=[];
 	    			peopleValue.filteroptions.push({
-	    			startDate: scope.datePicker.date.startDate.format('YYYY-MM-DD HH:mm:ss'),endDate:scope.datePicker.date.endDate.format('YYYY-MM-DD HH:mm:ss')	
+	    			startDate: moment(scope.datePicker.date.startDate).format('YYYY-MM-DD HH:mm:ss'),endDate:moment(scope.datePicker.date.endDate).format('YYYY-MM-DD HH:mm:ss')	
 	    			});
     			}
 
     		}
 
-    		if (scope.lists[2].people.length>0 && peopleValue.name!='Time') {
+    		if (peopleValue.name!='Time') {
     			peopleValue.filterselect=true;
     			var requestforfilter={
 					  "namespace": "Header Bidder",
@@ -181,14 +211,20 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 					      "threshold": 200
 					    }
 					  ],
-					  "orderingMetric": scope.lists[2].people[0].name.concat(' (HB Rendered Ad)'),
+					  "orderingMetric": scope.lists[2].people.length>0?scope.lists[2].people[0].name.concat(' (HB Rendered Ad)'):"Impressions Delivered (HB Rendered Ad)",
 					  "startTime": scope.request.startTime,
 					  "endTime": scope.request.endTime	
 					};
-					for (var i =0;i< scope.lists[2].people.length; i++) {
-			        	requestforfilter.metrics.push(scope.lists[2].people[i].name.concat(" (HB Rendered Ad)"));		
-			        }	
-					for (var i = 0; i < $(event.target).closest('li').index(); i++) {
+					if (scope.lists[2].people.length>0) {
+						for (var i =0;i< scope.lists[2].people.length; i++) {
+			        		requestforfilter.metrics.push(scope.lists[2].people[i].name.concat(" (HB Rendered Ad)"));		
+			       		}
+			       }		
+			       	else{
+			       		requestforfilter.metrics.push("Impressions Delivered (HB Rendered Ad)");		
+					}
+						
+					for (var i = 0; i < indexlatest; i++) {
 						
 						if(scope.lists[0].people[i].name!='Time'){
 							let obj={
@@ -213,28 +249,22 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 									}
 								}
 								if (obj.values.length>0&&count!=0) {
-								requestforfilter.filters.push(obj);	
-							}
-							}
-
-							
-									
+									requestforfilter.filters.push(obj);	
+								}
+							}		
 						}
 					}
 					console.log(JSON.stringify(requestforfilter));
 					callserver.callquery(JSON.stringify(requestforfilter)).then(function(response){
 						console.log(response);
-						
 						peopleValue.filtertype='in';
 						var filterops=[]; //updating filteroptions
-						
 						for (i = 0; i < response.data.result.split.length; i++) {
 							var flag=0;//did not get the option
 							for(j=0;j<peopleValue.filteroptions.length;j++){
 								if(peopleValue.filteroptions[j].fname==response.data.result.split[i][peopleValue.name]){
 									filterops.push({fname:response.data.result.split[i][peopleValue.name],selected:peopleValue.filteroptions[j].selected});
 									flag=1;
-
 									break;
 								}
 							}
@@ -246,44 +276,61 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 						for (i = 0; i < filterops.length; i++) {
 							peopleValue.filteroptions[i]=filterops[i];
 						}
-						
-
 					},function(response){
 						console.log(response);
 					});
-
-			}	
-    	}
+				}	
+    		}
     	//scope.liststhresholdselect
-    	
-    }
-
-        scope.dropCallback= function(index, item, external, type,list){
-        	
-	        	var indexes=scope.containsObject(list.people,item);
-	        	indexes.splice(indexes.indexOf(index),1);
-	        	
-	        	
-	        	if(indexes.length>0){
-	        		
-	        			list.people.splice(indexes[0],1);
-	        		
-        	   }
+    	}
+        scope.dropCallback= function(index, item, external, type,list,event){
+        	var repl = event.toElement;
+        	if(repl.tagName!=="LI"){
+        		list.people.splice(index,0,item);
+        	}   
+        	else{
+        		var rInd=angular.element(repl).index();
+        		list.people.splice(rInd,1,item);
+        		console.log("ffj");
+        	} 
+        	var indexes=scope.containsObject(list.people,item);
+        	indexes.splice(indexes.indexOf(index),1);	
+        	if(indexes.length>0){
+        			list.people.splice(indexes[0],1);
+    	   }
+    	   if (list.label==='Filters') {
+    	   	 scope.splitfilterclicked(list,item,null,index);
+    	   }
+        	return true;   	
         }
-
         scope.containsObject=function(values,item) {
 		    var valueArr = values.map(function(item){ return item.name });
-		  
 		    var indexes=[];
 			var isDuplicate = valueArr.filter(function(element, index){
-			    	if (element===item.name) {
-			    		indexes.push(index);
-			    		return index;
-			    	}  
+		    	if (element===item.name) {
+		    		indexes.push(index);
+		    		return index;
+		    	}  
 			});
 			return indexes;
 			
 		}
+		scope.measurezoneclicked = function(person,event){
+    	
+    	var flag=1;//does not exists already
+    	
+    	for (var i = 0; i <scope.lists[2].people.length ; i++) {
+    		if (scope.lists[2].people[i].name===person.name){
+    			flag=0;
+    			break;
+    		}
+    	}
+    	if (flag) {
+    	scope.lists[2].people.push(person);
+    	}
+    	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+
+    }
 	scope.buttonsclicked = function(type) {
 		if (type==='totals') {
 			scope.lists[1].people=[];
@@ -350,12 +397,14 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 					scope.request.endTime=endTime;
 		
 				}
-				if (!(oldstart===scope.request.startTime&&oldend===scope.request.endTime)) {
+				if (!(moment(oldstart).format('YYYY-MM-DD HH')===moment(scope.request.startTime).format('YYYY-MM-DD HH')&&moment(oldend).format('YYYY-MM-DD HH')===moment(scope.request.endTime).format('YYYY-MM-DD HH'))) {
 					console.log('satte.go from filter time');
+     			  	
      			  $state.go($state.current.name,{req:JSON.stringify(scope.lists)});
 				}
 			}	
 			else{
+
 				let obj={
 					dimension: scope.lists[0].people[i].name,
 					values:[],
@@ -381,9 +430,14 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 				}
 			}
 							
-							
+					
 			}			
 		}
+		if (old.people.length != lists.people.length) {
+						console.log('new filter added/removed satte.go');
+     			  	
+     			 		 $state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+				}		
 		},true);
 
 
@@ -392,14 +446,14 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 	$scope.$watch(function(){
 		  return scope.lists[1];
 		},function(lists,old){
-		    console.log('from dimensions');
+		    
 
 		    if ($state.current.name==='main.total'&&old.people.length==0&&lists.people.length>0) {
 		    	console.log('redicreting to splitdata');
-		    	
+		    	console.log('from dimensions');
 		    	$state.go('main.splitTable',{req:JSON.stringify(scope.lists)});
 		    }
-		    else{
+		    else{//for charts and splitable
      	  //console.log($state)
      	  //$state.params="somthing";
      	  //console.log($state.current.name);
@@ -414,8 +468,28 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 	     	  			}
 	     	  		}
 	     	  }
+	     	  if (old.people.length!=lists.people.length) {
+	     	  	console.log('from dimensions old new');
+		     	  	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});	
+		     	  
+	     	  }
+	     	  else{
+	     	  	    var flagforthreshold=0;
 
-	     	  $state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+	     	  //threshold not updated
+	
+		     	  for(i=0;i<scope.lists[1].people.length;i++){
+		     	  	if(old.people[i].thresholdselect!=lists.people[i].thresholdselect){
+		     	  		flagforthreshold=1;
+		     	  		break;
+		     	  	}
+		     	  }
+		     	  if (flagforthreshold==0) {
+		     	  	console.log('from dimensions thres');
+		     	  	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});	
+		     	  }
+	     	  }
+	     	  
      	   }
 
 		},true);
@@ -424,8 +498,12 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 	$scope.$watch(function(){
 		  return scope.lists[2];
 		},function(lists,old){
-		    console.log('from measures 2');
-     	  		$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+		    if (lists.people.length!=old.people.length) {
+		    	console.log('from measures 2');
+		    
+		    	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+		    }
+     	  		
 		},true);
 
 	/*$scope.$watch('scope.lists[2]',function(lists,old) {

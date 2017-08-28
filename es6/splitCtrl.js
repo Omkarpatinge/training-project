@@ -1,7 +1,8 @@
 define(['app','requestService','dataFactory','removeText','numberSuffix','splitTab'],function(app) {
-	app.controller('splitCtrl', ['$scope','requestService','dataFactory','$state','$stateParams', 
-		function($scope,requestService,dataFactory,$state,$stateParams){
+	app.controller('splitCtrl', ['$scope','requestService','dataFactory','$state','$stateParams','$rootScope', 
+		function($scope,requestService,dataFactory,$state,$stateParams,$rootScope){
 			var obj=this;
+			$rootScope.$broadcast("check");
 			obj.param={req:$stateParams.req}
 			var x=JSON.parse($stateParams.req);
 			var req=dataFactory.generateRequest(x);

@@ -4,7 +4,7 @@ define(['angularAMD','uiRouter','googleChart','dnd','angulardate'],function(angu
 	app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
 		$stateProvider
 		.state('main',angularAMD.route({
-				templateUrl:'main.html',
+				templateUrl:'main2.html',
 				controller:"MainCtrl",
 				controllerAs:"cntr",
 				controllerUrl:"MainCtrl"

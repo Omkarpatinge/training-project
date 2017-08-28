@@ -5,7 +5,7 @@ define(['angularAMD', 'uiRouter', 'googleChart', 'dnd', 'angulardate'], function
 	var app = angular.module('sam', ["ui.router", "googlechart", 'dndLists', 'daterangepicker']);
 	app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 		$stateProvider.state('main', angularAMD.route({
-			templateUrl: 'main.html',
+			templateUrl: 'main2.html',
 			controller: "MainCtrl",
 			controllerAs: "cntr",
 			controllerUrl: "MainCtrl"

@@ -2,9 +2,10 @@ define(['app','requestService','dataFactory','numberSuffix','apiConst'],function
 	app.controller('chartCtrl', ['$scope','requestService','dataFactory','numberSuffixFilter','api','$stateParams','$state','$rootScope',
 		function($scope,requestService,dataFactory,numberSuffixFilter,api,$stateParams,$state,$rootScope){
 		var obj=this;
+		$rootScope.$broadcast("check");
 		var x=JSON.parse($stateParams.req);
-		//console.log(JSON.stringify(x[1].people[0]));
 		var req = dataFactory.generateRequest(x);
+
 		var time=req["dimensionObjectList"].some(function(elem) {
 			return elem["dimension"]==="Time";
 		})
@@ -20,6 +21,7 @@ define(['app','requestService','dataFactory','numberSuffix','apiConst'],function
 			}
 			x[1].people.push(time);
 			//$state.go("main.chart",{req:JSON.stringify(x)});
+			console.log(x);
 			$rootScope.$broadcast("changed",JSON.stringify(x));
 			//console.log("her");
 

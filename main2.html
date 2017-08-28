@@ -1,13 +1,14 @@
-
 <!-- maincntr as cntr.  -->
 
 <div class="main" id="container-fluid">
 	<div class="row">
-		<div ng-repeat="list in cntr.dimensions" class="col-sm-2" id="dimensions" >
-			<div id="searchicon"> 
-				<div>{{list.label}}</div> 
-				<i class="zmdi zmdi-search "></i>
-				<input class="form-control" type="text" ng-model="cntr.searchd">
+		<div ng-repeat="list in cntr.dimensions" id="dimensions" >
+			<div class="searchicon"> 
+				<div>{{list.label}} ({{list.people.length}})</div> 
+				<span class="searchBar form-control">
+					<input type="text" ng-model="cntr.searchd" placeholder="Search">
+					<i class="material-icons">search</i>	
+				</span>
 			</div>
 			<ul >
 	    		<li ng-repeat="person in list.people | searching:cntr.searchd"
@@ -16,21 +17,21 @@
 	        		dnd-moved="list.people.splice($index, 1)" 
 	        		dnd-effect-allowed="copy" 
 	        		draggable="true">
-	        		<a href="#"><div><i class="zmdi zmdi-time"></i>&nbsp;&nbsp;{{person.name}}</div></a>
+	        		<a href="#"><div>&nbsp;&nbsp;{{person.name}}</div></a>
 	        	</li>      
 			</ul>
 		</div>
-		<div id="viewcontainer" class="col-sm-8">
-				<div class="row" id="filterwrapper">
+		<div id="viewcontainer">
+			<div id="filterwrapper">
 				<div ng-repeat="list in cntr.lists" class="col-sm-12 rules">
 					<div class="row">
 						<label class="col-sm-1">{{list.label}}</label>
-		   					<ul  		
+		   					<ul  
 		   						class="col-sm-11" 
 		   						dnd-list="list.people"  
 		   						dnd-horizontal-list="true" 
 		   						dnd-allowed-types="list.allowedTypes"
-							dnd-inserted="cntr.dropCallback(index, item, external, type,list)">
+							dnd-drop="cntr.dropCallback(index, item, external,type,list,event)">
 	        				<li ng-repeat="person in list.people track by $index" 
 	        					ng-if="list.people.length>0"
 	        					dnd-type="person.type" 
@@ -38,11 +39,11 @@
 	            				dnd-moved="list.people.splice($index, 1)" 
 	            				dnd-effect-allowed="copy" 
 	            				draggable="true"   
-	            				dnd-selected="cntr.splitfilterclicked(event,list,person)">{{person.name}} 			
-	            				<span ng-if="!(person.name==='Time'&&list.label==='Filters')" ng-click="list.people.splice($index, 1)"><i class="zmdi zmdi-close-circle"></i></span>
-								
+	            				dnd-selected="cntr.splitfilterclicked(list,person,event,$index);$event.stopPropagation()">
+	            				{{person.name}} 			
+	            				<span ng-if="!(person.name==='Time'&&list.label==='Filters')" ng-click="list.people.splice($index, 1);$event.stopPropagation()"><i class="zmdi zmdi-close"></i></span>								
 								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog" ng-if="list.label==='Split'&& person.thresholdselect">
-									<i class="zmdi zmdi-close-circle" ng-click="person.thresholdselect=false; $event.stopPropagation();"></i>
+									<i class="zmdi zmdi-close" ng-click="person.thresholdselect=false; $event.stopPropagation();"></i>
 									<div ng-if="person.name!='Time'">
 										<h5>Limit: </h5><br>
 										<select ng-model="person.threshold" ng-selected="true"> 
@@ -67,7 +68,8 @@
 									</div>
 								</div>
 								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog" ng-if="list.label==='Filters' &&  person.filterselect" ng-click="$event.stopPropagation();">
-									<i class="zmdi zmdi-close-circle" ng-click="person.filterselect=false; $event.stopPropagation();"></i>
+									<!-- <i ng-if="person.name!='Time'" class="zmdi zmdi-close-circle" ng-click="person.filterselect=false;list.people.splice($index, 1); $event.stopPropagation();"></i> -->
+									<i ng-if="person.name=='Time'" class="zmdi zmdi-close-circle" ng-click="person.filterselect=false; $event.stopPropagation();"></i>
 									<div ng-if="person.name!='Time'">
 										<select ng-model="person.filtertype"> 
 						  					<option value="in">in</option>
@@ -86,10 +88,10 @@
 											<label ng-if="person.filtertype==='regex'" ng-repeat="filterop in person.filteroptions | searching:person.filtersearch:'fname':person.filtertype">
 											{{filterop.fname}}
 											</label>		
-										</div>
-										<button ng-click="filterclickok($event,person,list);$event.stopPropagation();">OK
+										</div>	
+										<button ng-click="cntr.filterclickok($event,person,list);$event.stopPropagation();">OK
 										</button>
-										<!-- <button ng-click="person.filterselect=false; $event.stopPropagation();">Cancel</button> -->
+										<button ng-click="cntr.cancelfilterclicked(person,list); $event.stopPropagation();">Cancel</button>
 									</div>
 									<div ng-if="person.name=='Time'">
 										<div class="radio-toolbar" >
@@ -102,25 +104,31 @@
 										</div>
 										<div class="radio-toolbar" ng-if="person.filtertype=='Relative'" >
 											<p>Latest</p>
-							  				<input type="radio" id="L1H" ng-model="person.filtersearch" ng-value="'1H'"  >
-							  				<label for="L1H">1H</label>
-											<input type="radio" id="L6H" ng-model="person.filtersearch" ng-value="'6H'">
-							  				<label for="L6H">6H</label>
-											<input type="radio" id="L1D" ng-model="person.filtersearch" ng-value="'1D'">
-							  				<label for="L1D">1D</label>
+											<div class="timeGrp lat">
+								  				<input type="radio" id="L1H" ng-model="person.filtersearch" ng-value="'1H'"  >
+								  				<label for="L1H" class="btn">1H</label>
+												<input type="radio" id="L6H" ng-model="person.filtersearch" ng-value="'6H'">
+								  				<label for="L6H" class="btn">6H</label>
+												<input type="radio" id="L1D" ng-model="person.filtersearch" ng-value="'1D'">
+								  				<label for="L1D" class="btn">1D</label>
+											</div>
 											<p>Current</p>
-							  				<input type="radio" id="LD"  ng-model="person.filtersearch" ng-value="'LCD'">
-							  				<label for="LD">D</label>
-							  				<input type="radio" id="LW" ng-model="person.filtersearch" ng-value="'LCW'">
-							  				<label for="LW">W</label>
+											<div class="timeGrp cur">
+								  				<input type="radio" id="LD"  ng-model="person.filtersearch" ng-value="'LCD'">
+								  				<label for="LD">D</label>
+								  				<input type="radio" id="LW" ng-model="person.filtersearch" ng-value="'LCW'">
+								  				<label for="LW">W</label>
+							  				</div>
 											<p>Previous</p>	
-							  				<input type="radio" id="LPD"  ng-model="person.filtersearch" ng-value="'LPD'">
-							  				<label for="LPD">D</label>
-							  				<input type="radio" id="LPW" ng-model="person.filtersearch" ng-value="'LPW'">
-							  				<label for="LPW">W</label>
+											<div class="timeGrp cur">
+								  				<input type="radio" id="LPD"  ng-model="person.filtersearch" ng-value="'LPD'">
+								  				<label for="LPD">D</label>
+								  				<input type="radio" id="LPW" ng-model="person.filtersearch" ng-value="'LPW'">
+								  				<label for="LPW">W</label>
+							  				</div>
 										</div>
 										<div ng-if="person.filtertype=='Specific'">
-											<input date-range-picker class="form-control date-picker" type="text" ng-model="datePicker.date"  options="{locale: {format: 'DD-MM-YYYY'},opens:embed}"/>
+											<input ng-click="person.filtertype='Specific'" id="menu2" date-range-picker class="date-picker" type="text" ng-model="cntr.datePicker.date" options="{locale: {format: 'DD-MM-YYYY'},parentEl: '#menu2' }""  />
 											<button ng-click="cntr.setspecificdate(person);$event.stopPropagation()">OK</button>
 										</div>
 									</div>
@@ -130,17 +138,36 @@
 					</div>	
 	          	</div>
 			</div>
+
+			<div class="navView">
+				<button ng-class="{'active': cntr.total==true}" ng-click="cntr.buttonsclicked('totals')">
+				<i class="material-icons">functions</i><span>Total</span></button>
+				<button ng-class="{'active': cntr.split==true}" ng-click="cntr.buttonsclicked('splitdata')">
+				<i class="material-icons">border_all</i><span>Table</span></button>
+				<button ng-class="{'active': cntr.chart==true}" ng-click="cntr.buttonsclicked('charts')">
+				<i class="material-icons">trending_up</i><span>Line Chart</span></button>
+				<div class="viewOption">
+					<span id="numForm">
+						<input id="nonf" type="radio" name="numForm" checked>
+						<label for="nonf">1,000</label>
+						<input id="withf" type="radio" name="numForm">
+						<label for="withf">1K</label>
+					</span>
+					<span><button><i class="material-icons">sync</i></button></span>
+					<span><button><i class="material-icons">fullscreen</i></button></span>
+				</div>
+			</div>
 			<div class="row resultsView">
-			<button ng-click="cntr.buttonsclicked('totals')">Totals</button><button ng-click="cntr.buttonsclicked('splitdata')" >SpiltData</button><button ng-click="cntr.buttonsclicked('charts')">Charts</button>
 				<ui-view></ui-view>
-				
 			</div>
 		</div>	
-	    <div ng-repeat="list in cntr.measures" class="col-sm-2" id="measures">
-	    	<div id="searchicon"> 
-	      		<div>{{list.label}}</div> 
-	      		<i class="zmdi zmdi-search "></i>
-	      		<input class="form-control" type="text" ng-model="cntr.searchm">
+	    <div ng-repeat="list in cntr.measures" id="measures">
+	    	<div class="searchicon"> 
+	      		<div>{{list.label}} ({{list.people.length}})</div> 
+	      		<span class="searchBar form-control">
+	      			<input type="text" ng-model="cntr.searchm" placeholder="Search">
+	      			<i class="material-icons">search</i>	
+				</span>
 	      	</div>
 	        <ul>
 	            <li ng-repeat="person in list.people | searching:cntr.searchm"
@@ -148,7 +175,8 @@
 	                dnd-draggable="person" 
 	                dnd-moved="list.people.splice($index, 1)" 
 	                dnd-effect-allowed="copy" 
-	                draggable="true"><a href="#"><div><i class="zmdi zmdi-time"></i>&nbsp;&nbsp;{{person.name}}</div></a>
+	                dnd-selected="cntr.measurezoneclicked(person,event)"
+	                draggable="true"><a href="Javascript:void(0)"><div>&nbsp;&nbsp;{{person.name}}</div></a>
 	            </li>  
 	        </ul>
 	    </div>

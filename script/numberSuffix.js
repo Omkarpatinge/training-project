@@ -10,14 +10,18 @@ define(['app'], function (app) {
       if (window.isNaN(input)) {
         return null;
       }
-
-      if (input < 1000) {
-        return input;
+      if (window.isNaN(decimals)) {
+        rounded = 2;
+      } else {
+        rounded = decimals;
       }
-
+      if (input < 1000) {
+        return Math.round(input * 100) / 100;
+      }
       exp = Math.floor(Math.log(input) / Math.log(1000));
-
-      return (input / Math.pow(1000, exp)).toFixed(decimals) + suffixes[exp - 1];
+      var x = (input / Math.pow(1000, exp)).toFixed(rounded) + suffixes[exp - 1];
+      console.log(x);
+      return x;
     };
   });
 });

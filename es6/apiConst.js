@@ -60,7 +60,7 @@ define(['app'],function(app){
 			},
 			{
 				"type": "AreaChart",
-				"cssStyle" :"height:400px; width:300px;",
+				"cssStyle" :"height:400px; width:100px;",
 				"options": {
 					"focusTarget":"category",
 					"legend":{"position":"none"},
@@ -82,6 +82,15 @@ define(['app'],function(app){
 								},
 								"hours": {
 									"format": ["h:mm aa", "ha"]
+								},
+								"minutes": {
+									"format": ["HH:mm a ", "h:mm"]
+								},
+								"seconds": {
+									"format": ["HH:mm:ss a", "h:mm:ss"]
+								},
+								"milliseconds": {
+									"format": ["HH:mm:ss a", "h:mm:ss"]
 								}
 							}
 						},
@@ -91,8 +100,12 @@ define(['app'],function(app){
 									"format": ["hh:mm:ss aa", "ha"]
 								},
 								"minutes": {
-									"format": ["HH:mm a Z", "h:mm"]
+									"format": ["HH:mm a", "h:mm"]
+								},
+								"milliseconds": {
+									"format": ["mm:ss:fff a", "h:mm:ss:fff"]
 								}
+
 							}
 						}
 					}

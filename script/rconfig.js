@@ -28,8 +28,11 @@ require.config({
 		],
 		"bootstrap":"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min",
 		"daterangepicker":"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/daterangepicker.min",
-		"angulardate":"lib/angulardate",
-		"dnd":"lib/dnd",
+		"angulardate":[
+			"lib/angulardate",
+
+		],
+		"dnd":"lib/dndv2",
 		'angularAMD':'lib/angularAMD.min',
 		'requestService':'requestService',//Service
 		'dataFactory':'dataFactory',//Factory
@@ -47,16 +50,20 @@ require.config({
 		'angular':{
 			export:'angular'
 		},
+		"bootstrap":{
+			deps:["jquery"]
+		},
 		'uiRouter':['angularAMD'],
 		'angularAMD': ['angular'],
 		'googleChart':{
 			deps:['angular']
 		},
+
 		"angulardate":{
-	 		deps:["angular",'moment']
+	 		deps:['moment',"angular",'daterangepicker']
 	 	},
 	 	'moment':{
-	 		export:'moment'
+	 		
 	 	},
 	 	"dnd":['angular']
 	}
