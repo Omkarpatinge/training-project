@@ -5,6 +5,7 @@ define(['app', 'requestService', 'dataFactory', 'removeText', 'numberSuffix', 's
 		var obj = this;
 		$rootScope.$broadcast("check");
 		obj.param = { req: $stateParams.req };
+		obj.loaded = false;
 		var x = JSON.parse($stateParams.req);
 		var req = dataFactory.generateRequest(x);
 		obj.metrics = req["metrics"];

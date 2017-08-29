@@ -8,7 +8,7 @@ define(['app'], function (app) {
 		},
 		chart: [{
 			"type": "LineChart",
-			"cssStyle": "height:400px; width:300px;",
+			"cssStyle": "height:400px; width:100%;",
 			"options": {
 				"focusTarget": "category",
 				"showCategories": true,
@@ -60,7 +60,7 @@ define(['app'], function (app) {
 			}
 		}, {
 			"type": "AreaChart",
-			"cssStyle": "height:400px; width:100px;",
+			"cssStyle": "height:400px; width:100%;",
 			"options": {
 				"focusTarget": "category",
 				"legend": { "position": "none" },

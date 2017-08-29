@@ -2,7 +2,7 @@
 
 <div class="main" id="container-fluid">
 	<div class="row">
-		<div ng-repeat="list in cntr.dimensions" id="dimensions" >
+			<div ng-repeat="list in cntr.dimensions" id="dimensions" >
 			<div class="searchicon"> 
 				<div>{{list.label}} ({{list.people.length}})</div> 
 				<span class="searchBar form-control">
@@ -10,14 +10,24 @@
 					<i class="material-icons">search</i>	
 				</span>
 			</div>
-			<ul >
+			<ul>
 	    		<li ng-repeat="person in list.people | searching:cntr.searchd"
 	    			dnd-type="person.type" 
 	        		dnd-draggable="person" 
 	        		dnd-moved="list.people.splice($index, 1)" 
 	        		dnd-effect-allowed="copy" 
-	        		draggable="true">
-	        		<a href="#"><div>&nbsp;&nbsp;{{person.name}}</div></a>
+	        		draggable="true"
+	        		dnd-selected="person.popupadd=true"
+	        		>
+	        		<p>&nbsp;&nbsp;{{person.name}}</p>
+	        		
+	        		<span class="popupdim" ng-if="person.popupadd===true">
+		        		<span class="popup-text"  popup dimname="person">	
+		        			<p ng-click="cntr.dimzoneclicked(person,$event);$event.stopPropagation();">Filters</p>
+		        			<hr>
+		        			<p  ng-click="cntr.dimzoneclicked(person,$event);$event.stopPropagation();">Split</p>
+		        		</span>	
+	        		</span>
 	        	</li>      
 			</ul>
 		</div>
@@ -40,7 +50,16 @@
 	            				dnd-effect-allowed="copy" 
 	            				draggable="true"   
 	            				dnd-selected="cntr.splitfilterclicked(list,person,event,$index);$event.stopPropagation()">
-	            				{{person.name}} 			
+	            				<p>{{person.name}}</p>
+	            				<span ng-if="list.label==='Filters'">
+									<span ng-if="person.name==='Time'">
+										({{' '+cntr.request.startTime.split(' ')[0] + " - " + cntr.request.endTime.split(' ')[0]}})
+									</span>
+									<span ng-if="!(person.name==='Time')">
+										<span ng-if="person.filtertype==='Regex'">({{person.filtersearch}})
+										</span>
+									</span>
+								</span> 			
 	            				<span ng-if="!(person.name==='Time'&&list.label==='Filters')" ng-click="list.people.splice($index, 1);$event.stopPropagation()"><i class="zmdi zmdi-close"></i></span>								
 								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog" ng-if="list.label==='Split'&& person.thresholdselect">
 									<i class="zmdi zmdi-close" ng-click="person.thresholdselect=false; $event.stopPropagation();"></i>
@@ -54,16 +73,18 @@
 									</div>
 									<div ng-if="person.name=='Time'">
 										<div class="radio-toolbar">
-								  			<input type="radio" id="radio1" ng-model="cntr.person.granularity" ng-value="'60000'" >
-								  			<label for="radio1">1M</label>
-								  			<input type="radio" id="radio2" ng-model="cntr.person.granularity" ng-value="'300000'">
-								  			<label for="radio2">5M</label>
-								  			<input type="radio" id="radio3" ng-model="cntr.person.granularity" ng-value="3600000" checked>
-									  		<label for="radio3">1H</label>
-							  				<input type="radio" id="radio4"  ng-model="cntr.person.granularity" ng-value="86400000">
-							  				<label for="radio4">1D</label>
-							 	 			<input type="radio" id="radio5" ng-model="cntr.person.granularity" ng-value="604800000">
-							  				<label for="radio5">1W</label>
+											<div class="timeGrp tspl">
+									  			<input type="radio" id="radio1" ng-model="cntr.person.granularity" ng-value="'60000'" >
+									  			<label for="radio1">1M</label>
+									  			<input type="radio" id="radio2" ng-model="cntr.person.granularity" ng-value="'300000'">
+									  			<label for="radio2">5M</label>
+									  			<input type="radio" id="radio3" ng-model="cntr.person.granularity" ng-value="3600000" checked>
+										  		<label for="radio3">1H</label>
+								  				<input type="radio" id="radio4"  ng-model="cntr.person.granularity" ng-value="86400000">
+								  				<label for="radio4">1D</label>
+								 	 			<input type="radio" id="radio5" ng-model="cntr.person.granularity" ng-value="604800000">
+								  				<label for="radio5">1W</label>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -76,7 +97,10 @@
 						  					<option value="regex">Regex</option>
 										</select>
 										<input type="text" ng-model="person.filtersearch">
-										<div class="filList ">
+										<div ng-if="!cntr.loaded" class="filList jc">
+											<div  class="jawn"></div>
+										</div>
+										<div ng-if="cntr.loaded" class="filList">
 											<label ng-if="person.filtertype==='in'" ng-repeat="filterop in person.filteroptions | searching:person.filtersearch:'fname':person.filtertype">
 									 			<input type="checkbox"
 									    			value="{{filterop.fname}}"
@@ -128,8 +152,11 @@
 							  				</div>
 										</div>
 										<div ng-if="person.filtertype=='Specific'">
-											<input ng-click="person.filtertype='Specific'" id="menu2" date-range-picker class="date-picker" type="text" ng-model="cntr.datePicker.date" options="{locale: {format: 'DD-MM-YYYY'},parentEl: '#menu2' }""  />
-											<button ng-click="cntr.setspecificdate(person);$event.stopPropagation()">OK</button>
+											<my-calender date="cntr.datePicker.date" lists="cntr.lists">
+											</my-calender>
+											<!-- <button ng-click="cntr.setspecificdate(person);$event.stopPropagation()">OK</button>
+											<button ng-click="cntr.setspecificdate(person);$event.stopPropagation()">OK</button> -->
+											
 										</div>
 									</div>
 								</div>
@@ -148,12 +175,12 @@
 				<i class="material-icons">trending_up</i><span>Line Chart</span></button>
 				<div class="viewOption">
 					<span id="numForm">
-						<input id="nonf" type="radio" name="numForm" checked>
+						<input id="nonf" ng-model="val.nFormat" ng-value="false" type="radio" name="numForm" >
 						<label for="nonf">1,000</label>
-						<input id="withf" type="radio" name="numForm">
+						<input id="withf" ng-model="val.nFormat" ng-value="true" type="radio" name="numForm" checked>
 						<label for="withf">1K</label>
 					</span>
-					<span><button><i class="material-icons">sync</i></button></span>
+					<span><button ng-click="cntr.refresh()"><i class="material-icons">sync</i></button></span>
 					<span><button><i class="material-icons">fullscreen</i></button></span>
 				</div>
 			</div>
@@ -176,7 +203,7 @@
 	                dnd-moved="list.people.splice($index, 1)" 
 	                dnd-effect-allowed="copy" 
 	                dnd-selected="cntr.measurezoneclicked(person,event)"
-	                draggable="true"><a href="Javascript:void(0)"><div>&nbsp;&nbsp;{{person.name}}</div></a>
+	                draggable="true"><a href="Javascript:void(0)"><p>&nbsp;&nbsp;{{person.name}}</p></a>
 	            </li>  
 	        </ul>
 	    </div>

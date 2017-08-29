@@ -1,6 +1,6 @@
 //app.js
-define(['angularAMD','uiRouter','googleChart','dnd','angulardate'],function(angularAMD){
-	var app = angular.module('sam',["ui.router","googlechart",'dndLists','daterangepicker']);
+define(['angularAMD','uiRouter','googleChart','dnd'],function(angularAMD){
+	var app = angular.module('sam',["ui.router","googlechart",'dndLists']);
 	app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
 		$stateProvider
 		.state('main',angularAMD.route({
@@ -21,8 +21,8 @@ define(['angularAMD','uiRouter','googleChart','dnd','angulardate'],function(angu
 		.state('main.chart',angularAMD.route({
 					url:'/chart:req',
 					templateUrl:'_stats.html',
-					controller:"chartCtrl as chart",
-					//controllerAs:"chart",
+					controller:"chartCtrl",
+					controllerAs:"chart",
 					controllerUrl:"chartCtrl"
 				})
 		)

@@ -11,7 +11,7 @@ define(['app', 'jquery', 'requestService', 'dataFactory'], function (app, $) {
 			// controller: function($scope, $element, $attrs, $transclude) {},
 			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
 			restrict: 'EA', // E = Element, A = Attribute, C = Class, M = Comment
-			template: '<tr>' + '<td>Total</td>' + '<td ng-repeat="m in $parent.split.metrics">{{result[m]|numberSuffix:2}}</td>' + '</tr>',
+			template: '<tr>' + '<td>Total</td>' + '<td ng-repeat="m in $parent.split.metrics">{{result[m]|numberSuffix:2:val.nFormat}}</td>' + '</tr>',
 			// templateUrl: '',
 			//replace: true,
 			//transclude: true,
@@ -44,6 +44,10 @@ define(['app', 'jquery', 'requestService', 'dataFactory'], function (app, $) {
 						var scope = $scope.$parent;
 						scope.split.status = 2;
 						console.log("error:", response);
+					}).finally(function () {
+						var scope = $scope.$parent;
+						scope.split.loaded = true;
+						console.log("ddd");
 					});
 				} else {
 					scope.status = 1;

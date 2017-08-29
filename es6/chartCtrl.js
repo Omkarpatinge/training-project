@@ -1,7 +1,8 @@
-define(['app','requestService','dataFactory','numberSuffix','apiConst'],function(app) {
+define(['app','requestService','dataFactory','removeText','numberSuffix','apiConst'],function(app) {
 	app.controller('chartCtrl', ['$scope','requestService','dataFactory','numberSuffixFilter','api','$stateParams','$state','$rootScope',
 		function($scope,requestService,dataFactory,numberSuffixFilter,api,$stateParams,$state,$rootScope){
 		var obj=this;
+		obj.loaded=false;
 		$rootScope.$broadcast("check");
 		var x=JSON.parse($stateParams.req);
 		var req = dataFactory.generateRequest(x);
@@ -56,21 +57,23 @@ define(['app','requestService','dataFactory','numberSuffix','apiConst'],function
 			{
 			 	console.log(error);
 				obj.status=3;
+			}).finally(function() {
+				obj.loaded=true;
 			})
 	   	}
 		//console.log(obj,JSON.stringify(this))
 		function loadCharts() {
 			var result = obj.response.data.result;
+			obj.result=result;
 			for(var i=0;i<obj.metrics.length;i++){	
 				var m=obj.metrics[i];
-				var title=m.replace("(HB Rendered Ad)",numberSuffixFilter(result[m],2));
 				var data=dataFactory.getDataTable(result,m,dimension);
 				//console.log(data,"here");
 				//debugger;
 				//var dataTable=new google.visualization.arrayToDataTable(data);
 	   			var chart=JSON.parse(JSON.stringify(JSONChart));
 	   			//console.log(chart);
-				chart["options"].title=title;
+				
 				chart.data=data;
 				obj.chart[i]=chart;
 			}

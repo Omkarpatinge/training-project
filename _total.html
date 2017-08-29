@@ -1,9 +1,23 @@
 <div class="total">	<!-- <button ui-sref="sample">Pres</button> -->
-	<div ng-bind-html="totals"></div>
-	<ul>
-		<li ng-repeat="(key, value) in metricVal">
-			<h3 class="totName">{{key|removeText:"(HB Rendered Ad)"}}</h3>
-			<h1 class="totVal">{{value|numberSuffix:2}}</h1>
-		</li>
-	</ul>
+	<div class="status" ng-switch="counter.status">
+		<div ng-switch-when="0">
+			<div class="loaderContainer" ng-if="!counter.loaded">
+				<div class="loader">
+				  <div class="loader__bar"></div>
+				  <div class="loader__bar"></div>
+				  <div class="loader__bar"></div>
+				  <div class="loader__bar"></div>
+				  <div class="loader__bar"></div>
+				  <div class="loader__ball"></div>
+				</div>
+			</div>
+			<ul ng-if="counter.loaded">
+				<li ng-repeat="(key, value) in counter.metricVal">
+					<h1 class="totVal">{{value|numberSuffix:2:val.nFormat}}</h1>
+					<h3 class="totName">{{key|removeText:"(HB Rendered Ad)"}}</h3>
+				</li>
+			</ul>
+		</div>
+		<span ng-switch-when="2">Some Error Occured<br>Check Network</span>	
+	</div>	
 </div>

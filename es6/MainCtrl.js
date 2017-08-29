@@ -1,7 +1,11 @@
-define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],function(app,moment,$) {
+define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd','myCalender',"popup"],function(app,moment,$) {
 	app.controller('MainCtrl', function($scope,$http,callserver,$stateParams,$state,$location,$rootScope){
 
 	var scope=this;
+	scope.loaded=false;
+	$rootScope.val={
+		nFormat:true
+	}	
     $rootScope.$on("check", function(event){	
 		var cur = $state.current.name;
 		if(cur==="main.total"){
@@ -56,7 +60,7 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 
 		callserver.calldim().then(function(response) {
 			for (var i=0;i<response.data.result.length;i++) {
-					scope.dimensions[0].people.push({name:response.data.result[i].dimensionName,type:"dimensions",threshold:5,thresholdselect:false,filterselect:false,clickok:false,filteroptions:[],filtertype:'in'});
+					scope.dimensions[0].people.push({name:response.data.result[i].dimensionName,type:"dimensions",threshold:5,thresholdselect:false,filterselect:false,clickok:false,filteroptions:[],filtertype:'in',popupadd:false});
 				}	
 		},function(response) {
 			console.log(response);
@@ -113,7 +117,9 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 	scope.removething = function(person){
 		console.log(person);
 	}*/
-	
+	scope.refresh=function() {
+		$state.go($state.current, {}, {reload: true});
+	}
 	scope.cancelfilterclicked= function(person,list){
 		if (person.clickok==true){
 			scope.lists=JSON.parse($state.params.req);
@@ -156,7 +162,7 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 	    }
 	    person.filterselect=false; 
     }
-    scope.setspecificdate= function(person){
+    /*scope.setspecificdate= function(person){
     	person.filteroptions=[];
     	//console.log(scope.datePicker.date);
     	try{
@@ -169,7 +175,7 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
     	catch(e){
     		alert('select some date');
     	}
-    }
+    }*/
     scope.splitfilterclicked = function(list,peopleValue,event,indexlatest){
     	if (list.label==="Split"&&event!=null) {
     		console.log('in plitf');
@@ -178,7 +184,7 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
     	}
 
     	else if (list.label=="Filters") {
-
+    		scope.loaded=false;
     		if (peopleValue.name=='Time') {
     			peopleValue.filterselect=true;
 
@@ -278,17 +284,64 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
 						}
 					},function(response){
 						console.log(response);
+					}).finally(function() {
+						scope.loaded=true;
 					});
 				}	
     		}
     	//scope.liststhresholdselect
     	}
+
+
+    	
+
+    	scope.dimzoneclicked = function(person,event){
+    		console.log($(event.target).text());
+    		if ($(event.target).text()==='Split') {
+    			
+    			var flag=1;//does not exists already
+	    	
+		    	for (var i = 0; i <scope.lists[1].people.length ; i++) {
+		    		if (scope.lists[1].people[i].name===person.name){
+		    			flag=0;
+		    			break;
+		    		}
+		    	}
+		    	if (flag) {
+			    	scope.lists[1].people.push(person);
+		    	}
+		    	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+
+    		}
+    		else if($(event.target).text()==='Filters') {
+				var flag=1;//does not exists already
+	    		console.log('in filters');
+		    	for (var i = 0; i <scope.lists[0].people.length ; i++) {
+		    		if (scope.lists[0].people[i].name===person.name){
+		    			flag=0;
+		    			break;
+		    		}
+		    	}
+		    	if (flag) {
+			    	scope.lists[0].people.push(person);
+			    	scope.splitfilterclicked(scope.lists[0],person,null,scope.lists[0].people.length-1);
+
+		    	}    			
+    			
+    		}
+    		person.popupadd=false;
+    	}
+
         scope.dropCallback= function(index, item, external, type,list,event){
         	var repl = event.toElement;
-        	if(repl.tagName!=="LI"){
+        	console.log(event);
+        	if(repl.tagName==="UL"){
         		list.people.splice(index,0,item);
         	}   
         	else{
+        		if(repl.tagName==="P"){
+        			repl=repl.parentElement;
+        		}
         		var rInd=angular.element(repl).index();
         		list.people.splice(rInd,1,item);
         		console.log("ffj");
@@ -333,7 +386,7 @@ define(["app","moment",'jquery',"callserver","thingTest","searching",'dnd'],func
     }
 	scope.buttonsclicked = function(type) {
 		if (type==='totals') {
-			scope.lists[1].people=[];
+			//scope.lists[1].people=[];
 			//$state.go('main.total',{req:JSON.stringify(scope.lists)});
 			$location.path("/totals"+JSON.stringify(scope.lists));
 

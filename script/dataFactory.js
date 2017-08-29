@@ -1,6 +1,6 @@
 'use strict';
 
-define(['app', "moment", 'apiConst', 'angulardate', 'daterangepicker'], function (app, moment) {
+define(['app', "moment", 'apiConst'], function (app, moment) {
 	//console.log(moment);
 	app.factory('dataFactory', ['$http', 'api', function ($http, api) {
 		var con = {};
@@ -51,11 +51,10 @@ define(['app', "moment", 'apiConst', 'angulardate', 'daterangepicker'], function
 		}
 		con.createSplit = function (split, dimension, htmlElm, depth) {
 			var temp = "";
-			console.log("here");
 			for (var i = 0; i < split.length; i++) {
 				var currElm = split[i];
 				var newHtml = htmlElm + '[' + i + ']';
-				temp += '<tr>' + '<td>' + tab(depth) + split[i][dimension[depth]] + '</td>' + '<td ng-repeat="m in split.metrics">{{' + newHtml + '[m]|numberSuffix:2}}</td>' + '</tr>';
+				temp += '<tr>' + '<td>' + tab(depth) + split[i][dimension[depth]] + '</td>' + '<td ng-repeat="m in split.metrics">{{' + newHtml + '[m]|numberSuffix:2:val.nFormat}}</td>' + '</tr>';
 				if (currElm.split) {
 					temp += this.createSplit(currElm.split, dimension, newHtml + ".split", depth + 1);
 				}

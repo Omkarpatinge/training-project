@@ -4,17 +4,21 @@ define(['app','jquery','requestService','dataFactory','removeText','numberSuffix
 		function($scope,requestService,dataFactory,$stateParams,$rootScope){
 		//$scope.tex="I am MainController";
 		//var data=JSON.parse(decodeURIComponent($stateParams.req));
+		var obj=this;
 		$rootScope.$broadcast("check");
-		$scope.status=0;
+		//$rootScope.numForm="";
+		obj.status=0;
+		obj.loaded=false;
 
 		var x=JSON.parse($stateParams.req);
+		x[1].people=[];	
 		var data=dataFactory.generateRequest(x);
 		
 		var metricKey=data.metrics;
 		if(metricKey.length==0){
-			$scope.status=1;
+			obj.status=1;
 		}
-		if($scope.status==0){
+		if(obj.status==0){
 			dataFactory.getTotalData(data)
 				.then(function(response){
 					var result=response.data.result[0]||response.data.result;
@@ -23,9 +27,12 @@ define(['app','jquery','requestService','dataFactory','removeText','numberSuffix
 						x[metricKey[i]]=parseFloat(result[metricKey[i]]);
 					}
 					console.log(x);
-					$scope.metricVal=x;
+					obj.metricVal=x;
 				}, function() {
 					console.log('error');
+					obj.status=2;
+				}).finally(function() {
+				    obj.loaded=true;
 				});
 		}
 	}

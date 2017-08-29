@@ -12,7 +12,7 @@ define(['app','jquery','requestService','dataFactory'],function(app,$) {
 			 restrict: 'EA', // E = Element, A = Attribute, C = Class, M = Comment
 			 template:'<tr>'+
 						'<td>Total</td>'+
-						'<td ng-repeat="m in $parent.split.metrics">{{result[m]|numberSuffix:2}}</td>'+
+						'<td ng-repeat="m in $parent.split.metrics">{{result[m]|numberSuffix:2:val.nFormat}}</td>'+
 					'</tr>' ,
 			// templateUrl: '',
 			//replace: true,
@@ -47,6 +47,10 @@ define(['app','jquery','requestService','dataFactory'],function(app,$) {
 						var scope=$scope.$parent;
 						scope.split.status=2;
 						console.log("error:",response);
+					}).finally(function() {
+						var scope=$scope.$parent;
+						scope.split.loaded=true;
+						console.log("ddd")
 					})
 				}
 				else{

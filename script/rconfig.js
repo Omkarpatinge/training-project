@@ -26,12 +26,10 @@ require.config({
 		"moment":[
 			"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min"
 		],
+		"popup":"popup",
 		"bootstrap":"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min",
-		"daterangepicker":"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/daterangepicker.min",
-		"angulardate":[
-			"lib/angulardate",
-
-		],
+		"myCalender":"myCalender",
+		"daterangepicker":"lib/jquery.daterangepicker.min",
 		"dnd":"lib/dndv2",
 		'angularAMD':'lib/angularAMD.min',
 		'requestService':'requestService',//Service
@@ -58,13 +56,9 @@ require.config({
 		'googleChart':{
 			deps:['angular']
 		},
-
-		"angulardate":{
-	 		deps:['moment',"angular",'daterangepicker']
-	 	},
-	 	'moment':{
-	 		
-	 	},
+		"daterangepicker":{
+			deps:["jquery","moment"]
+		},
 	 	"dnd":['angular']
 	}
 });

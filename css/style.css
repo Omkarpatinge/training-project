@@ -6,6 +6,184 @@
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"); }
 
+.loaderContainer {
+  height: 100%;
+  display: flex; }
+
+.jc {
+  display: flex; }
+
+.jawn {
+  position: relative;
+  background-color: #EC5959;
+  width: 10px;
+  height: 10px;
+  margin: auto;
+  border-radius: 50%; }
+  .jawn:after, .jawn:before {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%; }
+  .jawn:after {
+    left: -10px;
+    top: -5px;
+    background-color: #C7C2A6;
+    transform-origin: 15px 10px;
+    animation: axis 1s linear infinite; }
+  .jawn:before {
+    left: -25px;
+    top: -15px;
+    background-color: #009bff;
+    transform-origin: 30px 20px;
+    animation: axis 2s linear infinite; }
+
+@keyframes axis {
+  0% {
+    transform: rotateZ(0deg) translate3d(0, 0, 0); }
+  100% {
+    transform: rotateZ(360deg) translate3d(0, 0, 0); } }
+
+.loader {
+  position: relative;
+  margin: auto;
+  display: inline-block;
+  vertical-align: middle;
+  width: 75px;
+  height: 100px; }
+  .loader__bar {
+    position: absolute;
+    bottom: 0;
+    width: 10px;
+    height: 50%;
+    background: #555;
+    transform-origin: center bottom;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2); }
+    .loader__bar:nth-child(1) {
+      left: 0px;
+      transform: scale(1, 0.2);
+      animation: barUp1 4s infinite; }
+    .loader__bar:nth-child(2) {
+      left: 15px;
+      transform: scale(1, 0.4);
+      animation: barUp2 4s infinite; }
+    .loader__bar:nth-child(3) {
+      left: 30px;
+      transform: scale(1, 0.6);
+      animation: barUp3 4s infinite; }
+    .loader__bar:nth-child(4) {
+      left: 45px;
+      transform: scale(1, 0.8);
+      animation: barUp4 4s infinite; }
+    .loader__bar:nth-child(5) {
+      left: 60px;
+      transform: scale(1, 1);
+      animation: barUp5 4s infinite; }
+  .loader__ball {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: #555;
+    border-radius: 50%;
+    animation: ball 4s infinite; }
+
+@keyframes ball {
+  0% {
+    transform: translate(0, 0); }
+  5% {
+    transform: translate(8px, -14px); }
+  10% {
+    transform: translate(15px, -10px); }
+  17% {
+    transform: translate(23px, -24px); }
+  20% {
+    transform: translate(30px, -20px); }
+  27% {
+    transform: translate(38px, -34px); }
+  30% {
+    transform: translate(45px, -30px); }
+  37% {
+    transform: translate(53px, -44px); }
+  40% {
+    transform: translate(60px, -40px); }
+  50% {
+    transform: translate(60px, 0); }
+  57% {
+    transform: translate(53px, -14px); }
+  60% {
+    transform: translate(45px, -10px); }
+  67% {
+    transform: translate(37px, -24px); }
+  70% {
+    transform: translate(30px, -20px); }
+  77% {
+    transform: translate(22px, -34px); }
+  80% {
+    transform: translate(15px, -30px); }
+  87% {
+    transform: translate(7px, -44px); }
+  90% {
+    transform: translate(0, -40px); }
+  100% {
+    transform: translate(0, 0); } }
+
+@keyframes barUp1 {
+  0% {
+    transform: scale(1, 0.2); }
+  40% {
+    transform: scale(1, 0.2); }
+  50% {
+    transform: scale(1, 1); }
+  90% {
+    transform: scale(1, 1); }
+  100% {
+    transform: scale(1, 0.2); } }
+
+@keyframes barUp2 {
+  0% {
+    transform: scale(1, 0.4); }
+  40% {
+    transform: scale(1, 0.4); }
+  50% {
+    transform: scale(1, 0.8); }
+  90% {
+    transform: scale(1, 0.8); }
+  100% {
+    transform: scale(1, 0.4); } }
+
+@keyframes barUp3 {
+  0% {
+    transform: scale(1, 0.6); }
+  100% {
+    transform: scale(1, 0.6); } }
+
+@keyframes barUp4 {
+  0% {
+    transform: scale(1, 0.8); }
+  40% {
+    transform: scale(1, 0.8); }
+  50% {
+    transform: scale(1, 0.4); }
+  90% {
+    transform: scale(1, 0.4); }
+  100% {
+    transform: scale(1, 0.8); } }
+
+@keyframes barUp5 {
+  0% {
+    transform: scale(1, 1); }
+  40% {
+    transform: scale(1, 1); }
+  50% {
+    transform: scale(1, 0.2); }
+  90% {
+    transform: scale(1, 0.2); }
+  100% {
+    transform: scale(1, 1); } }
+
 .dover {
   background-color: black; }
 
@@ -23,10 +201,10 @@ body {
   overflow-x: auto;
   font-family: 'Montserrat', sans-serif; }
   body *::-webkit-scrollbar-track {
-    background-color: #ffffff; }
+    background-color: rgba(255, 255, 255, 0); }
   body *::-webkit-scrollbar {
     width: 7px;
-    background-color: #F5F5F5; }
+    background-color: rgba(255, 255, 255, 0); }
   body *::-webkit-scrollbar-thumb {
     border-radius: 50px;
     background-color: rgba(153, 153, 153, 0.1); }
@@ -37,41 +215,23 @@ a {
 a:hover {
   text-decoration: none; }
 
-.daterangepicker_input {
-  width: 50%; }
+a:active, a:focus {
+  text-decoration: none; }
 
-#menu2 div.calendar.right div.calendar-table table tbody {
-  display: none; }
+#date-range12-container {
+  width: max-content;
+  margin: auto;
+  border-color: #fff; }
+  #date-range12-container .date-picker-wrapper {
+    margin: auto;
+    padding: 0px;
+    background-color: #fff; }
 
-#menu2 div.calendar.right div.calendar-table table thead tr:nth-child(2) {
-  display: none; }
+.date-picker-wrapper .month-wrapper {
+  width: 200px; }
 
-#menu2 div.calendar.right div.calendar-table table thead th.month {
-  display: none; }
-
-#menu2 div.calendar.right div.calendar-table i {
-  position: absolute;
-  top: 55px;
-  left: 220px; }
-
-#menu2 div.calendar.right {
-  width: 0px; }
-
-.col-sm-12 {
-  float: left; }
-
-.col-sm-11 {
-  width: 91.66666667%;
-  float: left; }
-
-#menu2 div.ranges {
-  clear: both; }
-
-#menu2 div.calendar.right div.daterangepicker_input {
-  width: 120px;
-  position: absolute;
-  left: 120px;
-  top: 8px; }
+.drp_top-bar {
+  display: none !important; }
 
 .resultsView {
   background-color: #fff;
@@ -90,7 +250,7 @@ a:hover {
   flex: 0 1; }
   .navView .viewOption {
     float: right;
-    min-width: max-content; }
+    min-width: 50px; }
     .navView .viewOption #numForm {
       background-color: #fff;
       padding: 0% 0%;
@@ -162,6 +322,13 @@ a:hover {
       -webkit-transition: 1s;
       /* Safari */
       transition: 1s; }
+  .container-fluid .nav-brand {
+    padding: 15px 0px; }
+  .container-fluid ul {
+    font-size: 20px;
+    padding: 15px 0; }
+    .container-fluid ul span {
+      color: #8F6AB2; }
 
 #container-fluid {
   padding: 0% 1%;
@@ -172,7 +339,7 @@ a:hover {
     background-color: white;
     min-height: 100%;
     padding: 0px 1%;
-    width: 22%;
+    width: 20%;
     height: 90vh;
     overflow-y: scroll;
     overflow-x: auto; }
@@ -180,12 +347,17 @@ a:hover {
     list-style: none;
     margin-left: 3%; }
   #container-fluid #dimensions li, #container-fluid #measures li {
-    padding: 1%; }
-    #container-fluid #dimensions li a, #container-fluid #measures li a {
-      color: #545A6A; }
-      #container-fluid #dimensions li a:hover, #container-fluid #measures li a:hover {
+    padding: 1%;
+    height: 30px; }
+    #container-fluid #dimensions li p, #container-fluid #measures li p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+      #container-fluid #dimensions li p:hover, #container-fluid #measures li p:hover {
         color: #52ACEE;
         background-color: #e1e1e1; }
+    #container-fluid #dimensions li a, #container-fluid #measures li a {
+      color: #545A6A; }
   #container-fluid ul {
     padding: 0; }
   #container-fluid .searchicon div {
@@ -214,21 +386,19 @@ a:hover {
   #container-fluid #viewcontainer {
     padding: 0% 0%;
     height: 90vh;
-    width: 56%;
+    width: 60%;
     display: flex;
     flex-flow: column; }
     #container-fluid #viewcontainer #filterwrapper {
       background-color: #fff;
-      height: max-content;
       margin: 0% 0px;
       padding: 0% 0%;
-      padding-top: 1%;
       box-shadow: inset 17px 0px 25px -25px rgba(0, 0, 0, 0.45), inset -17px 0px 25px -25px rgba(0, 0, 0, 0.45);
-      flex: 0 1; }
+      flex: 0 1 100px; }
     #container-fluid #viewcontainer .rules {
       width: 100%;
       border-bottom: 1px solid #E7EAF0;
-      height: 8vh;
+      height: 50px;
       display: table-cell;
       padding: 0% 2%; }
       #container-fluid #viewcontainer .rules .row {
@@ -248,8 +418,7 @@ a:hover {
         vertical-align: middle;
         background-color: #F5F5F5;
         color: #8A91A5;
-        padding: 1% 10px;
-        height: max-content;
+        padding: .5% 10px;
         font-weight: 600;
         min-width: max-content;
         max-width: 20%;
@@ -257,8 +426,9 @@ a:hover {
         border-radius: 5px; }
         #container-fluid #viewcontainer .rules li p {
           display: inline-block;
-          margin: 0px;
           float: left;
+          max-width: 150px;
+          margin: 0px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis; }
@@ -272,7 +442,6 @@ a:hover {
           background-color: #fff;
           z-index: 25;
           box-shadow: 1px 1px 5px #aaa;
-          width: max-content;
           height: max-content;
           position: absolute;
           padding: 20px;
@@ -285,18 +454,21 @@ a:hover {
               z-index: 20; }
           #container-fluid #viewcontainer .rules li .dialog .filList {
             height: 20vh;
+            padding: 0px  3%;
             overflow-y: auto;
             overflow-x: hidden; }
             #container-fluid #viewcontainer .rules li .dialog .filList label {
               display: block;
               width: 100%;
               text-align: left;
-              padding: 4% 0px; }
+              padding: 3% 0px; }
               #container-fluid #viewcontainer .rules li .dialog .filList label input[type="checkbox"] {
                 display: none; }
               #container-fluid #viewcontainer .rules li .dialog .filList label input[type="checkbox"]:checked + .glyphicon {
                 color: white;
                 background-color: #8A91A5; }
+              #container-fluid #viewcontainer .rules li .dialog .filList label span {
+                float: right; }
               #container-fluid #viewcontainer .rules li .dialog .filList label .glyphicon {
                 color: rgba(138, 145, 165, 0);
                 font-weight: lighter;
@@ -331,17 +503,8 @@ a:hover {
             background-color: #8A91A5;
             color: white; }
           #container-fluid #viewcontainer .rules li .dialog .radio-toolbar {
-            width: 50%;
+            width: 250px;
             margin: 0; }
-            #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .lat {
-              width: 100%; }
-              #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .lat label {
-                width: calc(33.333% + .9px); }
-            #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .cur {
-              width: 100%;
-              margin: auto; }
-              #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .cur label {
-                width: calc(50% + .9px); }
             #container-fluid #viewcontainer .rules li .dialog .radio-toolbar p {
               margin: 0px; }
             #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .timeGrp {
@@ -380,30 +543,76 @@ a:hover {
                 background-color: white;
                 border-radius: 0px;
                 border: 1px solid #aaa; }
+            #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .lat {
+              width: 100%; }
+              #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .lat label {
+                width: calc(33.333% + .9px); }
+            #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .tspl {
+              width: 250px; }
+              #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .tspl label {
+                margin: -1px;
+                width: calc(20%); }
+            #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .cur {
+              width: 100%;
+              margin: auto; }
+              #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .cur label {
+                width: calc(50% + .9px); }
       #container-fluid #viewcontainer .rules ul li span i {
         right: 5px; }
 
-.total ul {
-  list-style-type: none;
-  text-align: center;
-  padding: 5%; }
-  .total ul li {
-    display: inline-block;
-    margin: 10px; }
-  .total ul .totName {
-    color: #888;
-    font-size: 1.5em;
-    text-weight: light; }
-  .total ul .totVal {
-    font-size: 2em; }
+.total {
+  height: 100%; }
+  .total .status {
+    display: table;
+    width: 100%;
+    height: 100%; }
+    .total .status > div {
+      height: 100%; }
+    .total .status > span {
+      display: table-cell;
+      text-align: center;
+      font-size: 2em;
+      vertical-align: middle; }
+  .total ul {
+    list-style-type: none;
+    text-align: center;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    padding: 5%; }
+    .total ul li {
+      display: inline-block;
+      vertical-align: middle;
+      margin: auto 10px;
+      height: max-content; }
+    .total ul .totName {
+      color: #888;
+      font-size: 1.4em;
+      text-weight: light; }
+    .total ul .totVal {
+      font-size: 2.5em; }
 
 .stat {
   width: 100%;
   height: 100%; }
+  .stat .chartTitle {
+    width: 100%;
+    text-align: left; }
+    .stat .chartTitle h1 {
+      display: inline-block;
+      font-size: 2em;
+      font-weight: bolder; }
+    .stat .chartTitle i {
+      font-style: normal;
+      font-size: 1.2em;
+      color: #8088A0; }
   .stat .status {
     display: table;
     width: 100%;
     height: 100%; }
+    .stat .status > div {
+      height: 100%; }
     .stat .status span {
       display: table-cell;
       text-align: center;
@@ -424,19 +633,22 @@ a:hover {
     height: 400px; }
 
 .split {
-  padding: 0%; }
+  padding: 0%;
+  height: 100%; }
+  .split .status {
+    display: table;
+    width: 100%;
+    height: 100%; }
+    .split .status > div {
+      height: 100%; }
+    .split .status > span {
+      display: table-cell;
+      text-align: center;
+      font-size: 2em;
+      vertical-align: middle; }
   .split table {
     border-collapse: collapse;
     width: 100%; }
-    .split table .status {
-      display: table;
-      width: 100%;
-      height: 100%; }
-      .split table .status > span {
-        display: table-cell;
-        text-align: center;
-        font-size: 2em;
-        vertical-align: middle; }
     .split table tr {
       text-align: left;
       border-bottom: .5px solid #aaa; }
@@ -448,3 +660,50 @@ a:hover {
       z-index: 20; }
     .split table td, .split table th {
       padding: 1%; }
+
+.main ul li .popupdim {
+  display: inline-block;
+  position: relative;
+  background-color: white;
+  color: white; }
+  .main ul li .popupdim .popup-text {
+    width: 100px;
+    background-color: #fff;
+    color: #555;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    box-shadow: 2px 2px 10px 0px #aaa;
+    z-index: 1;
+    left: 90px;
+    top: -75px;
+    margin-left: 80px;
+    transition: all 2s; }
+    .main ul li .popupdim .popup-text hr {
+      color: #555;
+      border: 0.5px solid #ccc;
+      width: 90%;
+      height: 0px;
+      border-radius: 100%;
+      margin: 0 auto; }
+    .main ul li .popupdim .popup-text p {
+      margin: 0;
+      padding: 8px 0px; }
+      .main ul li .popupdim .popup-text p:first-child {
+        border-radius: 6px 6px 0px 0px; }
+      .main ul li .popupdim .popup-text p:last-child {
+        border-radius: 0px 0px 6px 6px; }
+    .main ul li .popupdim .popup-text p:hover {
+      cursor: pointer;
+      background-color: rgba(238, 238, 238, 0.5) !important; }
+  .main ul li .popupdim .popup-text::before {
+    content: "";
+    transform: rotate(45deg);
+    position: absolute;
+    top: 45%;
+    box-shadow: -2px 2px 10px -2px #aaa;
+    left: -.4%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #fff #fff; }

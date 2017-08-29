@@ -1,15 +1,29 @@
 <div class="split">
 	<div class="status" ng-switch="split.status">
-	<table ng-switch-when="0">
-		<thead>
-			<tr>
-				<th><span ng-repeat="d in split.dimensions">{{d}}<i ng-if="!$last"> ,</i></span></th>
-				<th ng-repeat="m in split.metrics">{{m|removeText:" (HB Rendered Ad)"}}</th>
-			</tr>	
-		</thead>
-		<tbody split-tab></tbody>
-	</table>
-	<span ng-switch-when="1">
-		Atleat One Split required
-	</span>
+		<div ng-switch-when="0">
+			<table ng-show="split.loaded" >
+				<thead>
+					<tr>
+						<th><span ng-repeat="d in split.dimensions">{{d}}<i ng-if="!$last"> ,</i></span></th>
+						<th ng-repeat="m in split.metrics">{{m|removeText:" (HB Rendered Ad)"}}</th>
+					</tr>	
+				</thead>
+				<tbody split-tab></tbody>
+			</table>
+			<div class="loaderContainer" ng-if="!split.loaded">
+				<div class="loader">
+				  <div class="loader__bar"></div>
+				  <div class="loader__bar"></div>
+				  <div class="loader__bar"></div>
+				  <div class="loader__bar"></div>
+				  <div class="loader__bar"></div>
+				  <div class="loader__ball"></div>
+				</div>
+			</div>
+		</div>
+		<span ng-switch-when="1">
+			Atleat One Split required
+		</span>
+		<span ng-switch-when="2">Some Error Occured<br>Check Network</span>	
+	</div>
 </div>
