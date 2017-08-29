@@ -250,20 +250,35 @@ body{
 	*::-webkit-scrollbar-track
 	{
 		background-color: rgba(#ffffff,0);
-		width:10px;
 	}
 
 	*::-webkit-scrollbar
 	{	
 		padding:0px 5px;
+		width: 10px;
+		position: relative;
 		background-color: rgba(#ffffff,0);
+		z-index: 10;
 	}
-
 	*::-webkit-scrollbar-thumb
 	{	
-		width:5px;
+		width:1px;
 		border-radius: 50px;
-		background-color: rgba(#999,.1);
+		background-color: rgba(#aaa,0.3);
+	}
+	.conbtn{
+		text-align:center;
+		padding: 10px 0px;
+	}
+	.okbtn{
+		background-color: red;
+		color: white;
+		width:35%
+	}
+	.cancelbtn{
+		background-color: #B3BACF;
+		color: white;
+		width: 40%;
 	}
 }
 
@@ -284,6 +299,10 @@ a:active,a:focus{
 		margin: auto;
 		padding:0px;
 		background-color: #fff;
+		border-width: 0px;
+		*{
+			border-width: 0px;
+		}
 
 	}
 }
@@ -401,10 +420,11 @@ a:active,a:focus{
 	}
 	.nav-brand{
 		padding: 15px 0px;
+		height: 100%;
 	}
 	ul{
 		font-size:20px;
-		padding: 15px 0;
+		padding: 10px 0;
 		span{
 			color:#8F6AB2;
 		}
@@ -424,6 +444,23 @@ a:active,a:focus{
 		height: 90vh;
 		overflow-y:scroll;
 		overflow-x:auto;
+		&::-webkit-scrollbar
+		{	
+			padding:0px 5px;
+			width: 40px;
+			position: relative;
+			background-color: rgba(#ffffff,0);
+			z-index: 10;
+		}
+
+		&::-webkit-scrollbar-thumb
+		{	
+			width:1px;
+			border-radius: 50px;
+			border:10px solid #fff;  
+			border-width:15px;
+			background-color: rgba(#aaa,0.3);
+		}
 	}
 	li{
 		list-style: none;
@@ -532,8 +569,8 @@ a:active,a:focus{
 				color:#8A91A5;
 				padding: .5% 10px;
 				font-weight:600; 
-				min-width:max-content;
-				//height: max-content;
+				min-width:150px;
+				height:30px;
 				max-width: 20%;
 				margin:auto 2px;
 				border-radius:5px;
@@ -710,6 +747,9 @@ a:active,a:focus{
 						}
 					}
 				}
+			}
+			.timeLi{
+				min-width:max-content; 
 			}
 			ul li span i{
 				//position: absolute;

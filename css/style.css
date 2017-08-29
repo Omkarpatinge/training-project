@@ -201,15 +201,28 @@ body {
   overflow-x: auto;
   font-family: 'Montserrat', sans-serif; }
   body *::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0);
-    width: 10px; }
+    background-color: rgba(255, 255, 255, 0); }
   body *::-webkit-scrollbar {
     padding: 0px 5px;
-    background-color: rgba(255, 255, 255, 0); }
+    width: 10px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0);
+    z-index: 10; }
   body *::-webkit-scrollbar-thumb {
-    width: 5px;
+    width: 1px;
     border-radius: 50px;
-    background-color: rgba(153, 153, 153, 0.1); }
+    background-color: rgba(170, 170, 170, 0.3); }
+  body .conbtn {
+    text-align: center;
+    padding: 10px 0px; }
+  body .okbtn {
+    background-color: red;
+    color: white;
+    width: 35%; }
+  body .cancelbtn {
+    background-color: #B3BACF;
+    color: white;
+    width: 40%; }
 
 a {
   text-decoration: none; }
@@ -227,7 +240,10 @@ a:active, a:focus {
   #date-range12-container .date-picker-wrapper {
     margin: auto;
     padding: 0px;
-    background-color: #fff; }
+    background-color: #fff;
+    border-width: 0px; }
+    #date-range12-container .date-picker-wrapper * {
+      border-width: 0px; }
 
 .date-picker-wrapper .month-wrapper {
   width: 200px; }
@@ -325,10 +341,11 @@ a:active, a:focus {
       /* Safari */
       transition: 1s; }
   .container-fluid .nav-brand {
-    padding: 15px 0px; }
+    padding: 15px 0px;
+    height: 100%; }
   .container-fluid ul {
     font-size: 20px;
-    padding: 15px 0; }
+    padding: 10px 0; }
     .container-fluid ul span {
       color: #8F6AB2; }
 
@@ -345,6 +362,18 @@ a:active, a:focus {
     height: 90vh;
     overflow-y: scroll;
     overflow-x: auto; }
+    #container-fluid #dimensions::-webkit-scrollbar, #container-fluid #measures::-webkit-scrollbar {
+      padding: 0px 5px;
+      width: 40px;
+      position: relative;
+      background-color: rgba(255, 255, 255, 0);
+      z-index: 10; }
+    #container-fluid #dimensions::-webkit-scrollbar-thumb, #container-fluid #measures::-webkit-scrollbar-thumb {
+      width: 1px;
+      border-radius: 50px;
+      border: 10px solid #fff;
+      border-width: 15px;
+      background-color: rgba(170, 170, 170, 0.3); }
   #container-fluid li {
     list-style: none;
     margin-left: 3%; }
@@ -422,7 +451,8 @@ a:active, a:focus {
         color: #8A91A5;
         padding: .5% 10px;
         font-weight: 600;
-        min-width: max-content;
+        min-width: 150px;
+        height: 30px;
         max-width: 20%;
         margin: auto 2px;
         border-radius: 5px; }
@@ -559,6 +589,8 @@ a:active, a:focus {
               margin: auto; }
               #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .cur label {
                 width: calc(50% + .9px); }
+      #container-fluid #viewcontainer .rules .timeLi {
+        min-width: max-content; }
       #container-fluid #viewcontainer .rules ul li span i {
         right: 5px; }
 

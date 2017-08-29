@@ -14,8 +14,10 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 			 restrict: 'EA', // E = Element, A = Attribute, C = Class, M = Comment
 			template: `<input type="text" id="abc">
 			<div id="date-range12-container"></div>
-			<button ng-click="specificOkClicked()">OK</button>
-			<button ng-click="specificCancelClicked()"">Cancel</button>`,
+			<div class="conbtn">
+			<button class="okbtn btn" ng-click="specificOkClicked()">OK</button>
+			<button class="cancelbtn btn" ng-click="specificCancelClicked()"">Cancel</button>
+			</div>`,
 			// templateUrl: '',
 			// replace: true,
 			// transclude: true,

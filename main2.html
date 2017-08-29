@@ -40,7 +40,8 @@
 		   						dnd-horizontal-list="true" 
 		   						dnd-allowed-types="list.allowedTypes"
 							dnd-drop="cntr.dropCallback(index, item, external,type,list,event)">
-	        				<li ng-repeat="person in list.people track by $index" 
+	        				<li ng-repeat="person in list.people track by $index"
+	        					ng-class="{timeLi:(list.label==='Filters'&&person.name==='Time')}" 
 	        					ng-if="list.people.length>0"
 	        					dnd-type="person.type" 
 	            				dnd-draggable="person" 
@@ -114,9 +115,11 @@
 											{{filterop.fname}}
 											</label>		
 										</div>	
-										<button ng-click="cntr.filterclickok($event,person,list);$event.stopPropagation();">OK
-										</button>
-										<button ng-click="cntr.cancelfilterclicked(person,list); $event.stopPropagation();">Cancel</button>
+										<div class="conbtn">
+											<button class="okbtn btn" ng-click="cntr.filterclickok($event,person,list);$event.stopPropagation();">OK
+											</button>
+											<button class="cancelbtn btn" ng-click="cntr.cancelfilterclicked(person,list); $event.stopPropagation();">Cancel</button>
+										</div>
 									</div>
 									<div ng-if="person.name=='Time'">
 										<div class="radio-toolbar" >
