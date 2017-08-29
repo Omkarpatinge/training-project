@@ -1,6 +1,6 @@
 "use strict";
 
-define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd', 'myCalender', "popup"], function (app, moment, $) {
+define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd', 'myCalender', "popup", "countselected"], function (app, moment, $) {
 	app.controller('MainCtrl', function ($scope, $http, callserver, $stateParams, $state, $location, $rootScope) {
 
 		var scope = this;
@@ -140,20 +140,6 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 			}
 			person.filterselect = false;
 		};
-		/*scope.setspecificdate= function(person){
-  	person.filteroptions=[];
-  	//console.log(scope.datePicker.date);
-  	try{
-  	person.filteroptions.push({
-  		startDate: moment(scope.datePicker.date.startDate).format('YYYY-MM-DD HH:mm:ss'),endDate:moment(scope.datePicker.date.endDate).format('YYYY-MM-DD HH:mm:ss')
-  	});
-  	person.filterselect=false;
-  	person.filtersearch="";
-  	}
-  	catch(e){
-  		alert('select some date');
-  	}
-  }*/
 		scope.splitfilterclicked = function (list, peopleValue, event, indexlatest) {
 			if (list.label === "Split" && event != null) {
 				console.log('in plitf');
@@ -171,7 +157,6 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 						});
 					}
 				}
-
 				if (peopleValue.name != 'Time') {
 					peopleValue.filterselect = true;
 					var requestforfilter = {
@@ -298,16 +283,18 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 
 		scope.dropCallback = function (index, item, external, type, list, event) {
 			var repl = event.toElement;
-			console.log(event);
-			if (repl.tagName === "UL") {
+			if (repl.tagName === "UL" || repl.tagName === "LI" && !repl.innerHTML) {
 				list.people.splice(index, 0, item);
 			} else {
-				if (repl.tagName === "P") {
+				if (repl.tagName === "P" || repl.tagName === "SPAN") {
 					repl = repl.parentElement;
 				}
-				var rInd = angular.element(repl).index();
-				list.people.splice(rInd, 1, item);
-				console.log("ffj");
+				if (repl.children[0].innerHTML.indexOf("Time") > -1) {
+					list.people.splice(index, 0, item);
+				} else {
+					var rInd = angular.element(repl).index();
+					list.people.splice(rInd, 1, item);
+				}
 			}
 			var indexes = scope.containsObject(list.people, item);
 			indexes.splice(indexes.indexOf(index), 1);
@@ -444,7 +431,7 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 			return scope.lists[1];
 		}, function (lists, old) {
 
-			if ($state.current.name === 'main.total' && old.people.length == 0 && lists.people.length > 0) {
+			if ($state.current.name === 'main.total' && old.people.length < lists.people.length && lists.people.length > 0) {
 				console.log('redicreting to splitdata');
 				console.log('from dimensions');
 				$state.go('main.splitTable', { req: JSON.stringify(scope.lists) });

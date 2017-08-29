@@ -26,13 +26,13 @@ require.config({
 		"moment":[
 			"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min"
 		],
+		"countselected":"countselected",
 		"popup":"popup",
 		"bootstrap":"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min",
 		"myCalender":"myCalender",
 		"daterangepicker":"lib/jquery.daterangepicker.min",
 		"dnd":"lib/dndv2",
 		'angularAMD':'lib/angularAMD.min',
-		'requestService':'requestService',//Service
 		'dataFactory':'dataFactory',//Factory
 		'apiConst':'apiConst',//Constant
 		'removeText':'removeText',//Filter

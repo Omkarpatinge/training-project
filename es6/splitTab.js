@@ -1,6 +1,6 @@
-define(['app','jquery','requestService','dataFactory'],function(app,$) {
-	app.directive('splitTab', [ 'requestService','dataFactory','$compile','$stateParams','$state',
-		function(requestService,dataFactory,$compile,$stateParams,$state){
+define(['app','jquery','dataFactory'],function(app,$) {
+	app.directive('splitTab', [ 'dataFactory','$compile','$stateParams','$state',
+		function(dataFactory,$compile,$stateParams,$state){
 		// Runs during compile	
 		return {
 			// name: '',

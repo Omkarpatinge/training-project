@@ -17,10 +17,8 @@
 	        		dnd-moved="list.people.splice($index, 1)" 
 	        		dnd-effect-allowed="copy" 
 	        		draggable="true"
-	        		dnd-selected="person.popupadd=true"
-	        		>
+	        		dnd-selected="person.popupadd=true">
 	        		<p>&nbsp;&nbsp;{{person.name}}</p>
-	        		
 	        		<span class="popupdim" ng-if="person.popupadd===true">
 		        		<span class="popup-text"  popup dimname="person">	
 		        			<p ng-click="cntr.dimzoneclicked(person,$event);$event.stopPropagation();">Filters</p>
@@ -55,12 +53,15 @@
 									<span ng-if="person.name==='Time'">
 										({{' '+cntr.request.startTime.split(' ')[0] + " - " + cntr.request.endTime.split(' ')[0]}})
 									</span>
-									<span ng-if="!(person.name==='Time')">
+									<span ng-if="person.name!='Time'&& person.clickok">
 										<span ng-if="person.filtertype==='Regex'">({{person.filtersearch}})
+										</span>
+										<span  ng-if="person.filtertype==='in'">
+											{{person.filteroptions | countselected}}
 										</span>
 									</span>
 								</span> 			
-	            				<span ng-if="!(person.name==='Time'&&list.label==='Filters')" ng-click="list.people.splice($index, 1);$event.stopPropagation()"><i class="zmdi zmdi-close"></i></span>								
+	            				<span class="cIcon" ng-if="!(person.name==='Time'&&list.label==='Filters')" ng-click="list.people.splice($index, 1);$event.stopPropagation()"><i class="zmdi zmdi-close"></i></span>								
 								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog" ng-if="list.label==='Split'&& person.thresholdselect">
 									<i class="zmdi zmdi-close" ng-click="person.thresholdselect=false; $event.stopPropagation();"></i>
 									<div ng-if="person.name!='Time'">

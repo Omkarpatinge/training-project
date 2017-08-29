@@ -1,8 +1,8 @@
 'use strict';
 
-define(['app', 'jquery', 'requestService', 'dataFactory', 'removeText', 'numberSuffix'], function (app, $) {
+define(['app', 'jquery', 'dataFactory', 'removeText', 'numberSuffix'], function (app, $) {
 	//console.log(app);
-	app.controller('totalCounterCtrl', ['$scope', 'requestService', 'dataFactory', '$stateParams', '$rootScope', function ($scope, requestService, dataFactory, $stateParams, $rootScope) {
+	app.controller('totalCounterCtrl', ['$scope', 'dataFactory', '$stateParams', '$rootScope', function ($scope, dataFactory, $stateParams, $rootScope) {
 		//$scope.tex="I am MainController";
 		//var data=JSON.parse(decodeURIComponent($stateParams.req));
 		var obj = this;

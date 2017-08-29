@@ -8,7 +8,7 @@ define(["app"],function(app) {
 					count++;
 				}
 			}
-			return count;
+			return "("+count+")";
 		}
 	});	
 });

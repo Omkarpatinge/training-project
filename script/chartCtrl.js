@@ -1,7 +1,7 @@
 'use strict';
 
-define(['app', 'requestService', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], function (app) {
-	app.controller('chartCtrl', ['$scope', 'requestService', 'dataFactory', 'numberSuffixFilter', 'api', '$stateParams', '$state', '$rootScope', function ($scope, requestService, dataFactory, numberSuffixFilter, api, $stateParams, $state, $rootScope) {
+define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], function (app) {
+	app.controller('chartCtrl', ['$scope', 'googleChartApiPromise', 'dataFactory', 'numberSuffixFilter', 'api', '$stateParams', '$state', '$rootScope', function ($scope, googleChartApiPromise, dataFactory, numberSuffixFilter, api, $stateParams, $state, $rootScope) {
 		var obj = this;
 		obj.loaded = false;
 		$rootScope.$broadcast("check");
@@ -46,6 +46,7 @@ define(['app', 'requestService', 'dataFactory', 'removeText', 'numberSuffix', 'a
 		if (obj.status == 1) {
 			buildChart(obj);
 		}
+
 		function buildChart() {
 			//console.log(req);
 			dataFactory.getLineData(req).then(function (response) {

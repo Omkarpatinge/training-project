@@ -249,18 +249,19 @@ body{
 	font-family: 'Montserrat', sans-serif;
 	*::-webkit-scrollbar-track
 	{
-		
 		background-color: rgba(#ffffff,0);
+		width:10px;
 	}
 
 	*::-webkit-scrollbar
-	{
-		width: 7px;
+	{	
+		padding:0px 5px;
 		background-color: rgba(#ffffff,0);
 	}
 
 	*::-webkit-scrollbar-thumb
 	{	
+		width:5px;
 		border-radius: 50px;
 		background-color: rgba(#999,.1);
 	}
@@ -546,7 +547,7 @@ a:active,a:focus{
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
-				span{
+				.cIcon{
 					float: right;
 				}
 				i{

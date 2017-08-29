@@ -201,11 +201,13 @@ body {
   overflow-x: auto;
   font-family: 'Montserrat', sans-serif; }
   body *::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0); }
+    background-color: rgba(255, 255, 255, 0);
+    width: 10px; }
   body *::-webkit-scrollbar {
-    width: 7px;
+    padding: 0px 5px;
     background-color: rgba(255, 255, 255, 0); }
   body *::-webkit-scrollbar-thumb {
+    width: 5px;
     border-radius: 50px;
     background-color: rgba(153, 153, 153, 0.1); }
 
@@ -432,7 +434,7 @@ a:active, a:focus {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis; }
-        #container-fluid #viewcontainer .rules li span {
+        #container-fluid #viewcontainer .rules li .cIcon {
           float: right; }
         #container-fluid #viewcontainer .rules li i {
           float: right;

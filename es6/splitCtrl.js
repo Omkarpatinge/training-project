@@ -1,6 +1,6 @@
-define(['app','requestService','dataFactory','removeText','numberSuffix','splitTab'],function(app) {
-	app.controller('splitCtrl', ['$scope','requestService','dataFactory','$state','$stateParams','$rootScope', 
-		function($scope,requestService,dataFactory,$state,$stateParams,$rootScope){
+define(['app','dataFactory','removeText','numberSuffix','splitTab'],function(app) {
+	app.controller('splitCtrl', ['$scope','dataFactory','$state','$stateParams','$rootScope', 
+		function($scope,dataFactory,$state,$stateParams,$rootScope){
 			var obj=this;
 			$rootScope.$broadcast("check");
 			obj.param={req:$stateParams.req}
