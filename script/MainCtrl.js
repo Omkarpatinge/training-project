@@ -120,33 +120,45 @@ define(["app", "moment", "callserver", "thingTest", "searching", 'dnd', 'myCalen
 		scope.filterclickok = function ($event, person, list) {
 			person.clickok = true;
 			if (person.filtertype != 'regex') {
+				var count = 0;
 				var flag = 1; //Non selected	
 				for (var i = 0; i < person.filteroptions.length; i++) {
 					if (person.filteroptions[i].selected) {
 						flag = 0; //atleast one selected
-						break;
+						count++;
 					}
 				}
+				person.filtercount = count;
+
 				if (flag) {
 					for (i = 0; i < list.people.length; i++) {
 						if (list.people[i].name == person.name) list.people.splice(i, 1);
 					}
 				} else {
 					console.log('from ok filters in');
+					person.clickokfor = 'in';
+					person.filterselect = false;
 					$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
 				}
 			} else {
-				console.log('state.go from filter regex');
-
-				$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
+				if (person.filtersearch === '') {
+					for (i = 0; i < list.people.length; i++) {
+						if (list.people[i].name == person.name) list.people.splice(i, 1);
+					}
+				} else {
+					console.log('state.go from filter regex');
+					person.regexstring = new RegExp(person.filtersearch).toString();
+					person.clickokfor = 'regex';
+					person.filterselect = false;
+					$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
+				}
 			}
-			person.filterselect = false;
 		};
 		scope.splitfilterclicked = function (list, peopleValue, event, indexlatest) {
 			if (list.label === "Split" && event != null) {
 				console.log('in plitf');
 				console.log(arguments);
-				list.people[$(event.target).closest('li').index()].thresholdselect = true;
+				list.people[indexlatest].thresholdselect = true;
 			} else if (list.label == "Filters") {
 				scope.loaded = false;
 				if (peopleValue.name == 'Time') {
@@ -221,7 +233,7 @@ define(["app", "moment", "callserver", "thingTest", "searching", 'dnd', 'myCalen
 					console.log(JSON.stringify(requestforfilter));
 					callserver.callquery(JSON.stringify(requestforfilter)).then(function (response) {
 						console.log(response);
-						peopleValue.filtertype = 'in';
+						//peopleValue.filtertype='in';
 						var filterops = []; //updating filteroptions
 						for (i = 0; i < response.data.result.split.length; i++) {
 							var flag = 0; //did not get the option
@@ -346,6 +358,14 @@ define(["app", "moment", "callserver", "thingTest", "searching", 'dnd', 'myCalen
 			} else {
 				$state.go('main.chart', { req: JSON.stringify(scope.lists) });
 			}
+		};
+
+		scope.fullscreen = function () {
+
+			var el = document.getElementById("makefullscreen");
+			var rfs = el.requestFullscreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+
+			rfs.call(el);
 		};
 
 		$scope.$watch(function () {

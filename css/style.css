@@ -313,6 +313,7 @@ a:active, a:focus {
     float: right;
     min-width: 50px; }
     .navView .viewOption #numForm {
+      float: left;
       background-color: #fff;
       padding: 0% 0%;
       border-radius: 5px; }
@@ -430,8 +431,7 @@ a:active, a:focus {
       overflow: hidden;
       text-overflow: ellipsis; }
       #container-fluid #dimensions li p:hover, #container-fluid #measures li p:hover {
-        color: #52ACEE;
-        background-color: #e1e1e1; }
+        cursor: pointer; }
     #container-fluid #dimensions li a, #container-fluid #measures li a {
       color: #545A6A; }
   #container-fluid ul {
@@ -508,7 +508,8 @@ a:active, a:focus {
         height: 30px;
         max-width: 250px;
         margin: auto 2px;
-        border-radius: 5px; }
+        border-radius: 5px;
+        cursor: pointer; }
         #container-fluid #viewcontainer .rules li p {
           display: inline-block;
           float: left;
@@ -642,6 +643,21 @@ a:active, a:focus {
               margin: auto; }
               #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .cur label {
                 width: calc(50% + .9px); }
+          #container-fluid #viewcontainer .rules li .dialog::before {
+            content: "";
+            transform: rotate(135deg);
+            position: absolute;
+            top: -1.5%;
+            box-shadow: -2px 2px 10px -2px #aaa;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #fff #fff; }
+        #container-fluid #viewcontainer .rules li splitsdialog {
+          position: relative;
+          top: 100%;
+          left: 0%; }
       #container-fluid #viewcontainer .rules ul li span i {
         right: 5px; }
 

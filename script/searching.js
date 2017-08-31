@@ -14,10 +14,13 @@ define(["app"], function (app) {
 					}
 				}
 			} else if (objname && ftype === 'regex') {
+
 				for (var i = 0; i < input.length; i++) {
-					if (input[i][objname].search(value) != -1) {
-						filtered.push(input[i]);
-					}
+					try {
+						if (input[i][objname].search(value) != -1) {
+							filtered.push(input[i]);
+						}
+					} catch (e) {}
 				}
 			} else {
 				for (var i = 0; i < input.length; i++) {

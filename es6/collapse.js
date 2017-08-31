@@ -43,6 +43,9 @@ define(['app','jquery'],function(app,$) {
 		        	var rectUl=ul.getBoundingClientRect(),rectLi;
 		          	var children = $ul.children(':not(:last-child)');
 		          	var count = children.length;
+		          	$scope.$apply(function() {
+			        		scope.cntr.clps[index]=0;
+					})
 		        	for(var i=(clps==0?count-1:clps-1);i>=0;i--){
 		        		console.log(clps,i);
 		        		rectLi=children[i].getBoundingClientRect();
