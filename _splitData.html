@@ -5,7 +5,11 @@
 				<thead>
 					<tr>
 						<th><span ng-repeat="d in split.dimensions">{{d}}<i ng-if="!$last"> ,</i></span></th>
-						<th ng-repeat="m in split.metrics">{{m|removeText:" (HB Rendered Ad)"}}</th>
+						<th  ng-repeat="m in split.metrics" ng-click=split.sortTab(m)>{{m|removeText:" (HB Rendered Ad)"}}
+						<span ng-show="split.sort.name==m">
+							<i ng-if="split.sort.state==1" class="material-icons">keyboard_arrow_up</i>
+							<i ng-if="split.sort.state==2" class="material-icons">keyboard_arrow_down</i>
+						</span></th>
 					</tr>	
 				</thead>
 				<tbody split-tab></tbody>

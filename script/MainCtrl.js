@@ -1,9 +1,11 @@
 "use strict";
 
-define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd', 'myCalender', "popup", "countselected"], function (app, moment, $) {
+define(["app", "moment", "callserver", "thingTest", "searching", 'dnd', 'myCalender', "popup", "countselected", "collapse"], function (app, moment) {
 	app.controller('MainCtrl', function ($scope, $http, callserver, $stateParams, $state, $location, $rootScope) {
-
+		var $ = angular.element;
 		var scope = this;
+		scope.over = [false, false, false];
+		scope.clps = [0, 0, 0];
 		scope.loaded = false;
 		$rootScope.val = {
 			nFormat: true
@@ -478,7 +480,6 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
 		}, function (lists, old) {
 			if (lists.people.length != old.people.length) {
 				console.log('from measures 2');
-
 				$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
 			}
 		}, true);
@@ -489,5 +490,6 @@ define(["app", "moment", 'jquery', "callserver", "thingTest", "searching", 'dnd'
       	  		$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
   
   },true);*/
+		$scope.cntr = this;
 	});
 });

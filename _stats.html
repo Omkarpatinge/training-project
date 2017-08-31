@@ -18,7 +18,8 @@
 						<h1>{{chart.result[m]|numberSuffix:1:val.nFormat}}</h1>
 						<i> {{m|removeText:"(HB Rendered Ad)"}}</i>	
 					</div>
-					<section class="gChart" google-chart chart="chart.chart[{{$index}}]"></section>
+					<section ng-if="!chart.chartLoaded" class="chartloader"></section>
+					<section ng-if="chart.chartLoaded" class="gChart" google-chart chart="chart.chart[{{$index}}]"></section>
 				</li>
 			</ul>
 		</div>

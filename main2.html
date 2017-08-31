@@ -31,16 +31,17 @@
 		</div>
 		<div id="viewcontainer">
 			<div id="filterwrapper">
-				<div ng-repeat="list in cntr.lists" class="col-sm-12 rules">
+				<div ng-repeat="list in cntr.lists" class="col-sm-12 rules" ng-init="$rowIndex = $index">
 					<div class="row">
 						<label class="col-sm-1">{{list.label}}</label>
-		   					<ul  
-		   						class="col-sm-11" 
+		   					<ul class="col-sm-11"
+		   						data-ul={{$rowIndex}} 
+		   						collapse
 		   						dnd-list="list.people"  
 		   						dnd-horizontal-list="true" 
 		   						dnd-allowed-types="list.allowedTypes"
 							dnd-drop="cntr.dropCallback(index, item, external,type,list,event)">
-	        				<li ng-repeat="person in list.people track by $index"
+	        				<li ng-repeat="person in list.people|collapseOut:cntr.clps[$rowIndex] track by $index"
 	        					ng-class="{timeLi:(list.label==='Filters'&&person.name==='Time')}" 
 	        					ng-if="list.people.length>0"
 	        					dnd-type="person.type" 
@@ -49,7 +50,7 @@
 	            				dnd-effect-allowed="copy" 
 	            				draggable="true"   
 	            				dnd-selected="cntr.splitfilterclicked(list,person,event,$index);$event.stopPropagation()">
-	            				<p>{{person.name}}</p>
+	            				<p>{{person.name}}{{$root.clps}}</p>
 	            				<span ng-if="list.label==='Filters'">
 									<span ng-if="person.name==='Time'">
 										({{' '+cntr.request.startTime.split(' ')[0] + " - " + cntr.request.endTime.split(' ')[0]}})
@@ -165,11 +166,20 @@
 									</div>
 								</div>
 	        				</li>
+	        				<li ng-if="cntr.over[$rowIndex]" >
+	        					<a class="dropdown-toggle" data-toggle="dropdown-menu" href="Javascript:void(0)">
+				              	+{{list.people.length - cntr.clps[$rowIndex]}}
+				              	</a>
+				              	<ul class="dropdown-menu" class="collapsed">
+				              	<li ng-repeat="person in list.people|collapseIn:cntr.clps[$rowIndex] track by $index"	ng-click="cntr.splitfilterclicked(list,person,event,$index);$event.stopPropagation()">
+	            					<p>{{person.name}}</p>
+	        					</li>
+				              </ul>
+				          </li>
 						</ul>
 					</div>	
 	          	</div>
 			</div>
-
 			<div class="navView">
 				<button ng-class="{'active': cntr.total==true}" ng-click="cntr.buttonsclicked('totals')">
 				<i class="material-icons">functions</i><span>Total</span></button>
