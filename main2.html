@@ -31,16 +31,18 @@
 		</div>
 		<div id="viewcontainer">
 			<div id="filterwrapper">
-				<div ng-repeat="list in cntr.lists" class="col-sm-12 rules">
+				<div ng-repeat="list in cntr.lists" class="col-sm-12 rules" ng-init="$rowIndex = $index">
 					<div class="row">
 						<label class="col-sm-1">{{list.label}}</label>
 		   					<ul  
 		   						class="col-sm-11" 
+		   						data-ul={{$rowIndex}} 
+		   						collapse
 		   						dnd-list="list.people"  
 		   						dnd-horizontal-list="true" 
 		   						dnd-allowed-types="list.allowedTypes"
 							dnd-drop="cntr.dropCallback(index, item, external,type,list,event)">
-	        				<li ng-repeat="person in list.people track by $index"
+	        				<li ng-repeat="person in list.people | collapseOut:cntr.clps[$rowIndex] track by $index"
 	        					ng-class="{timeLi:(list.label==='Filters'&&person.name==='Time')}" 
 	        					ng-if="list.people.length>0"
 	        					dnd-type="person.type" 
@@ -54,20 +56,22 @@
 									<span ng-if="person.name==='Time'">
 										({{' '+cntr.request.startTime.split(' ')[0] + " - " + cntr.request.endTime.split(' ')[0]}})
 									</span>
-									<span ng-if="person.name!='Time'&& person.clickok">
-										<span ng-if="person.filtertype==='Regex'">({{person.filtersearch}})
+									<span ng-if="person.name!='Time'&&person.clickok">
+										<span ng-if="person.regexstring!=''&&person.clickokfor==='regex'">({{person.regexstring}})
+											
 										</span>
-										<span  ng-if="person.filtertype==='in'">
-											{{person.filteroptions | countselected}}
+										<span  ng-if="person.filtercount>0 && person.clickokfor==='in'">
+											({{person.filtercount}})
+											 
 										</span>
 									</span>
-								</span> 			
+								</span>			
 	            				<span class="cIcon" ng-if="!(person.name==='Time'&&list.label==='Filters')" ng-click="list.people.splice($index, 1);$event.stopPropagation()"><i class="zmdi zmdi-close"></i></span>								
-								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog" ng-if="list.label==='Split'&& person.thresholdselect">
+								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog splitsdialog" ng-if="list.label==='Split'&& person.thresholdselect" >
 									<i class="zmdi zmdi-close" ng-click="person.thresholdselect=false; $event.stopPropagation();"></i>
 									<div ng-if="person.name!='Time'">
 										<h5>Limit: </h5><br>
-										<select ng-model="person.threshold" ng-selected="true"> 
+										<select class="form-control" ng-model="person.threshold" ng-selected="true"> 
 								  			<option value="2">2</option>
 								  			<option value="3">3</option>
 								 			<option value="5" ng-selected="true">5</option>
@@ -76,21 +80,21 @@
 									<div ng-if="person.name=='Time'">
 										<div class="radio-toolbar">
 											<div class="timeGrp tspl">
-									  			<input type="radio" id="radio1" ng-model="cntr.person.granularity" ng-value="'60000'" >
+									  			<input type="radio" id="radio1" ng-model="person.granularity" ng-value="'60000'" >
 									  			<label for="radio1">1M</label>
-									  			<input type="radio" id="radio2" ng-model="cntr.person.granularity" ng-value="'300000'">
+									  			<input type="radio" id="radio2" ng-model="person.granularity" ng-value="'300000'">
 									  			<label for="radio2">5M</label>
-									  			<input type="radio" id="radio3" ng-model="cntr.person.granularity" ng-value="3600000" checked>
+									  			<input type="radio" id="radio3" ng-model="person.granularity" ng-value="3600000" checked>
 										  		<label for="radio3">1H</label>
-								  				<input type="radio" id="radio4"  ng-model="cntr.person.granularity" ng-value="86400000">
+								  				<input type="radio" id="radio4"  ng-model="person.granularity" ng-value="86400000">
 								  				<label for="radio4">1D</label>
-								 	 			<input type="radio" id="radio5" ng-model="cntr.person.granularity" ng-value="604800000">
+								 	 			<input type="radio" id="radio5" ng-model="person.granularity" ng-value="604800000">
 								  				<label for="radio5">1W</label>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog" ng-if="list.label==='Filters' &&  person.filterselect" ng-click="$event.stopPropagation();">
+								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog splitsfilter" ng-if="list.label==='Filters' &&  person.filterselect" ng-click="$event.stopPropagation();">
 									<!-- <i ng-if="person.name!='Time'" class="zmdi zmdi-close-circle" ng-click="person.filterselect=false;list.people.splice($index, 1); $event.stopPropagation();"></i> -->
 									<i ng-if="person.name=='Time'" class="zmdi zmdi-close-circle" ng-click="person.filterselect=false; $event.stopPropagation();"></i>
 									<div ng-if="person.name!='Time'">
@@ -165,6 +169,16 @@
 									</div>
 								</div>
 	        				</li>
+	        				<li ng-if="cntr.over[$rowIndex]" >
+	        					<a class="dropdown-toggle" data-toggle="dropdown-menu" href="Javascript:void(0)">
+				              	+{{list.people.length - cntr.clps[$rowIndex]}}
+				              	</a>
+				              	<ul class="dropdown-menu" class="collapsed">
+				              	<li ng-repeat="person in list.people|collapseIn:cntr.clps[$rowIndex] track by $index"	ng-click="cntr.splitfilterclicked(list,person,event,$index);$event.stopPropagation()">
+	            					<p>{{person.name}}</p>
+	        					</li>
+				              </ul>
+				          </li>
 						</ul>
 					</div>	
 	          	</div>
@@ -185,10 +199,10 @@
 						<label for="withf">1K</label>
 					</span>
 					<span><button ng-click="cntr.refresh()"><i class="material-icons">sync</i></button></span>
-					<span><button><i class="material-icons">fullscreen</i></button></span>
+					<span><button ng-click="cntr.fullscreen()"><i class="material-icons">fullscreen</i></button></span>
 				</div>
 			</div>
-			<div class="row resultsView">
+			<div class="row resultsView" id="makefullscreen">
 				<ui-view></ui-view>
 			</div>
 		</div>	

@@ -1,5 +1,5 @@
 define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
-	app.directive('myCalender', [function(){
+	app.directive('myCalender', function($timeout){
 		// Runs during compile
 		return {
 			// name: '',
@@ -44,6 +44,11 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 					alwaysOpen:true 
 				};
 
+				for (var i = 0; i < scope.lists[0].people.length; i++) {
+							if (scope.lists[0].people[i].name=='Time') {
+								break;
+							}
+						}
 
 			input.dateRangePicker(config);
 			input.data('dateRangePicker').setDateRange(scope.date.startDate,scope.date.endDate);
@@ -52,21 +57,17 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 			scope.specificOkClicked =function() {
 						scope.date.startDate=input.val().split(' to ')[0] + ' 00:00:00';
 						scope.date.endDate=input.val().split(' to ')[1] + ' 00:00:00';
-						for (var i = 0; i < scope.lists[0].people.length; i++) {
-							if (scope.lists[0].people[i].name=='Time') {
-								
-								scope.lists[0].people[i].filteroptions=[];
+						scope.lists[0].people[i].filteroptions=[];
 						    	//console.log(scope.datePicker.date);
 						    	
 						    	scope.lists[0].people[i].filteroptions.push({
 						    		startDate: moment(scope.date.startDate).format('YYYY-MM-DD HH:mm:ss'),endDate:moment(scope.date.endDate).format('YYYY-MM-DD HH:mm:ss')
 						    	});
-						    	scope.lists[0].people[i].filterselect=false;
-						    	
-						    	
-						    	
-							}
-						}
+						    	$timeout(function() {
+					console.log(scope.lists[0].people[i].filterselect);
+					scope.lists[0].people[i].filterselect=false;
+	
+				},0);
 						scope.$apply;
 						//console.log(moment(start).format('YYYY-MM-DD HH:mm:ss'),end);
 			}
@@ -74,11 +75,17 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 			scope.specificCancelClicked =function() {
 				//console.log(start.split(' ')[0],end.split(' ')[0]);	
 				input.data('dateRangePicker').setDateRange(scope.date.startDate.split(' ')[0],scope.date.endDate.split(' ')[0]);
+				$timeout(function() {
+					console.log(scope.lists[0].people[i].filterselect);
+					scope.lists[0].people[i].filterselect=false;
+	
+				},0);
+				
 				scope.$apply;
 			}
 
 	
 			}
 		};
-	}]);
+	});
 })
