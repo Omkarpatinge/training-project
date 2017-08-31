@@ -2,6 +2,10 @@ define(['app','dataFactory','removeText','numberSuffix','splitTab'],function(app
 	app.controller('splitCtrl', ['$scope','dataFactory','$state','$stateParams','$rootScope', 
 		function($scope,dataFactory,$state,$stateParams,$rootScope){
 			var obj=this;
+			obj.sort={
+				name:"",
+				state:0//0-nosort // 1--asc //2--dec
+			}
 			$rootScope.$broadcast("check");
 			obj.param={req:$stateParams.req}
 			obj.loaded=false;

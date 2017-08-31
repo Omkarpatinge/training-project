@@ -3,6 +3,7 @@ define(['app','dataFactory','removeText','numberSuffix','apiConst'],function(app
 		function($scope,googleChartApiPromise,dataFactory,numberSuffixFilter,api,$stateParams,$state,$rootScope){
 		var obj=this;
 		obj.loaded=false;
+		obj.chartLoaded=false;
 		$rootScope.$broadcast("check");
 		var x=JSON.parse($stateParams.req);
 		var req = dataFactory.generateRequest(x);
@@ -78,6 +79,9 @@ define(['app','dataFactory','removeText','numberSuffix','apiConst'],function(app
 				chart.data=data;
 				obj.chart[i]=chart;
 			}
+			googleChartApiPromise.then(function() {},function() {}).finally(function() {
+				obj.chartLoaded=true;				
+			})
 		}
 		//$scope.chart=this;
 		//console.log(req);
