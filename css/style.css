@@ -498,7 +498,7 @@ a:active, a:focus {
           left: inherit; }
           #container-fluid #viewcontainer .rules ul.col-sm-11 .dropdown-menu li {
             display: list-item; }
-        #container-fluid #viewcontainer .rules ul.col-sm-11 > li > a:hover {
+        #container-fluid #viewcontainer .rules ul.col-sm-11 > li:hover {
           background-color: #e0e0e0; }
       #container-fluid #viewcontainer .rules li {
         display: inline-block;

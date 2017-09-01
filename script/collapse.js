@@ -46,7 +46,6 @@ define(['app', 'jquery'], function (app, $) {
 					} else {
 						grow();
 					}
-					console.log(clps);
 				});
 				$(window).resize(function (event) {
 					refresh();

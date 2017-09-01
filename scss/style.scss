@@ -624,7 +624,7 @@ a:active,a:focus{
 						display: list-item;
 					}
 				}
-				&>li>a:hover {
+				&>li:hover {
 				    background-color:#e0e0e0;
 				}
 			}

@@ -106,7 +106,7 @@
 											<div  class="jawn"></div>
 										</div>
 										<div ng-if="cntr.loaded" class="filList">
-											<label ng-if="person.filtertype==='in'" ng-repeat="filterop in person.filteroptions | searching:person.filtersearch:'fname':person.filtertype">
+											<label ng-if="person.filtertype==='in'" ng-repeat="filterop in testvalue=(person.filteroptions | searching:person.filtersearch:'fname':person.filtertype )">
 									 			<input type="checkbox"
 									    			value="{{filterop.fname}}"
 									    			ng-model="filterop.selected">
@@ -114,9 +114,11 @@
 
 									    		{{filterop.fname}}
 											</label>
-											<label ng-if="person.filtertype==='regex'" ng-repeat="filterop in person.filteroptions | searching:person.filtersearch:'fname':person.filtertype">
+											<label ng-if="person.filtertype==='in'" ng-show="!testvalue.length">No records found</label>
+											<label ng-if="person.filtertype==='regex'" ng-repeat="filterop in testValue=(person.filteroptions | searching:person.filtersearch:'fname':person.filtertype)">
 											{{filterop.fname}}
-											</label>		
+											</label>	
+											<label ng-if="person.filtertype==='regex'" ng-show="!testValue.length">No records found</label>
 										</div>	
 										<div class="conbtn">
 											<button class="okbtn btn" ng-click="cntr.filterclickok($event,person,list);$event.stopPropagation();">OK
@@ -173,9 +175,25 @@
 				              	+{{list.people.length - cntr.clps[$rowIndex]}}
 				              	</a>
 				              	<ul class="dropdown-menu" class="collapsed">
-				              	<li ng-repeat="person in list.people|collapseIn:cntr.clps[$rowIndex] track by $index"	ng-click="cntr.splitfilterclicked(list,person,event,$index);$event.stopPropagation()">
+				              	<li ng-repeat="person in list.people|collapseIn:cntr.clps[$rowIndex] track by $index" ng-if="list.people.length>0"
+	        					dnd-type="person.type" 
+	            				dnd-draggable="person" 
+	            				dnd-moved="list.people.splice(cntr.clps+$index, 1)" 
+	            				dnd-effect-allowed="copy" 
+	            				draggable="true"   
+	            				dnd-selected="cntr.splitfilterclicked(list,person,event,cntr.clps+$index);$event.stopPropagation()">
 	            					<p>{{person.name}}</p>
-	            					
+	            					<span ng-if="person.name!='Time'&&person.clickok">
+										<span ng-if="person.regexstring!=''&&person.clickokfor==='regex'">({{person.regexstring}})
+											
+										</span>
+										<span  ng-if="person.filtercount>0 && person.clickokfor==='in'">
+											({{person.filtercount}})
+											 
+										</span>
+									</span>
+
+
 	        					</li>
 				              </ul>
 				          </li>

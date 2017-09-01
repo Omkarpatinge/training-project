@@ -333,7 +333,7 @@
             // we position the placeholder before the list item, otherwise after it.
             var rect = listItemNode.getBoundingClientRect();
             if (listSettings.horizontal) {
-              var isFirstHalf = event.clientX < rect.left;
+              var isFirstHalf = event.clientX < (rect.left+5);
             } else {
               var isFirstHalf = event.clientY < rect.top + rect.height / 2;
             }
