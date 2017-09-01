@@ -29,35 +29,64 @@ define(['app', 'jquery'], function (app, $) {
 				var scroll = ul.scrollHeight;
 				var drop = false;
 
-				$('.dropdown-toggle').on('click', function () {
-					$(this).closest('.dropdown-menu').css('display', 'block');
+				$(document).ready(function () {
+					if (scroll > offset) {
+						shrink();
+					} else {
+						grow();
+					}
 				});
-				if (scroll > offset) {
-					$scope.$apply(function () {
-						scope.cntr.over[index] = true;
-					});
-					shrink();
-				}
+				ul.addEventListener('dropCollapse', function () {
+					var offsetW = ul.offsetWidth;
+					var offsetH = ul.offsetHeight;
+					var scrollW = ul.scrollWidth;
+					var scrollH = ul.scrollHeight;
+					if (scrollH > offsetH) {
+						shrink();
+					} else {
+						grow();
+					}
+					console.log(clps);
+				});
 				$(window).resize(function (event) {
 					refresh();
 				});
 				function shrink() {
 					var rectUl = ul.getBoundingClientRect(),
 					    rectLi;
-					var children = $ul.children(':not(:last-child)');
+					var children = $ul.children();
 					var count = children.length;
-					$scope.$apply(function () {
-						scope.cntr.clps[index] = 0;
-					});
+					var flag = false;
+					try {
+						$scope.$apply(function () {
+							scope.cntr.clps[index] = clps;
+						});
+					} catch (err) {
+						scope.cntr.clps[index] = clps;
+					}
 					for (var i = clps == 0 ? count - 1 : clps - 1; i >= 0; i--) {
-						console.log(clps, i);
 						rectLi = children[i].getBoundingClientRect();
 						if (rectUl.bottom < rectLi.bottom || rectUl.right < rectLi.right) {
+							if (!flag) {
+								try {
+									$scope.$apply(function () {
+										$scope.$parent.cntr.over[index] = true;
+									});
+								} catch (err) {
+									$scope.$parent.cntr.over[index] = true;
+								}
+							}
+							flag = true;
+							console.log("fffkkk");
 							clps = i;
 						} else {
-							$scope.$apply(function () {
+							try {
+								$scope.$apply(function () {
+									$scope.$parent.cntr.clps[index] = clps;
+								});
+							} catch (err) {
 								$scope.$parent.cntr.clps[index] = clps;
-							});
+							}
 							break;
 						}
 					}
@@ -65,10 +94,14 @@ define(['app', 'jquery'], function (app, $) {
 					console.log(children);
 					rectLi = children[0].getBoundingClientRect();
 					if (rectUl.bottom < rectLi.bottom || rectUl.right < rectLi.right) {
-						clps += 1;
-						$scope.$apply(function () {
+						clps -= 1;
+						try {
+							$scope.$apply(function () {
+								$scope.$parent.cntr.clps[index] = clps;
+							});
+						} catch (err) {
 							$scope.$parent.cntr.clps[index] = clps;
-						});
+						}
 					}
 				}
 				function grow() {
@@ -76,14 +109,21 @@ define(['app', 'jquery'], function (app, $) {
 					var offsetH = ul.offsetHeight;
 					var scrollW = ul.scrollWidth;
 					var scrollH = ul.scrollHeight;
-					$scope.$apply(function () {
-						scope.cntr.over[index] = false;
-						scope.cntr.clps[index] = 0;
-					});
+					clps = 0;
+					if (scrollH <= offsetH) {
+						try {
+							$scope.$apply(function () {
+								scope.cntr.over[index] = false;
+								scope.cntr.clps[index] = clps;
+							});
+						} catch (err) {
+							scope.cntr.over[index] = false;
+							scope.cntr.clps[index] = clps;
+						}
+					}
+					offsetH = ul.offsetHeight;
+					scrollH = ul.scrollHeight;
 					if (scrollH > offsetH) {
-						$scope.$apply(function () {
-							scope.cntr.over[index] = true;
-						});
 						shrink();
 					}
 				}
@@ -95,10 +135,7 @@ define(['app', 'jquery'], function (app, $) {
 					var scrollW = ul.scrollWidth;
 					var scrollH = ul.scrollHeight;
 					if (scrollH > offsetH && diffWidth > 0) {
-						$scope.$apply(function () {
-							$scope.$parent.cntr.over[index] = true;
-						});
-						console.log("fk");
+
 						shrink();
 					} else if (diffWidth < 0) {
 						grow();

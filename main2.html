@@ -42,7 +42,6 @@
 		   						dnd-allowed-types="list.allowedTypes"
 							dnd-drop="cntr.dropCallback(index, item, external,type,list,event)">
 	        				<li ng-repeat="person in list.people | collapseOut:cntr.clps[$rowIndex] track by $index"
-
 	        					ng-class="{timeLi:(list.label==='Filters'&&person.name==='Time')}" 
 	        					ng-if="list.people.length>0"
 	        					dnd-type="person.type" 
@@ -67,7 +66,7 @@
 									</span>
 								</span>			
 	            				<span class="cIcon" ng-if="!(person.name==='Time'&&list.label==='Filters')" ng-click="list.people.splice($index, 1);$event.stopPropagation()"><i class="zmdi zmdi-close"></i></span>								
-								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog splitsdialog" ng-if="list.label==='Split'&& person.thresholdselect" >
+								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog" ng-class="{'splitsdialog':person.name!='Time','timesplitdialog':person.name==='Time'}" ng-if="list.label==='Split'&& person.thresholdselect" >
 									<i class="zmdi zmdi-close" ng-click="person.thresholdselect=false; $event.stopPropagation();"></i>
 									<div ng-if="person.name!='Time'">
 										<h5>Limit: </h5><br>
@@ -170,12 +169,13 @@
 								</div>
 	        				</li>
 	        				<li ng-if="cntr.over[$rowIndex]" >
-	        					<a class="dropdown-toggle" data-toggle="dropdown-menu" href="Javascript:void(0)">
+	        					<a class="dropdown-toggle" data-toggle="dropdown" href="Javascript:void(0)">
 				              	+{{list.people.length - cntr.clps[$rowIndex]}}
 				              	</a>
 				              	<ul class="dropdown-menu" class="collapsed">
 				              	<li ng-repeat="person in list.people|collapseIn:cntr.clps[$rowIndex] track by $index"	ng-click="cntr.splitfilterclicked(list,person,event,$index);$event.stopPropagation()">
 	            					<p>{{person.name}}</p>
+	            					
 	        					</li>
 				              </ul>
 				          </li>

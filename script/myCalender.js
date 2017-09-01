@@ -48,19 +48,28 @@ define(['app', 'jquery', 'moment', 'daterangepicker'], function (app, $, moment)
 				input.data('dateRangePicker').setDateRange(scope.date.startDate, scope.date.endDate);
 
 				scope.specificOkClicked = function () {
-					scope.date.startDate = input.val().split(' to ')[0] + ' 00:00:00';
-					scope.date.endDate = input.val().split(' to ')[1] + ' 00:00:00';
-					scope.lists[0].people[i].filteroptions = [];
-					//console.log(scope.datePicker.date);
+					try {
+						var timeinput = input.val().split(' to ');
+						if (timeinput.length == 2 && timeinput[0].split('-').length == 3 && timeinput[1].split('-').length == 3 && timeinput[1].split('-')[1] < 13 && timeinput[0].split('-')[1] < 13) {
 
-					scope.lists[0].people[i].filteroptions.push({
-						startDate: moment(scope.date.startDate).format('YYYY-MM-DD HH:mm:ss'), endDate: moment(scope.date.endDate).format('YYYY-MM-DD HH:mm:ss')
-					});
-					$timeout(function () {
-						console.log(scope.lists[0].people[i].filterselect);
-						scope.lists[0].people[i].filterselect = false;
-					}, 0);
-					scope.$apply;
+							scope.date.startDate = input.val().split(' to ')[0] + ' 00:00:00';
+							scope.date.endDate = input.val().split(' to ')[1] + ' 23:59:59';
+							scope.lists[0].people[i].filteroptions = [];
+							//console.log(scope.datePicker.date);
+
+							scope.lists[0].people[i].filteroptions.push({
+								startDate: moment(scope.date.startDate).format('YYYY-MM-DD HH:mm:ss'), endDate: moment(scope.date.endDate).format('YYYY-MM-DD HH:mm:ss')
+							});
+							$timeout(function () {
+								console.log(scope.lists[0].people[i].filterselect);
+								scope.lists[0].people[i].filterselect = false;
+							}, 0);
+							scope.$apply;
+						}
+					} catch (e) {
+						alert('Not a valid date');
+					}
+
 					//console.log(moment(start).format('YYYY-MM-DD HH:mm:ss'),end);
 				};
 

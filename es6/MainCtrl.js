@@ -1,11 +1,11 @@
-define(["app","moment","callserver","thingTest","searching",'dnd','myCalender',"popup","countselected","collapse"],
-	function(app,moment) {
-	app.controller('MainCtrl', function($scope,$http,callserver,$stateParams,$state,$location,$rootScope){
-	var $=angular.element;
+define(["app","moment","jquery",'bootstrap',"callserver","thingTest","searching",'dnd','myCalender',"popup","countselected","collapse"],
+	function(app,moment,$) {
+	app.controller('MainCtrl', function($scope,$http,callserver,$stateParams,$state,$location,$rootScope,$timeout){
 	var scope=this;
 	scope.over=[false,false,false];
 	scope.clps=[0,0,0];
 	scope.loaded=false;
+	scope.collapseEvent=new Event('dropCollapse');
 	$rootScope.val={
 		nFormat:true
 	}	
@@ -90,7 +90,7 @@ define(["app","moment","callserver","thingTest","searching",'dnd','myCalender',"
 	            label: "Filters",
 	            allowedTypes: ['dimensions'],
 	            people: [
-	                {name: "Time", type: 'dimensions',threshold:5,filterselect:false,filtertype:'Relative',filteroptions:[/*{fname:'',selected:true}*/],filtersearch:'6H',clickok:false}
+	                {name: "Time", type: 'dimensions',threshold:5,filterselect:false,filtertype:'Relative',filteroptions:[{startDate: '2017-08-09 07:51:02',endDate:'2017-08-19 07:51:02'}],filtersearch:'6H',clickok:false}
 	            ]
 	        },
 	        {
@@ -137,6 +137,7 @@ define(["app","moment","callserver","thingTest","searching",'dnd','myCalender',"
 	    	}
 		}
 	}
+
     scope.filterclickok =function($event,person,list){
     	person.clickok=true;
 	    if(person.filtertype!='regex'){
@@ -172,11 +173,16 @@ define(["app","moment","callserver","thingTest","searching",'dnd','myCalender',"
 	    		}	
 	    	}
 	    	else{
-		    	console.log('state.go from filter regex');
-		    	person.regexstring = (new RegExp(person.filtersearch)).toString();
-		    	person.clickokfor='regex';
-		    	person.filterselect=false;
-	     	  	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+		    	try{
+			    	person.regexstring = (new RegExp(person.filtersearch)).toString();
+			    	person.clickokfor='regex';
+			    	person.filterselect=false;
+			    	console.log('state.go from filter regex');
+		     	  	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+     	  		}
+     	  		catch(e){
+     	  			alert('invalid regex');
+     	  		}
      	  	}
 	    }
 	   
@@ -394,8 +400,8 @@ define(["app","moment","callserver","thingTest","searching",'dnd','myCalender',"
 	scope.buttonsclicked = function(type) {
 		if (type==='totals') {
 			//scope.lists[1].people=[];
-			//$state.go('main.total',{req:JSON.stringify(scope.lists)});
-			$location.path("/totals"+JSON.stringify(scope.lists));
+			$state.go('main.total',{req:JSON.stringify(scope.lists)});	
+			//$location.path("/totals"+JSON.stringify(scope.lists));
 
 		}
 		else if (type==='splitdata') {
@@ -508,10 +514,12 @@ define(["app","moment","callserver","thingTest","searching",'dnd','myCalender',"
 			}			
 		}
 		if (old.people.length != lists.people.length) {
-						console.log('new filter added/removed satte.go');
-     			  	
-     			 		 $state.go($state.current.name,{req:JSON.stringify(scope.lists)});
-				}		
+				$timeout(function(){
+			    	$('#filterwrapper ul')[0].dispatchEvent(scope.collapseEvent);  	
+			    }, 5);
+				console.log('new filter added/removed satte.go');
+			  	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+			}		
 		},true);
 
 
@@ -521,7 +529,11 @@ define(["app","moment","callserver","thingTest","searching",'dnd','myCalender',"
 		  return scope.lists[1];
 		},function(lists,old){
 		    
-
+			if ($state.current.name==='main.total'&&old.people.length!=lists.people.length) {
+				$timeout(function(){
+		    		$('#filterwrapper ul')[1].dispatchEvent(scope.collapseEvent);  	
+		    	}, 5);
+			}
 		    if ($state.current.name==='main.total'&&old.people.length<lists.people.length&&lists.people.length>0) {
 		    	console.log('redicreting to splitdata');
 		    	console.log('from dimensions');
@@ -543,6 +555,9 @@ define(["app","moment","callserver","thingTest","searching",'dnd','myCalender',"
 	     	  		}
 	     	  }
 	     	  if (old.people.length!=lists.people.length) {
+     	  		$timeout(function(){
+		    		$('#filterwrapper ul')[1].dispatchEvent(scope.collapseEvent);  	
+		    	}, 5);
 	     	  	console.log('from dimensions old new');
 		     	  	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});	
 		     	  
@@ -573,8 +588,11 @@ define(["app","moment","callserver","thingTest","searching",'dnd','myCalender',"
 		  return scope.lists[2];
 		},function(lists,old){
 		    if (lists.people.length!=old.people.length) {
-		    	console.log('from measures 2');  
+		    	console.log('from measures 2');
 		    	$state.go($state.current.name,{req:JSON.stringify(scope.lists)});
+		    	$timeout(function(){
+		    		$('#filterwrapper ul')[2].dispatchEvent(scope.collapseEvent);  	
+		    	}, 5);
 		    }
      	  		
 		},true);

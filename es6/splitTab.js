@@ -46,10 +46,10 @@ define(['app','jquery','dataFactory'],function(app,$) {
 					if(data.metrics.length===0){
 						data.metrics=["Impressions Delivered (HB Rendered Ad)"];
 						data.orderingMetric="Impressions Delivered (HB Rendered Ad)";
-						console.log(JSON.stringify(data));
+						
 					}
 					else{
-						console.log(JSON.stringify(data));
+						
 					}
 					var container=document.createElement('div');
 					var dim=data['dimensionObjectList'];
@@ -57,13 +57,17 @@ define(['app','jquery','dataFactory'],function(app,$) {
 						dataFactory.getTotalData(data).then(function(response) {
 							var scope=$scope.$parent;
 							scope.result=response.data.result;
-							console.log($scope,scope);
 							console.log(response);
-							var x =dataFactory.createSplit(scope.result.split,scope.split.dimensions,'result.split',0);
-					 		var d=$compile(x)(scope)
-					 		for(var i=0;i<d.length;i++){
-					 			iElm[0].appendChild(d[i]);
-					 		}
+							if(scope.result[data.metrics[0]]){
+								var x =dataFactory.createSplit(scope.result.split,scope.split.dimensions,'result.split',0);
+						 		var d=$compile(x)(scope)
+						 		for(var i=0;i<d.length;i++){
+						 			iElm[0].appendChild(d[i]);
+						 		}	
+							}
+							else{
+								scope.split.status=2;
+							}
 					 		//console.log(x,d,d.length);								
 						}, function(response){
 							var scope=$scope.$parent;

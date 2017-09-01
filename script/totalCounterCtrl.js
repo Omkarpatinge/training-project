@@ -10,7 +10,6 @@ define(['app', 'jquery', 'dataFactory', 'removeText', 'numberSuffix'], function 
 		//$rootScope.numForm="";
 		obj.status = 0;
 		obj.loaded = false;
-
 		var x = JSON.parse($stateParams.req);
 		x[1].people = [];
 		var data = dataFactory.generateRequest(x);
@@ -26,13 +25,14 @@ define(['app', 'jquery', 'dataFactory', 'removeText', 'numberSuffix'], function 
 				for (var i = 0; i < metricKey.length; i++) {
 					x[metricKey[i]] = parseFloat(result[metricKey[i]]);
 				}
-				console.log(x);
+				//console.log(x);
 				obj.metricVal = x;
 			}, function () {
 				console.log('error');
 				obj.status = 2;
 			}).finally(function () {
 				obj.loaded = true;
+				console.log('tryme');
 			});
 		}
 	}]);
