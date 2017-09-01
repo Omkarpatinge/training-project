@@ -104,7 +104,7 @@ define(["app","moment","jquery",'bootstrap',"callserver","thingTest","searching"
 	            label: "Values",
 	            allowedTypes: ['Measures'],
 	            people: [
-	                
+	                 {name:'Impressions Delivered',type:"Measures"}
 	            ]
 	        },
 	        

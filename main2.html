@@ -121,7 +121,8 @@
 											<label ng-if="person.filtertype==='regex'" ng-show="!testValue.length">No records found</label>
 										</div>	
 										<div class="conbtn">
-											<button class="okbtn btn" ng-click="cntr.filterclickok($event,person,list);$event.stopPropagation();">OK
+											<span ng-hide="true" ng-if="person.filtertype==='regex'" ng-repeat="filterop in testValue1=(person.filteroptions | searching:person.filtersearch:'fname':person.filtertype)"></span>
+											<button ng-disabled="!testValue1.length && person.filtertype==='regex'" class="okbtn btn" ng-click="cntr.filterclickok($event,person,list);$event.stopPropagation();">OK
 											</button>
 											<button class="cancelbtn btn" ng-click="cntr.cancelfilterclicked(person,list); $event.stopPropagation();">Cancel</button>
 										</div>
@@ -212,7 +213,7 @@
 					<span id="numForm">
 						<input id="nonf" ng-model="val.nFormat" ng-value="false" type="radio" name="numForm" >
 						<label for="nonf">1,000</label>
-						<input id="withf" ng-model="val.nFormat" ng-value="true" type="radio" name="numForm" checked>
+						<input id="withf" ng-model="val.nFormat" ng-value="true" type="radio" name="numForm" >
 						<label for="withf">1K</label>
 					</span>
 					<span><button ng-click="cntr.refresh()"><i class="material-icons">sync</i></button></span>

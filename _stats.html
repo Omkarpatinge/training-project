@@ -19,7 +19,9 @@
 						<i> {{m|removeText:"(HB Rendered Ad)"}}</i>	
 					</div>
 					<section ng-if="!chart.chartLoaded" class="chartloader"></section>
-					<section ng-if="chart.chartLoaded" class="gChart" google-chart chart="chart.chart[{{$index}}]"></section>
+					<div class="container">
+						<section ng-if="chart.chartLoaded" class="gChart col-sm-12" google-chart chart="chart.chart[{{$index}}]"></section>
+					</div>
 				</li>
 			</ul>
 		</div>

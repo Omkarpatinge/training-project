@@ -91,7 +91,7 @@ define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "sear
 			}, {
 				label: "Values",
 				allowedTypes: ['Measures'],
-				people: []
+				people: [{ name: 'Impressions Delivered', type: "Measures" }]
 			}];
 		}
 

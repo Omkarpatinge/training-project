@@ -82,7 +82,7 @@ define(['app',"moment",'apiConst'],function(app,moment){
 					var oldend=request.endTime;
 					if (lists[0].people[i].filtertype=='Specific') {
 							request.startTime=lists[0].people[i].filteroptions[0].startDate;
-							request.endTime=lists[0].people[i].filteroptions[0].endDate;
+							request.endTime=moment(lists[0].people[i].filteroptions[0].endDate).add(1,'days').format('YYYY-MM-DD 00:00:00');
 
 					}
 					else if (lists[0].people[i].filtertype=='Relative'){

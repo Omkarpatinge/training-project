@@ -8,7 +8,7 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 		$rootScope.$broadcast("check");
 		var x = JSON.parse($stateParams.req);
 		var req = dataFactory.generateRequest(x);
-
+		var format = $rootScope.val.nFormat;
 		var time = req["dimensionObjectList"].some(function (elem) {
 			return elem["dimension"] === "Time";
 		});
@@ -30,6 +30,7 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 
 			//$location.path("/chart"+JSON.stringify(x));
 		};
+
 		obj.status = 0;
 		obj.chart = [];
 		obj.status = time ? 1 : obj.status;
@@ -47,7 +48,14 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 		if (obj.status == 1) {
 			buildChart(obj);
 		}
-
+		$scope.$watch(function () {
+			return $rootScope.val.nFormat;
+		}, function (list, old) {
+			format = list;
+			if (obj.status == 1) {
+				buildChart(obj);
+			}
+		});
 		function buildChart() {
 			//console.log(req);
 			dataFactory.getLineData(req).then(function (response) {
@@ -69,12 +77,18 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 			for (var i = 0; i < obj.metrics.length; i++) {
 				var m = obj.metrics[i];
 				var data = dataFactory.getDataTable(result, m, dimension);
+
 				//console.log(data,"here");
 				//debugger;
 				//var dataTable=new google.visualization.arrayToDataTable(data);
 				var chart = JSON.parse(JSON.stringify(JSONChart));
 				//console.log(chart);
-
+				if (format) {
+					chart.formatters.number = api.formatShort;
+					chart.options.vAxis = {
+						"format": "short"
+					};
+				}
 				chart.data = data;
 				obj.chart[i] = chart;
 			}
@@ -82,9 +96,5 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 				obj.chartLoaded = true;
 			});
 		}
-		//$scope.chart=this;
-		//console.log(req);
-		//var a=dataFactory.getLineData(requestService.getReq());
-		//console.log(a);
 	}]);
 });

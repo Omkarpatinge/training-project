@@ -6,15 +6,36 @@ define(['app'], function (app) {
 			url: "http://localhost:8001/api/v1/query",
 			chartUrl: "http://localhost:3000/script/"
 		},
+		formatShort: [{
+			"columnNum": 1,
+			"fractionDigits": 2,
+			"pattern": "short"
+		}, {
+			"columnNum": 2,
+			"fractionDigits": 2,
+			"pattern": "short"
+		}, {
+			"columnNum": 3,
+			"fractionDigits": 2
+		}],
+		formatLong: [{
+			"columnNum": 1,
+			"fractionDigits": 2,
+			"pattern": "long"
+		}, {
+			"columnNum": 2,
+			"fractionDigits": 2,
+			"pattern": "long"
+		}, {
+			"columnNum": 3,
+			"fractionDigits": 2
+		}],
 		chart: [{
 			"type": "LineChart",
-			"cssStyle": "height:400px; width:100%;",
+			"cssStyle": "height:400px;width:100%",
 			"options": {
 				"focusTarget": "category",
 				"showCategories": true,
-				"vAxis": {
-					"format": "short"
-				},
 				"hAxis": {
 					"gridlines": {
 						"count": -1,
@@ -43,19 +64,6 @@ define(['app'], function (app) {
 				"date": [{
 					"columnNum": 0,
 					"pattern": "MMM d, yyyy , h:mm aa"
-				}],
-				"number": [{
-					"columnNum": 1,
-					"fractionDigits": 2,
-					"pattern": "short"
-				}, {
-					"columnNum": 2,
-					"fractionDigits": 2,
-					"pattern": "short"
-				}, {
-					"columnNum": 3,
-					"fractionDigits": 2,
-					"pattern": "short"
 				}]
 			}
 		}, {
@@ -64,9 +72,6 @@ define(['app'], function (app) {
 			"options": {
 				"focusTarget": "category",
 				"legend": { "position": "none" },
-				"vAxis": {
-					"format": "short"
-				},
 				"hAxis": {
 					"gridlines": {
 						"count": -1,
@@ -114,11 +119,6 @@ define(['app'], function (app) {
 				"date": [{
 					"columnNum": 0,
 					"pattern": "MMM d, yyyy , h:mm aa"
-				}],
-				"number": [{
-					"columnNum": 1,
-					"fractionDigits": 2,
-					"pattern": "short"
 				}]
 			}
 		}]

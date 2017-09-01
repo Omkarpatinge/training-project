@@ -53,7 +53,7 @@ define(['app', 'jquery', 'moment', 'daterangepicker'], function (app, $, moment)
 						if (timeinput.length == 2 && timeinput[0].split('-').length == 3 && timeinput[1].split('-').length == 3 && timeinput[1].split('-')[1] < 13 && timeinput[0].split('-')[1] < 13) {
 
 							scope.date.startDate = input.val().split(' to ')[0] + ' 00:00:00';
-							scope.date.endDate = input.val().split(' to ')[1] + ' 23:59:59';
+							scope.date.endDate = input.val().split(' to ')[1] + ' 00:00:00';
 							scope.lists[0].people[i].filteroptions = [];
 							//console.log(scope.datePicker.date);
 
