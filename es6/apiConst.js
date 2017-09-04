@@ -36,6 +36,7 @@ define(['app'],function(app){
 					"focusTarget": "category",
 					"showCategories": true,
 					"hAxis": {
+						"title":"Time",
 						"gridlines": {
 							"count": -1,
 							"units": {
@@ -52,7 +53,7 @@ define(['app'],function(app){
 									"format": ["h:mm aa", "ha"]
 								},
 								"minutes": {
-									"format": ["HH:mm a ", "h:mm"]
+									"format": ["HH:mm a ", "h:mm aa"]
 								},
 								"seconds": {
 									"format": ["HH:mm:ss a", "h:mm:ss"]
@@ -68,7 +69,7 @@ define(['app'],function(app){
 									"format": ["hh:mm:ss aa", "ha"]
 								},
 								"minutes": {
-									"format": ["HH:mm a", "h:mm"]
+									"format": ["HH:mm a", "h:mm aa"]
 								},
 								"milliseconds": {
 									"format": ["mm:ss:fff a", "h:mm:ss:fff"]
@@ -93,6 +94,7 @@ define(['app'],function(app){
 					"focusTarget":"category",
 					"legend":{"position":"none"},
 					"hAxis": {
+						"title":"Time",
 						"gridlines": {
 							"count": -1,
 							"units": {
@@ -109,13 +111,13 @@ define(['app'],function(app){
 									"format": ["h:mm aa", "ha"]
 								},
 								"minutes": {
-									"format": ["HH:mm a ", "h:mm"]
+									"format": ["HH:mm a ", "h:mm aa"]
 								},
 								"seconds": {
-									"format": ["HH:mm:ss a", "h:mm:ss"]
+									"format": ["HH:mm:ss a", "h:mm:ss aa"]
 								},
 								"milliseconds": {
-									"format": ["HH:mm:ss a", "h:mm:ss"]
+									"format": ["HH:mm:ss a", "h:mm:ss aa"]
 								}
 							}
 						},
@@ -125,10 +127,10 @@ define(['app'],function(app){
 									"format": ["hh:mm:ss aa", "ha"]
 								},
 								"minutes": {
-									"format": ["HH:mm a", "h:mm"]
+									"format": ["HH:mm a", "h:mm aa"]
 								},
 								"milliseconds": {
-									"format": ["mm:ss:fff a", "h:mm:ss:fff"]
+									"format": ["mm:ss:fff a", "h:mm:ss:fff aa"]
 								}
 
 							}

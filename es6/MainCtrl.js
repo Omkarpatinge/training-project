@@ -363,7 +363,7 @@ define(["app","moment","jquery",'bootstrap',"callserver","thingTest","searching"
 
         scope.dropCallback= function(index, item, external, type,list,event){
         	var repl = event.toElement;
-        	if(repl.tagName==="UL" || (repl.tagName==="LI" && !repl.innerHTML)){
+        	if(repl.tagName==="UL" || (repl.tagName==="LI" && !repl.innerHTML||repl.tagName==="I")){
         		list.people.splice(index,0,item);
         	}   
         	else{

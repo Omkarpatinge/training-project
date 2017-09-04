@@ -387,8 +387,7 @@ a:active, a:focus {
 
 .container-fluid {
   background-color: white;
-  box-shadow: 0 2px 5px -2px #888;
-  height: 5vh; }
+  box-shadow: 0 2px 5px -2px #888; }
   .container-fluid .navbar-header, .container-fluid .nav, .container-fluid .nav-report {
     display: inline-block;
     vertical-align: middle; }
@@ -437,7 +436,7 @@ a:active, a:focus {
     padding: 0px 1%;
     width: 16%;
     overflow-y: scroll;
-    overflow-x: auto; }
+    overflow-x: visible; }
     #container-fluid #dimensions::-webkit-scrollbar, #container-fluid #measures::-webkit-scrollbar {
       padding: 0px 5px;
       width: 28px;
@@ -531,7 +530,7 @@ a:active, a:focus {
       #container-fluid #viewcontainer .rules ul.col-sm-11 {
         min-width: 50%;
         margin: 0px;
-        padding: 1% 1%;
+        padding: 0.5% 1%;
         display: flex;
         flex-wrap: wrap;
         height: 50px; }
@@ -907,14 +906,14 @@ a:active, a:focus {
       top: 0px;
       height: 20px;
       color: #aaa;
+      box-shadow: 0 2px 5px -2px #888;
       background-color: #fff;
       z-index: 20; }
     .split table td, .split table th {
       padding: 1%; }
 
 .main ul li .popupdim {
-  display: inline-block;
-  position: relative;
+  position: absolute;
   background-color: white;
   color: white; }
   .main ul li .popupdim .popup-text {
@@ -926,8 +925,8 @@ a:active, a:focus {
     position: absolute;
     box-shadow: 2px 2px 10px 0px #aaa;
     z-index: 1;
-    left: 30px;
-    top: -75px;
+    left: 60px;
+    top: -45px;
     margin-left: 80px;
     transition: all 2s; }
     .main ul li .popupdim .popup-text hr {
@@ -958,3 +957,15 @@ a:active, a:focus {
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent #fff #fff; }
+
+#filterwrapper div div > ul > li.dndPlaceholder {
+  min-width: 1px !important;
+  max-width: 2px !important;
+  position: relative;
+  top: -15px;
+  width: 1px !important;
+  text-align: center;
+  background-color: transparent !important; }
+  #filterwrapper div div > ul > li.dndPlaceholder i {
+    font-size: 2em;
+    margin: 0 auto; }

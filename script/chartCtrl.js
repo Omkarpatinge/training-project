@@ -101,6 +101,7 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 						"format": "short"
 					};
 				}
+				chart.options.vAxis.title = m.replace("(HB Rendered Ad)", "");
 				chart.data = data;
 				obj.chart[i] = chart;
 			}
