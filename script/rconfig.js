@@ -30,7 +30,7 @@ require.config({
 		"popup":"popup",
 		"bootstrap":"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min",
 		"myCalender":"myCalender",
-		"daterangepicker":"lib/jquery.daterangepicker.min",
+		"daterangepicker":"lib/jquery.daterangepicker2.min",
 		"dnd":"lib/dndv2",
 		'angularAMD':'lib/angularAMD.min',
 		'dataFactory':'dataFactory',//Factory

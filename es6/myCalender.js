@@ -12,7 +12,7 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 			// controller: function($scope, $element, $attrs, $transclude) {},
 			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
 			 restrict: 'EA', // E = Element, A = Attribute, C = Class, M = Comment
-			template: `<input type="text" id="abc">
+			template: `<input class="form-control" type="text" id="abc">
 			<div id="date-range12-container"></div>
 			<div class="conbtn">
 			<button class="okbtn btn" ng-click="specificOkClicked()">OK</button>
@@ -28,7 +28,7 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 				
 				
 				var config={
-					separator : ' to ',
+					separator : ' - ',
 					getValue: function()
 						{
 							return this.value;
@@ -37,6 +37,7 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 						{
 							this.value = s;
 						},
+					startOfWeek: 'monday',
 					format: 'YYYY-MM-DD',
 					singleMonth:true ,
 					inline:true,

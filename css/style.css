@@ -241,6 +241,7 @@ body {
   box-sizing: border-box;
   height: 100vh;
   color: #545A6A;
+  overflow-y: hidden;
   overflow-x: auto;
   font-family: 'Montserrat', sans-serif; }
   body *::-webkit-scrollbar-track {
@@ -256,16 +257,16 @@ body {
     border-radius: 50px;
     background-color: rgba(170, 170, 170, 0.3); }
   body .conbtn {
-    text-align: center;
     padding: 10px 0px; }
   body .okbtn {
-    background-color: red;
+    background-color: #EC5959;
     color: white;
-    width: 40%; }
+    margin: 5px;
+    width: 35%; }
   body .cancelbtn {
     background-color: #B3BACF;
     color: white;
-    width: 50%; }
+    width: 45%; }
 
 a {
   text-decoration: none; }
@@ -288,8 +289,20 @@ a:active, a:focus {
     #date-range12-container .date-picker-wrapper * {
       border-width: 0px; }
 
-.date-picker-wrapper .month-wrapper {
-  width: 200px; }
+.date-picker-wrapper {
+  font-family: 'Montserrat', sans-serif;
+  /* .first-date-selected{
+		border-radius: 10px 0px 0px 10px;
+	}
+	.last-date-selected{
+		border-radius: 0px 10px 10px 0px;
+	} */ }
+  .date-picker-wrapper .month-wrapper {
+    width: 200px; }
+  .date-picker-wrapper .caption {
+    color: #000; }
+  .date-picker-wrapper .week-name {
+    color: #D2DAE6; }
 
 .drp_top-bar {
   display: none !important; }
@@ -365,18 +378,21 @@ a:active, a:focus {
     .navView button i {
       font-size: 1.5em;
       margin-right: 5px;
-      position: relative;
-      top: 2px; }
+      position: relative; }
     .navView button span {
       position: relative;
-      top: -3px;
-      font-size: 1em; }
+      font-size: 1em;
+      top: -2px; }
 
 .container-fluid {
   background-color: white;
   box-shadow: 0 2px 5px -2px #888; }
+  .container-fluid .navbar-header, .container-fluid .nav, .container-fluid .nav-report {
+    display: inline-block;
+    vertical-align: middle; }
   .container-fluid i {
     color: #EC5959;
+    margin-right: 10px;
     -webkit-transition: 1s;
     /* Safari */
     transition: 1s; }
@@ -387,13 +403,25 @@ a:active, a:focus {
       /* Safari */
       transition: 1s; }
   .container-fluid .nav-brand {
-    padding: 15px 0px;
-    height: 100%; }
+    padding: 15px 0px; }
   .container-fluid ul {
     font-size: 20px;
     padding: 10px 0; }
     .container-fluid ul span {
       color: #8F6AB2; }
+  .container-fluid .nav-report {
+    float: right;
+    margin: auto 3%;
+    margin-top: 10px;
+    display: inline-block;
+    vertical-align: middle; }
+    .container-fluid .nav-report span {
+      font-size: 1.3em; }
+    .container-fluid .nav-report i {
+      font-size: 1.1em;
+      color: #545A6A; }
+      .container-fluid .nav-report i:hover {
+        background-color: #fff; }
 
 #container-fluid {
   padding: 0% 1%;
@@ -404,13 +432,13 @@ a:active, a:focus {
     background-color: white;
     min-height: 100%;
     padding: 0px 1%;
-    width: 15%;
+    width: 18%;
     height: 90vh;
     overflow-y: scroll;
     overflow-x: auto; }
     #container-fluid #dimensions::-webkit-scrollbar, #container-fluid #measures::-webkit-scrollbar {
       padding: 0px 5px;
-      width: 40px;
+      width: 28px;
       position: relative;
       background-color: rgba(255, 255, 255, 0);
       z-index: 10; }
@@ -418,22 +446,44 @@ a:active, a:focus {
       width: 1px;
       border-radius: 50px;
       border: 10px solid #fff;
-      border-width: 15px;
+      border-width: 10px;
       background-color: rgba(170, 170, 170, 0.3); }
   #container-fluid li {
     list-style: none;
     margin-left: 3%; }
   #container-fluid #dimensions li, #container-fluid #measures li {
     padding: 1%;
-    height: 30px; }
+    height: 30px;
+    display: flex; }
+    #container-fluid #dimensions li:hover, #container-fluid #measures li:hover {
+      color: #5D8DE4;
+      background-color: #F5F5F5; }
+      #container-fluid #dimensions li:hover span, #container-fluid #measures li:hover span {
+        visibility: visible; }
+    #container-fluid #dimensions li span, #container-fluid #measures li span {
+      float: right;
+      visibility: hidden; }
+    #container-fluid #dimensions li i, #container-fluid #measures li i {
+      color: #8088A0;
+      float: right;
+      padding-top: 3px;
+      margin-left: 3px; }
     #container-fluid #dimensions li p, #container-fluid #measures li p {
       white-space: nowrap;
+      width: 90%;
       overflow: hidden;
       text-overflow: ellipsis; }
       #container-fluid #dimensions li p:hover, #container-fluid #measures li p:hover {
         cursor: pointer; }
     #container-fluid #dimensions li a, #container-fluid #measures li a {
-      color: #545A6A; }
+      color: #545A6A;
+      width: 100%;
+      display: flex; }
+      #container-fluid #dimensions li a:hover, #container-fluid #measures li a:hover {
+        color: #5D8DE4;
+        background-color: #F5F5F5; }
+        #container-fluid #dimensions li a:hover span, #container-fluid #measures li a:hover span {
+          visibility: visible; }
   #container-fluid ul {
     padding: 0; }
   #container-fluid .searchicon div {
@@ -443,8 +493,7 @@ a:active, a:focus {
     padding: 3% 0px; }
   #container-fluid .searchicon .searchBar {
     width: 100%;
-    margin: 4% auto;
-    padding: 0px 3%; }
+    margin: 4% auto; }
     #container-fluid .searchicon .searchBar:focus {
       outline-color: blue; }
     #container-fluid .searchicon .searchBar input {
@@ -454,15 +503,19 @@ a:active, a:focus {
       #container-fluid .searchicon .searchBar input:focus {
         border: 0px solid #fff;
         outline-color: transparent; }
+      #container-fluid .searchicon .searchBar input::placeholder {
+        font-weight: lighter;
+        color: #aaa; }
     #container-fluid .searchicon .searchBar i {
       width: 10%;
       float: right;
-      position: relative;
-      top: 3px; }
+      font-size: 1.5em;
+      margin: 0px;
+      position: relative; }
   #container-fluid #viewcontainer {
     padding: 0% 0%;
     height: 90vh;
-    width: 70%;
+    width: 64%;
     display: flex;
     flex-flow: column; }
     #container-fluid #viewcontainer #filterwrapper {
@@ -530,24 +583,47 @@ a:active, a:focus {
         #container-fluid #viewcontainer .rules li .dialog {
           background-color: #fff;
           z-index: 25;
+          color: #545A6A;
           box-shadow: 2px 2px 20px -5px #aaa,-2px 0px 20px -5px #aaa;
           height: max-content;
           position: absolute;
           padding: 20px;
           margin: 10px 0px;
           cursor: pointer; }
-          #container-fluid #viewcontainer .rules li .dialog input[type="text"] {
+          #container-fluid #viewcontainer .rules li .dialog #abc {
+            padding: 6px 7px; }
+          #container-fluid #viewcontainer .rules li .dialog .searchBar {
             width: 100%;
-            margin: 2% 0px; }
-            #container-fluid #viewcontainer .rules li .dialog input[type="text"] select, #container-fluid #viewcontainer .rules li .dialog input[type="text"] option {
-              z-index: 20; }
+            margin: 4% auto;
+            padding: 0px 0px; }
+            #container-fluid #viewcontainer .rules li .dialog .searchBar:focus {
+              outline-color: blue; }
+            #container-fluid #viewcontainer .rules li .dialog .searchBar input {
+              width: 90%;
+              height: 100%;
+              padding: 6px 12px;
+              border: 0px solid #fff; }
+              #container-fluid #viewcontainer .rules li .dialog .searchBar input:focus {
+                border: 0px solid #fff;
+                outline-color: transparent; }
+              #container-fluid #viewcontainer .rules li .dialog .searchBar input::placeholder {
+                font-weight: lighter;
+                color: #aaa; }
+            #container-fluid #viewcontainer .rules li .dialog .searchBar i {
+              color: #aaa;
+              width: 10%;
+              float: right;
+              font-size: 1.5em;
+              margin: 0px;
+              position: relative;
+              top: 3px; }
           #container-fluid #viewcontainer .rules li .dialog .filList {
-            height: 20vh;
-            padding: 0px  3%;
+            height: 25vh;
+            padding: 0px 3%;
             overflow-y: auto;
             overflow-x: hidden; }
             #container-fluid #viewcontainer .rules li .dialog .filList label {
-              display: block;
+              display: flex;
               width: 100%;
               text-align: left;
               padding: 3% 0px; }
@@ -556,17 +632,43 @@ a:active, a:focus {
               #container-fluid #viewcontainer .rules li .dialog .filList label input[type="checkbox"]:checked + .glyphicon {
                 color: white;
                 background-color: #8A91A5; }
+              #container-fluid #viewcontainer .rules li .dialog .filList label input[type="checkbox"]:checked + .zmdi {
+                color: white;
+                background-color: #8A91A5; }
               #container-fluid #viewcontainer .rules li .dialog .filList label span {
                 float: right; }
+              #container-fluid #viewcontainer .rules li .dialog .filList label .zmdi {
+                color: rgba(138, 145, 165, 0);
+                font-weight: bold;
+                text-align: center;
+                background-color: white;
+                width: 18px;
+                height: 18px;
+                margin: .5% 0px;
+                margin-right: 4%;
+                border: 1px solid #aaa;
+                padding: .5% 1.3%;
+                border-radius: 4px; }
               #container-fluid #viewcontainer .rules li .dialog .filList label .glyphicon {
                 color: rgba(138, 145, 165, 0);
                 font-weight: lighter;
                 background-color: white;
-                margin: 3% 0px;
+                margin: .5% 0px;
+                margin-right: 4%;
                 border: 1px solid #aaa;
-                padding: .5%; }
+                padding: .5%;
+                border-radius: 4px; }
           #container-fluid #viewcontainer .rules li .dialog select {
-            width: 100%; }
+            width: 100%;
+            padding: 3% 5%;
+            border-width: 0px;
+            border-radius: 4px;
+            background-color: #EEF0F6;
+            margin-bottom: 5px; }
+          #container-fluid #viewcontainer .rules li .dialog option {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 2px 2px 20px -5px #aaa,-2px 0px 20px -5px #aaa; }
           #container-fluid #viewcontainer .rules li .dialog i {
             position: absolute;
             top: 5px;
@@ -578,11 +680,11 @@ a:active, a:focus {
             background-color: #fff;
             color: #8A91A5;
             font-family: Arial;
-            padding: 4% 10px;
+            padding: 3% 10px;
             font-size: 12px;
             width: 48%;
-            border: 1px solid #aaa;
-            border-radius: 3px;
+            border: 1px solid #D5D7DD;
+            border-radius: 5px;
             cursor: pointer; }
           #container-fluid #viewcontainer .rules li .dialog .radio-toolbar form {
             padding: 0px;
@@ -596,7 +698,8 @@ a:active, a:focus {
             margin: 0;
             margin-bottom: 15px; }
             #container-fluid #viewcontainer .rules li .dialog .radio-toolbar p {
-              margin: 0px; }
+              margin: 0px;
+              width: 100%; }
             #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .timeGrp {
               background-color: #fff;
               border-radius: 3px;
@@ -609,7 +712,7 @@ a:active, a:focus {
                 float: left; }
               #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .timeGrp input:checked + label {
                 color: #8A91A5;
-                background-color: rgba(138, 145, 165, 0.3); }
+                background-color: #EEF0F6; }
               #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .timeGrp label:first-of-type {
                 border-radius: 3px 0px 0px 3px;
                 position: relative;
@@ -627,24 +730,28 @@ a:active, a:focus {
                 display: inline-block;
                 color: #8A91A5;
                 margin: -0.5px;
-                padding: 1% 10%;
+                padding: 3% 0px;
                 font-size: 12px;
                 cursor: pointer;
                 background-color: white;
                 border-radius: 0px;
                 border: 1px solid #aaa; }
             #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .lat {
-              width: 100%; }
+              width: 100%;
+              margin: 7% auto;
+              margin-top: 2%; }
               #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .lat label {
                 width: calc(33.333% + .9px); }
             #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .tspl {
-              width: 250px; }
+              width: 235px; }
               #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .tspl label {
+                text-align: center;
                 margin: -1px;
                 width: calc(20%); }
             #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .cur {
               width: 100%;
-              margin: auto; }
+              margin: 7% auto;
+              margin-top: 2%; }
               #container-fluid #viewcontainer .rules li .dialog .radio-toolbar .cur label {
                 width: calc(50% + .9px); }
           #container-fluid #viewcontainer .rules li .dialog::before {

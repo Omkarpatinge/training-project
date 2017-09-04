@@ -14,7 +14,7 @@ define(['app', 'jquery', 'moment', 'daterangepicker'], function (app, $, moment)
 			// controller: function($scope, $element, $attrs, $transclude) {},
 			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
 			restrict: 'EA', // E = Element, A = Attribute, C = Class, M = Comment
-			template: '<input type="text" id="abc">\n\t\t\t<div id="date-range12-container"></div>\n\t\t\t<div class="conbtn">\n\t\t\t<button class="okbtn btn" ng-click="specificOkClicked()">OK</button>\n\t\t\t<button class="cancelbtn btn" ng-click="specificCancelClicked()"">Cancel</button>\n\t\t\t</div>',
+			template: '<input class="form-control" type="text" id="abc">\n\t\t\t<div id="date-range12-container"></div>\n\t\t\t<div class="conbtn">\n\t\t\t<button class="okbtn btn" ng-click="specificOkClicked()">OK</button>\n\t\t\t<button class="cancelbtn btn" ng-click="specificCancelClicked()"">Cancel</button>\n\t\t\t</div>',
 			// templateUrl: '',
 			// replace: true,
 			// transclude: true,
@@ -24,13 +24,14 @@ define(['app', 'jquery', 'moment', 'daterangepicker'], function (app, $, moment)
 				var input = $(iElm[0].childNodes[0]);
 
 				var config = {
-					separator: ' to ',
+					separator: ' - ',
 					getValue: function getValue() {
 						return this.value;
 					},
 					setValue: function setValue(s) {
 						this.value = s;
 					},
+					startOfWeek: 'monday',
 					format: 'YYYY-MM-DD',
 					singleMonth: true,
 					inline: true,

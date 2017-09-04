@@ -7,7 +7,7 @@
 				<div>{{list.label}} ({{list.people.length}})</div> 
 				<span class="searchBar form-control">
 					<input type="text" ng-model="cntr.searchd" placeholder="Search">
-					<i class="material-icons">search</i>	
+					<i class="zmdi zmdi-search"></i>
 				</span>
 			</div>
 			<ul>
@@ -18,7 +18,7 @@
 	        		dnd-effect-allowed="copy" 
 	        		draggable="true"
 	        		dnd-selected="person.popupadd=true">
-	        		<p>&nbsp;&nbsp;{{person.name}}</p>
+	        		<p>&nbsp;&nbsp;{{person.name}}</p><span><i class="zmdi zmdi-arrows"></i></span>
 	        		<span class="popupdim" ng-if="person.popupadd===true">
 		        		<span class="popup-text"  popup dimname="person">	
 		        			<p ng-click="cntr.dimzoneclicked(person,$event);$event.stopPropagation();">Filters</p>
@@ -50,7 +50,7 @@
 	            				dnd-effect-allowed="copy" 
 	            				draggable="true"   
 	            				dnd-selected="cntr.splitfilterclicked(list,person,event,$index);$event.stopPropagation()">
-	            				<p>{{person.name}}{{$root.clps}}</p>
+	            				<p>{{person.name}}</p>
 	            				<span ng-if="list.label==='Filters'">
 									<span ng-if="person.name==='Time'">
 										({{' '+cntr.request.startTime.split(' ')[0] + " - " + cntr.request.endTime.split(' ')[0]}})
@@ -59,9 +59,12 @@
 										<span ng-if="person.regexstring!=''&&person.clickokfor==='regex'">({{person.regexstring}})
 											
 										</span>
-										<span  ng-if="person.filtercount>0 && person.clickokfor==='in'">
+										<span  ng-if="person.filtercount>1 && person.clickokfor==='in'">
 											({{person.filtercount}})
 											 
+										</span>
+										<span  ng-if="person.filtercount==1 && person.clickokfor==='in'">
+										 : {{person.firstFil}} 
 										</span>
 									</span>
 								</span>			
@@ -101,7 +104,10 @@
 						  					<option value="in">in</option>
 						  					<option value="regex">Regex</option>
 										</select>
-										<input type="text" ng-model="person.filtersearch">
+										<span class="searchBar form-control">
+											<input type="text" ng-model="person.filtersearch" placeholder="Search">
+											<i class="zmdi zmdi-search"></i>
+										</span>
 										<div ng-if="!cntr.loaded" class="filList jc">
 											<div  class="jawn"></div>
 										</div>
@@ -110,9 +116,8 @@
 									 			<input type="checkbox"
 									    			value="{{filterop.fname}}"
 									    			ng-model="filterop.selected">
-									    		<span class="glyphicon glyphicon-ok white"></span>
-
-									    		{{filterop.fname}}
+									    		<span class="zmdi zmdi-check"></span>
+									    		<p>{{filterop.fname}}</p>
 											</label>
 											<label ng-if="person.filtertype==='in'" ng-show="!testvalue.length">No records found</label>
 											<label ng-if="person.filtertype==='regex'" ng-repeat="filterop in testValue=(person.filteroptions | searching:person.filtersearch:'fname':person.filtertype)">
@@ -204,11 +209,11 @@
 			</div>
 			<div class="navView">
 				<button ng-class="{'active': cntr.total==true}" ng-click="cntr.buttonsclicked('totals')">
-				<i class="material-icons">functions</i><span>Total</span></button>
+				<i class="zmdi zmdi-functions"></i><span>Total</span></button>
 				<button ng-class="{'active': cntr.split==true}" ng-click="cntr.buttonsclicked('splitdata')">
-				<i class="material-icons">border_all</i><span>Table</span></button>
+				<i class="zmdi zmdi-border-all"></i><span>Table</span></button>
 				<button ng-class="{'active': cntr.chart==true}" ng-click="cntr.buttonsclicked('charts')">
-				<i class="material-icons">trending_up</i><span>Line Chart</span></button>
+				<i class="zmdi zmdi-trending-up"></i><span>Line Chart</span></button>
 				<div class="viewOption">
 					<span id="numForm">
 						<input id="nonf" ng-model="val.nFormat" ng-value="false" type="radio" name="numForm" >
@@ -239,7 +244,10 @@
 	                dnd-moved="list.people.splice($index, 1)" 
 	                dnd-effect-allowed="copy" 
 	                dnd-selected="cntr.measurezoneclicked(person,event)"
-	                draggable="true"><a href="Javascript:void(0)"><p>&nbsp;&nbsp;{{person.name}}</p></a>
+	                draggable="true"><a href="Javascript:void(0)">
+	                <p>&nbsp;&nbsp;{{person.name}}</p>
+	                <span><i class="zmdi zmdi-arrows"></i></span>
+	                </a>
 	            </li>  
 	        </ul>
 	    </div>

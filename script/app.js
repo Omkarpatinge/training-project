@@ -33,15 +33,21 @@ define(['angularAMD', 'uiRouter', 'googleChart', 'dnd'], function (angularAMD) {
 			controller: "SampleController",
 			controllerUrl: "SampleController"
 		}));
-		var req = encodeURIComponent(JSON.stringify({
-			"metrics": ["Impressions Delivered (HB Rendered Ad)", "Adjustment1 (HB Rendered Ad)"],
-			"startTime": "2017-08-09 07:40:37",
-			"endTime": "2017-08-09 13:40:38",
-			"namespace": "Header Bidder",
-			"orderingMetric": "Impressions Delivered (HB Rendered Ad),"
-		}));
+		var req = encodeURIComponent(JSON.stringify([{
+			label: "Filters",
+			allowedTypes: ['dimensions'],
+			people: [{ name: "Time", type: 'dimensions', threshold: 5, filterselect: false, filtertype: 'Relative', filteroptions: [{ startDate: '2017-08-09 07:51:02', endDate: '2017-08-19 07:51:02' }], filtersearch: '6H', clickok: false }]
+		}, {
+			label: "Split",
+			allowedTypes: ['dimensions'],
+			people: []
+		}, {
+			label: "Values",
+			allowedTypes: ['Measures'],
+			people: [{ name: 'Impressions Delivered', type: "Measures" }]
+		}]));
 		//console.log(req);
-		$urlRouterProvider.otherwise('/chart');
+		$urlRouterProvider.otherwise('/totals' + req);
 	}]);
 
 	return angularAMD.bootstrap(app);

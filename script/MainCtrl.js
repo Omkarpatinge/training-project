@@ -125,6 +125,9 @@ define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "sear
 				var flag = 1; //Non selected	
 				for (var i = 0; i < person.filteroptions.length; i++) {
 					if (person.filteroptions[i].selected) {
+						if (flag == 1) {
+							person.firstFil = person.filteroptions[i].fname;
+						}
 						flag = 0; //atleast one selected
 						count++;
 					}
