@@ -59,8 +59,14 @@ define(['app','dataFactory','removeText','numberSuffix','apiConst'],function(app
 			dataFactory.getLineData(req).then(function(response) {
 				//console.log("res:",response)
 				obj.response=response;
+				try{
+					loadCharts();
+				}
+				catch(err){
+					obj.status=4;
+				}
+				
 				//console.log(response);
-				loadCharts();
 			},function(error)
 			{
 			 	console.log(error);

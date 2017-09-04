@@ -57,7 +57,6 @@ define(['app','jquery','dataFactory'],function(app,$) {
 						dataFactory.getTotalData(data).then(function(response) {
 							var scope=$scope.$parent;
 							scope.result=response.data.result;
-							console.log(response);
 							if(scope.result[data.metrics[0]]){
 								var x =dataFactory.createSplit(scope.result.split,scope.split.dimensions,'result.split',0);
 						 		var d=$compile(x)(scope)
@@ -66,7 +65,7 @@ define(['app','jquery','dataFactory'],function(app,$) {
 						 		}	
 							}
 							else{
-								scope.split.status=2;
+								scope.split.status=3;
 							}
 					 		//console.log(x,d,d.length);								
 						}, function(response){
@@ -76,7 +75,6 @@ define(['app','jquery','dataFactory'],function(app,$) {
 						}).finally(function() {
 							var scope=$scope.$parent;
 							scope.split.loaded=true;
-							console.log("ddd")
 						})
 					}
 					else{

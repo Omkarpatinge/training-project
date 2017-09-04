@@ -22,17 +22,21 @@ define(['app','jquery','dataFactory','removeText','numberSuffix'],function(app,$
 			.then(function(response){
 				var result=response.data.result[0]||response.data.result;
 				var x={}
-				for (var i = 0; i < metricKey.length; i++) {
-					x[metricKey[i]]=parseFloat(result[metricKey[i]]);
+				if(!result[metricKey[0]]){
+					obj.status=3;
 				}
-				//console.log(x);
-				obj.metricVal=x;
+				else{
+					for (var i = 0; i < metricKey.length; i++) {
+						x[metricKey[i]]=parseFloat(result[metricKey[i]]);
+					}
+					//console.log(x);
+					obj.metricVal=x;	
+				}
 			}, function() {
 				console.log('error');
 				obj.status=2;
 			}).finally(function() {
 				obj.loaded=true;
-				console.log('tryme');
 			});
 		}
 	}])

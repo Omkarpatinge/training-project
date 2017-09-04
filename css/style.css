@@ -469,7 +469,8 @@ a:active, a:focus {
     #container-fluid #dimensions li p, #container-fluid #measures li p {
       white-space: nowrap;
       overflow: hidden;
-      text-overflow: ellipsis; }
+      text-overflow: ellipsis;
+      margin-bottom: 0; }
       #container-fluid #dimensions li p:hover, #container-fluid #measures li p:hover {
         cursor: pointer; }
     #container-fluid #dimensions li a, #container-fluid #measures li a {
@@ -839,7 +840,7 @@ a:active, a:focus {
 .stat {
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: auto; }
   .stat .chartTitle {
     width: 100%;
