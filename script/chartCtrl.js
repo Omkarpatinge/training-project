@@ -7,6 +7,15 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 		obj.chartLoaded = false;
 		$rootScope.$broadcast("check");
 		var x = JSON.parse($stateParams.req);
+		//console.log(x);
+		for (var i = 0; i < x[1].people.length; i++) {
+			if (x[1].people[i].name == 'Time' && i != 1) {
+				var timeobj = JSON.parse(JSON.stringify(x[1].people[i]));
+				x[1].people.splice(i, 1);
+				x[1].people.splice(1, 0, timeobj);
+				$state.go('main.chart', { req: JSON.stringify(x) });
+			}
+		}
 		var req = dataFactory.generateRequest(x);
 		var format = $rootScope.val.nFormat;
 		var time = req["dimensionObjectList"].some(function (elem) {
@@ -24,7 +33,6 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 			};
 			x[1].people.push(time);
 			//$state.go("main.chart",{req:JSON.stringify(x)});
-			console.log(x);
 			$rootScope.$broadcast("changed", JSON.stringify(x));
 			//console.log("her");
 
@@ -66,10 +74,9 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 				} catch (err) {
 					obj.status = 4;
 				}
-
 				//console.log(response);
 			}, function (error) {
-				console.log(error);
+				console.log("error");
 				obj.status = 3;
 			}).finally(function () {
 				obj.loaded = true;

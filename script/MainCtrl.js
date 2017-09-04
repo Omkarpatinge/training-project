@@ -60,7 +60,7 @@ define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "sear
 
 		callserver.calldim().then(function (response) {
 			for (var i = 0; i < response.data.result.length; i++) {
-				scope.dimensions[0].people.push({ name: response.data.result[i].dimensionName, type: "dimensions", threshold: 5, thresholdselect: false, filterselect: false, clickok: false, filteroptions: [], filtertype: 'in', popupadd: false });
+				scope.dimensions[0].people.push({ name: response.data.result[i].dimensionName, type: "dimensions", granularity: 3600000, threshold: 5, thresholdselect: false, filterselect: false, clickok: false, filteroptions: [], filtertype: 'in', popupadd: false });
 			}
 		}, function (response) {
 			console.log(response);
@@ -78,12 +78,27 @@ define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "sear
 
 		if ($state.params.req) {
 			scope.lists = JSON.parse($state.params.req);
+			for (var j = 0; j < scope.lists[1].people.length; j++) {
+				scope.lists[1].people[j].thresholdselect = false;
+			}
+
+			for (j = 0; j < scope.lists[0].people.length; j++) {
+				if (scope.lists[0].people[j].name != 'Time' && !scope.lists[0].people[j].clickok) {
+					scope.lists[0].people.splice(j, 1);
+				} else if (scope.lists[0].people[j].name == 'Time') {
+					scope.lists[0].people[j].filterselect = false;
+					if (scope.lists[0].people[j].filtertype === 'Specific') {
+						scope.datePicker.date.startDate = scope.lists[0].people[j].filteroptions[0].startDate;
+						scope.datePicker.date.endDate = scope.lists[0].people[j].filteroptions[0].endDate;
+					}
+				}
+			}
 		} else {
 
 			scope.lists = [{
 				label: "Filters",
 				allowedTypes: ['dimensions'],
-				people: [{ name: "Time", type: 'dimensions', threshold: 5, filterselect: false, filtertype: 'Relative', filteroptions: [{ startDate: '2017-08-09 07:51:02', endDate: '2017-08-19 07:51:02' }], filtersearch: '6H', clickok: false }]
+				people: [{ name: "Time", type: 'dimensions', granularity: 3600000, threshold: 5, filterselect: false, filtertype: 'Relative', filteroptions: [{ startDate: '2017-08-09 07:51:02', endDate: '2017-08-19 07:51:02' }], filtersearch: '6H', clickok: false }]
 			}, {
 				label: "Split",
 				allowedTypes: ['dimensions'],
@@ -240,7 +255,6 @@ define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "sear
 					}
 					console.log(JSON.stringify(requestforfilter));
 					callserver.callquery(JSON.stringify(requestforfilter)).then(function (response) {
-						console.log(response);
 						//peopleValue.filtertype='in';
 						var filterops = []; //updating filteroptions
 						for (i = 0; i < response.data.result.split.length; i++) {

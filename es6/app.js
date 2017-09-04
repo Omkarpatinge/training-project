@@ -46,7 +46,7 @@ define(['angularAMD','uiRouter','googleChart','dnd'],function(angularAMD){
 	            label: "Filters",
 	            allowedTypes: ['dimensions'],
 	            people: [
-	                {name: "Time", type: 'dimensions',threshold:5,filterselect:false,filtertype:'Relative',filteroptions:[{startDate: '2017-08-09 07:51:02',endDate:'2017-08-19 07:51:02'}],filtersearch:'6H',clickok:false}
+	                {name: "Time", type: 'dimensions',threshold:5,granularity:3600000,filterselect:false,filtertype:'Relative',filteroptions:[{startDate: '2017-08-09 07:51:02',endDate:'2017-08-19 07:51:02'}],filtersearch:'6H',clickok:false}
 	            ]
 	        },
 	        {

@@ -44,11 +44,26 @@ define(['app'], function (app) {
 					"gridlines": {
 						"count": -1,
 						"units": {
+							"years": {
+								"format": ["YYYY"]
+							},
+							"months": {
+								"format": ["MMM"]
+							},
 							"days": {
 								"format": ["MMM dd"]
 							},
 							"hours": {
 								"format": ["h:mm aa", "ha"]
+							},
+							"minutes": {
+								"format": ["HH:mm a ", "h:mm"]
+							},
+							"seconds": {
+								"format": ["HH:mm:ss a", "h:mm:ss"]
+							},
+							"milliseconds": {
+								"format": ["HH:mm:ss a", "h:mm:ss"]
 							}
 						}
 					},
@@ -58,8 +73,12 @@ define(['app'], function (app) {
 								"format": ["hh:mm:ss aa", "ha"]
 							},
 							"minutes": {
-								"format": ["HH:mm a Z", "h:mm"]
+								"format": ["HH:mm a", "h:mm"]
+							},
+							"milliseconds": {
+								"format": ["mm:ss:fff a", "h:mm:ss:fff"]
 							}
+
 						}
 					}
 				}

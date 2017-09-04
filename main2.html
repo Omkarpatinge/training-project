@@ -74,20 +74,17 @@
 									<i class="zmdi zmdi-close" ng-click="person.thresholdselect=false; $event.stopPropagation();"></i>
 									<div ng-if="person.name!='Time'">
 										<h5>Limit: </h5><br>
-										<select class="form-control" ng-model="person.threshold" ng-selected="true"> 
-								  			<option value="2">2</option>
-								  			<option value="3">3</option>
-								 			<option value="5" ng-selected="true">5</option>
+										<select class="form-control" ng-model="person.threshold" ng-options="option for option in [2,3,5]">
 										</select>
 									</div>
-									<div ng-if="person.name=='Time'">
+									<div ng-if="person.name=='Time'" >
 										<div class="radio-toolbar">
 											<div class="timeGrp tspl">
-									  			<input type="radio" id="radio1" ng-model="person.granularity" ng-value="'60000'" >
+									  			<input type="radio" id="radio1" ng-model="person.granularity" ng-value="60000" >
 									  			<label for="radio1">1M</label>
-									  			<input type="radio" id="radio2" ng-model="person.granularity" ng-value="'300000'">
+									  			<input type="radio" id="radio2" ng-model="person.granularity" ng-value="300000">
 									  			<label for="radio2">5M</label>
-									  			<input type="radio" id="radio3" ng-model="person.granularity" ng-value="3600000" checked>
+									  			<input type="radio" id="radio3" ng-model="person.granularity" ng-value="3600000" >
 										  		<label for="radio3">1H</label>
 								  				<input type="radio" id="radio4"  ng-model="person.granularity" ng-value="86400000">
 								  				<label for="radio4">1D</label>

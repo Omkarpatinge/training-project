@@ -364,15 +364,19 @@ a:active,a:focus{
 
 .date-picker-wrapper{
 	font-family: 'Montserrat', sans-serif;
-	/* .first-date-selected{
-		border-radius: 10px 0px 0px 10px;
+
+	.first-date-selected{
+		border-radius: 5px 0px 0px 5px;
 	}
 	.last-date-selected{
-		border-radius: 0px 10px 10px 0px;
-	} */
+		border-radius: 0px 5px 5px 0px;
+	}
 	.month-wrapper{
 		width: 200px;
-		
+		table .day{
+			height: 21px;
+			margin-bottom:4px;
+		}
 	}
 	.caption{
 		color: #000;
@@ -482,7 +486,7 @@ a:active,a:focus{
 .container-fluid{
 	background-color: white;
 	box-shadow:0 2px 5px -2px #888;
-	
+	height: 5vh;
 	.navbar-header,.nav,.nav-report{
 		display: inline-block;
 		vertical-align: middle;
@@ -532,13 +536,13 @@ a:active,a:focus{
 	width: 100%;
 	#dimensions,#viewcontainer,#measures{
 		float: left;
+		height: 93.5vh;
 	}
 	#dimensions,#measures{
 		background-color: white;
 		min-height: 100%;
 		padding: 0px 1%;
 		width: 16%;
-		height: 90vh;
 		overflow-y:scroll;
 		overflow-x:auto;
 		&::-webkit-scrollbar
@@ -572,13 +576,6 @@ a:active,a:focus{
 		&:hover{
 			color: #5D8DE4;
 			background-color: #F5F5F5;
-			span{
-				visibility: visible;
-				
-			}
-		}
-		span{
-			visibility: hidden;
 		}
 		i{
 			color:#8088A0;
@@ -602,9 +599,6 @@ a:active,a:focus{
 			&:hover{
 				color: #5D8DE4;
 				background-color: #F5F5F5;
-				span{
-					visibility: visible;
-				}
 			}
 		}
 	}
@@ -648,8 +642,7 @@ a:active,a:focus{
 		}	
 	}
 	#viewcontainer{
-		padding: 0% 0%; 
-		height: 90vh;
+		padding: 0% 0%;
 		width: 68%;		//	width:max-content;
 		display: flex;
 		flex-flow: column;
@@ -936,7 +929,7 @@ a:active,a:focus{
 							}
 						}
 						.tspl{
-							width: 235px;
+							width: 100%;
 							label{
 								text-align: center;
 								margin: -1px;
@@ -992,6 +985,7 @@ a:active,a:focus{
 				}
 				.timesplitdialog{
 					top:80%;
+					width: 235px;
 					&::before{
 						content: "";
 					    transform: rotate(135deg);

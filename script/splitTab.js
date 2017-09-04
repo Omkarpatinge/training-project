@@ -47,6 +47,7 @@ define(['app', 'jquery', 'dataFactory'], function (app, $) {
 					var dim = data['dimensionObjectList'];
 					if (dim.length != 0) {
 						dataFactory.getTotalData(data).then(function (response) {
+							console.log(response);
 							var scope = $scope.$parent;
 							scope.result = response.data.result;
 							if (scope.result[data.metrics[0]]) {
@@ -60,9 +61,10 @@ define(['app', 'jquery', 'dataFactory'], function (app, $) {
 							}
 							//console.log(x,d,d.length);								
 						}, function (response) {
+							console.log(data);
 							var scope = $scope.$parent;
 							scope.split.status = 2;
-							console.log("error:", response);
+							console.log("error");
 						}).finally(function () {
 							var scope = $scope.$parent;
 							scope.split.loaded = true;
