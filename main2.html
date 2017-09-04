@@ -18,7 +18,7 @@
 	        		dnd-effect-allowed="copy" 
 	        		draggable="true"
 	        		dnd-selected="person.popupadd=true">
-	        		<p>&nbsp;&nbsp;{{person.name}}</p><span><i class="zmdi zmdi-arrows"></i></span>
+	        		<p>&nbsp;&nbsp;{{person.name}}</p>
 	        		<span class="popupdim" ng-if="person.popupadd===true">
 		        		<span class="popup-text"  popup dimname="person">	
 		        			<p ng-click="cntr.dimzoneclicked(person,$event);$event.stopPropagation();">Filters</p>
@@ -50,10 +50,11 @@
 	            				dnd-effect-allowed="copy" 
 	            				draggable="true"   
 	            				dnd-selected="cntr.splitfilterclicked(list,person,event,$index);$event.stopPropagation()">
-	            				<p>{{person.name}}</p>
+	            				<p ng-hide="person.name==='Time'&&list.label==='Filters'">{{person.name}}</p>
+	            				<p ng-if="person.name==='Time'&&list.label==='Filters'" class="zmdi zmdi-calendar-alt"></p>
 	            				<span ng-if="list.label==='Filters'">
 									<span ng-if="person.name==='Time'">
-										({{' '+cntr.request.startTime.split(' ')[0] + " - " + cntr.request.endTime.split(' ')[0]}})
+										{{' '+cntr.request.startTime.split(' ')[0] + " - " + cntr.request.endTime.split(' ')[0]}}
 									</span>
 									<span ng-if="person.name!='Time'&&person.clickok">
 										<span ng-if="person.regexstring!=''&&person.clickokfor==='regex'">({{person.regexstring}})
@@ -246,7 +247,6 @@
 	                dnd-selected="cntr.measurezoneclicked(person,event)"
 	                draggable="true"><a href="Javascript:void(0)">
 	                <p>&nbsp;&nbsp;{{person.name}}</p>
-	                <span><i class="zmdi zmdi-arrows"></i></span>
 	                </a>
 	            </li>  
 	        </ul>

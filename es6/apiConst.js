@@ -70,6 +70,7 @@ define(['app'],function(app){
 				"type": "AreaChart",
 				"cssStyle" :"height:400px; width:100%;",
 				"options": {
+					"legend": {"position": 'none'},
 					"focusTarget":"category",
 					"legend":{"position":"none"},
 					"hAxis": {

@@ -536,7 +536,7 @@ a:active,a:focus{
 		background-color: white;
 		min-height: 100%;
 		padding: 0px 1%;
-		width: 18%;
+		width: 16%;
 		height: 90vh;
 		overflow-y:scroll;
 		overflow-x:auto;
@@ -567,7 +567,7 @@ a:active,a:focus{
 	#dimensions li,#measures li{
 		padding: 1%;
 		height: 30px;
-		display: flex;
+		//display: flex;
 		&:hover{
 			color: #5D8DE4;
 			background-color: #F5F5F5;
@@ -577,7 +577,6 @@ a:active,a:focus{
 			}
 		}
 		span{
-			float: right;
 			visibility: hidden;
 		}
 		i{
@@ -588,7 +587,6 @@ a:active,a:focus{
 		}
 		p{
 			white-space: nowrap;
-			width: 90%;
 			overflow: hidden;
     		text-overflow: ellipsis;
     		&:hover{
@@ -650,7 +648,7 @@ a:active,a:focus{
 	#viewcontainer{
 		padding: 0% 0%; 
 		height: 90vh;
-		width: 64%;		//	width:max-content;
+		width: 68%;		//	width:max-content;
 		display: flex;
 		flex-flow: column;
 		#filterwrapper{
@@ -724,6 +722,11 @@ a:active,a:focus{
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
+				.zmdi-calendar-alt{
+					margin-right:5px;
+					margin-top:2px;
+					font-size: 1.25em;
+				}
 				.cIcon{
 					float: right;
 				}
@@ -778,7 +781,7 @@ a:active,a:focus{
 						}
 					}		
 					.filList{
-						height: 25vh;
+						height: 20vh;
 						padding: 0px 3%;
 						overflow-y:auto;
 						overflow-x:hidden;
@@ -1102,6 +1105,7 @@ a:active,a:focus{
 	.gChart{
 		height: 400px;
 		width: 100%;
+		margin-left: -75px;
 	}
 }
 .split{
@@ -1158,59 +1162,56 @@ a:active,a:focus{
 	position: relative;
 	background-color: white;
 	color: white;
-	
-
 	.popup-text {
 		
-    width: 100px;
-    background-color: #fff;
+	    width: 100px;
+	    background-color: #fff;
 
-    color: #555;
-    
-    text-align: center;
-    border-radius: 6px;
-    position: absolute;
-    box-shadow: 2px 2px 10px 0px #aaa;
-    z-index: 1;
-    left: 30px;
-    top: -75px;
-    margin-left: 80px;	
-	transition: all 2s;
-	hr{
-		color:#555;
-		border:0.5px solid #ccc;
-		width: 90%;
-		height: 0px;
-		border-radius: 100%;
-		margin:0 auto;
-	}
-	p{
-		margin: 0;
-		padding:8px 0px;
-		&:first-child{
-			border-radius: 6px 6px 0px 0px;
+	    color: #555;
+	    
+	    text-align: center;
+	    border-radius: 6px;
+	    position: absolute;
+	    box-shadow: 2px 2px 10px 0px #aaa;
+	    z-index: 1;
+	    left: 30px;
+	    top: -75px;
+	    margin-left: 80px;	
+		transition: all 2s;
+		hr{
+			color:#555;
+			border:0.5px solid #ccc;
+			width: 90%;
+			height: 0px;
+			border-radius: 100%;
+			margin:0 auto;
 		}
-		&:last-child{
-			border-radius: 0px 0px 6px 6px;
+		p{
+			margin: 0;
+			padding:8px 0px;
+			&:first-child{
+				border-radius: 6px 6px 0px 0px;
+			}
+			&:last-child{
+				border-radius: 0px 0px 6px 6px;
+			}
 		}
-	}
-     p:hover{
-     	cursor: pointer;
-     	background-color: rgba(#eee,0.5) !important;
-     }
-	}
+	     p:hover{
+	     	cursor: pointer;
+	     	background-color: rgba(#eee,0.5) !important;
+	     }
+		}
 
-	.popup-text::before {
-    content: "";
-    transform: rotate(45deg);
-    position: absolute;
-    top: 45%;
-    box-shadow: -2px 2px 10px -2px #aaa;
-    left: -.4%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color:transparent transparent #fff #fff;
-}
-
+		.popup-text::before {
+	    content: "";
+	    transform: rotate(45deg);
+	    position: absolute;
+	    top: 45%;
+	    box-shadow: -2px 2px 10px -2px #aaa;
+	    left: -.4%;
+	    margin-left: -5px;
+	    border-width: 5px;
+	    border-style: solid;
+	    border-color:transparent transparent #fff #fff;
+	}
 }

@@ -432,7 +432,7 @@ a:active, a:focus {
     background-color: white;
     min-height: 100%;
     padding: 0px 1%;
-    width: 18%;
+    width: 16%;
     height: 90vh;
     overflow-y: scroll;
     overflow-x: auto; }
@@ -453,15 +453,13 @@ a:active, a:focus {
     margin-left: 3%; }
   #container-fluid #dimensions li, #container-fluid #measures li {
     padding: 1%;
-    height: 30px;
-    display: flex; }
+    height: 30px; }
     #container-fluid #dimensions li:hover, #container-fluid #measures li:hover {
       color: #5D8DE4;
       background-color: #F5F5F5; }
       #container-fluid #dimensions li:hover span, #container-fluid #measures li:hover span {
         visibility: visible; }
     #container-fluid #dimensions li span, #container-fluid #measures li span {
-      float: right;
       visibility: hidden; }
     #container-fluid #dimensions li i, #container-fluid #measures li i {
       color: #8088A0;
@@ -470,7 +468,6 @@ a:active, a:focus {
       margin-left: 3px; }
     #container-fluid #dimensions li p, #container-fluid #measures li p {
       white-space: nowrap;
-      width: 90%;
       overflow: hidden;
       text-overflow: ellipsis; }
       #container-fluid #dimensions li p:hover, #container-fluid #measures li p:hover {
@@ -515,7 +512,7 @@ a:active, a:focus {
   #container-fluid #viewcontainer {
     padding: 0% 0%;
     height: 90vh;
-    width: 64%;
+    width: 68%;
     display: flex;
     flex-flow: column; }
     #container-fluid #viewcontainer #filterwrapper {
@@ -574,6 +571,10 @@ a:active, a:focus {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis; }
+        #container-fluid #viewcontainer .rules li .zmdi-calendar-alt {
+          margin-right: 5px;
+          margin-top: 2px;
+          font-size: 1.25em; }
         #container-fluid #viewcontainer .rules li .cIcon {
           float: right; }
         #container-fluid #viewcontainer .rules li i {
@@ -618,7 +619,7 @@ a:active, a:focus {
               position: relative;
               top: 3px; }
           #container-fluid #viewcontainer .rules li .dialog .filList {
-            height: 25vh;
+            height: 20vh;
             padding: 0px 3%;
             overflow-y: auto;
             overflow-x: hidden; }
@@ -873,7 +874,8 @@ a:active, a:focus {
     padding: 10px; }
   .stat .gChart {
     height: 400px;
-    width: 100%; }
+    width: 100%;
+    margin-left: -75px; }
 
 .split {
   padding: 0%;
