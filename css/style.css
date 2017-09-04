@@ -797,6 +797,8 @@ a:active, a:focus {
             border-width: 5px;
             border-style: solid;
             border-color: transparent transparent #fff #fff; }
+          #container-fluid #viewcontainer .rules li .timesplitdialog .radio-toolbar {
+            margin-bottom: 0px; }
       #container-fluid #viewcontainer .rules ul li span i {
         right: 5px; }
 

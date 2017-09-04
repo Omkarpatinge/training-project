@@ -54,7 +54,7 @@
 	            				<p ng-if="person.name==='Time'&&list.label==='Filters'" class="zmdi zmdi-calendar-alt"></p>
 	            				<span ng-if="list.label==='Filters'">
 									<span ng-if="person.name==='Time'">
-										{{' '+cntr.request.startTime.split(' ')[0] + " - " + cntr.request.endTime.split(' ')[0]}}
+										{{' '+(cntr.request.startTime.split(' ')[0]|date:"mediumDate") + " - " + (cntr.request.endTime.split(' ')[0]|date:"mediumDate")}}
 									</span>
 									<span ng-if="person.name!='Time'&&person.clickok">
 										<span ng-if="person.regexstring!=''&&person.clickokfor==='regex'">({{person.regexstring}})
@@ -223,7 +223,7 @@
 						<label for="withf">1K</label>
 					</span>
 					<span><button ng-click="cntr.refresh()"><i class="material-icons">sync</i></button></span>
-					<span><button ng-click="cntr.fullscreen()"><i class="material-icons">fullscreen</i></button></span>
+					<!-- <span><button ng-click="cntr.fullscreen()"><i class="material-icons">fullscreen</i></button></span> -->
 				</div>
 			</div>
 			<div class="row resultsView" id="makefullscreen">
