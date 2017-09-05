@@ -179,8 +179,6 @@ define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "sear
 		};
 		scope.splitfilterclicked = function (list, peopleValue, event, indexlatest) {
 			if (list.label === "Split" && event != null) {
-				console.log('in plitf');
-				console.log(arguments);
 				list.people[indexlatest].thresholdselect = true;
 			} else if (list.label == "Filters") {
 				scope.loaded = false;
