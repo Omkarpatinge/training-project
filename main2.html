@@ -68,7 +68,10 @@
 										 : {{person.firstFil}} 
 										</span>
 									</span>
-								</span>			
+								</span>	
+								<span ng-if="list.label==='Split' &&person.name==='Time'">
+									{{person.granularity | gettimevalue}}
+								</span>		
 	            				<span class="cIcon" ng-if="!(person.name==='Time'&&list.label==='Filters')" ng-click="list.people.splice($index, 1);$event.stopPropagation()"><i class="zmdi zmdi-close"></i></span>								
 								<div thing-test exact="person.name" index="$index" listname="list.label" persons="cntr.lists" class="dialog" ng-class="{'splitsdialog':person.name!='Time','timesplitdialog':person.name==='Time'}" ng-if="list.label==='Split'&& person.thresholdselect" >
 									<i class="zmdi zmdi-close" ng-click="person.thresholdselect=false; $event.stopPropagation();"></i>

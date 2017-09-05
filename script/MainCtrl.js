@@ -1,6 +1,6 @@
 "use strict";
 
-define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "searching", 'dnd', 'myCalender', "popup", "countselected", "collapse"], function (app, moment, $) {
+define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "searching", 'dnd', 'myCalender', "popup", "countselected", "collapse", "gettimevalue"], function (app, moment, $) {
 	app.controller('MainCtrl', function ($scope, $http, callserver, $stateParams, $state, $location, $rootScope, $timeout) {
 		var scope = this;
 		scope.over = [false, false, false];

@@ -58,7 +58,6 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 			scope.specificOkClicked =function() {
 						try{
 							var timeinput=input.val().split(' to ');
-							console.log()
 							if (timeinput.length==2&&timeinput[0].split('-').length==3&&timeinput[1].split('-').length==3&&timeinput[1].split('-')[1]<13&&timeinput[0].split('-')[1]<13) {
 
 								scope.date.startDate=input.val().split(' to ')[0] + ' 00:00:00';
@@ -80,7 +79,6 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 						catch(e){
 							alert('Not a valid date');
 						}
-						console.log("okddd")
 						//console.log(moment(start).format('YYYY-MM-DD HH:mm:ss'),end);
 			}
 

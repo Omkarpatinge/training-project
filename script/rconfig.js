@@ -43,7 +43,8 @@ require.config({
 		"searching":"searching",
 		"callserver":"callserver",
 		"thingTest":"thingTest",
-		"collapse":"collapse"
+		"collapse":"collapse",
+		"gettimevalue":"gettimevalue"
 	},
 	shim:{
 		'angular':{

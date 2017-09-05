@@ -20,7 +20,7 @@ define(["app"], function (app) {
           if (inThing) {} else {
             //console.log(scope.persons[1].people[0]);
             //scope.$apply();
-            console.log('outthing');
+
             try {
               $timeout(function () {
                 if (scope.listname === 'Split') {
