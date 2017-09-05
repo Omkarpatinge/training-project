@@ -59,18 +59,19 @@ define(['app','dataFactory','removeText','numberSuffix','apiConst'],function(app
     	$scope.$watch(function() {return  $rootScope.val.nFormat},function(list,old) {
 			format=list;
 			if(obj.status==1){
-	    		buildChart(obj);
+	    		buildChart();
 	    	}
 		})
 	   	function buildChart() {
 	   		//console.log(req);
 			dataFactory.getLineData(req).then(function(response) {
 				//console.log("res:",response)
+				var res =response.data.result; 
 				obj.response=response;
-				try{
+				if(res[req.metrics[0]]){
 					loadCharts();
 				}
-				catch(err){
+				else{
 					obj.status=4;
 				}			
 				//console.log(response);
@@ -98,10 +99,15 @@ define(['app','dataFactory','removeText','numberSuffix','apiConst'],function(app
 				if(format){
 		    		chart.formatters.number=api.formatShort;
 		    		chart.options.vAxis={
-		    			"format":"short"
+		    			"format":"short",
+		    			"title":m.replace("(HB Rendered Ad)","")
 		    		}
 		    	}
-		    	chart.options.vAxis.title=m.replace("(HB Rendered Ad)","");
+		    	else{
+		    		chart.options.vAxis={
+		    			"title":m.replace("(HB Rendered Ad)","")
+		    		}
+		    	}
 				chart.data=data;
 				obj.chart[i]=chart;
 			}

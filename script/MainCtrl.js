@@ -325,9 +325,11 @@ define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "sear
 				if (repl.tagName === "P" || repl.tagName === "SPAN") {
 					repl = repl.parentElement;
 				}
+				console.log(repl);
 				if (repl.children[0].innerHTML.indexOf("Time") > -1 && list.label == "Filters") {
 					list.people.splice(index, 0, item);
 				} else {
+
 					var rInd = angular.element(repl).index();
 					list.people.splice(rInd, 1, item);
 				}
