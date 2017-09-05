@@ -883,7 +883,8 @@ a:active, a:focus {
     width: 100px; }
   .split i {
     position: relative;
-    top: 6px; }
+    color: #aaa;
+    font-weight: bold; }
   .split .status {
     display: table;
     width: 100%;
@@ -905,7 +906,6 @@ a:active, a:focus {
       position: sticky;
       top: 0px;
       height: 20px;
-      color: #aaa;
       box-shadow: 0 2px 5px -2px #888;
       background-color: #fff;
       z-index: 20; }
