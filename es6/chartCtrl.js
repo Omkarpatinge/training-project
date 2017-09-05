@@ -25,6 +25,7 @@ define(['app','dataFactory','removeText','numberSuffix','apiConst'],function(app
 				"name":"Time",
 				"type":"dimensions",
 				"threshold":5,
+				"granularity":3600000,
 				"filterselect":false,
 				"filtertype":"Relative",
 				"filteroptions":[],
@@ -59,7 +60,7 @@ define(['app','dataFactory','removeText','numberSuffix','apiConst'],function(app
     	$scope.$watch(function() {return  $rootScope.val.nFormat},function(list,old) {
 			format=list;
 			if(obj.status==1){
-	    		loadCharts();
+	    		buildChart();
 	    	}
 		})
 	   	function buildChart() {

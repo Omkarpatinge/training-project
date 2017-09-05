@@ -54,7 +54,7 @@ define(['app', "moment", 'apiConst'], function (app, moment) {
 			for (var i = 0; i < split.length; i++) {
 				var currElm = split[i];
 				var newHtml = htmlElm + '[' + i + ']';
-				temp += '<tr>' + '<td>' + tab(depth) + split[i][dimension[depth]] + '</td>' + '<td ng-repeat="m in split.metrics">{{' + newHtml + '[m]|numberSuffix:2:val.nFormat}}</td>' + '</tr>';
+				temp += '<tr class="tabData">' + '<td>' + tab(depth) + split[i][dimension[depth]] + '</td>' + '<td ng-repeat="m in split.metrics">{{' + newHtml + '[m]|numberSuffix:2:val.nFormat}}</td>' + '</tr>';
 				if (currElm.split) {
 					temp += this.createSplit(currElm.split, dimension, newHtml + ".split", depth + 1);
 				}

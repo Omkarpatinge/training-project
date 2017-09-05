@@ -54,7 +54,7 @@ define(['app',"moment",'apiConst'],function(app,moment){
 			for (var i = 0; i < split.length; i++) {
 				var currElm=split[i];
 				var newHtml=htmlElm+'['+i+']';
-				temp+=('<tr>'+
+				temp+=('<tr class="tabData">'+
 						'<td>'+tab(depth)+split[i][dimension[depth]]+'</td>'+
 						'<td ng-repeat="m in split.metrics">{{'+newHtml+'[m]|numberSuffix:2:val.nFormat}}</td>'+
 						'</tr>');

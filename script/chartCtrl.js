@@ -26,6 +26,7 @@ define(['app', 'dataFactory', 'removeText', 'numberSuffix', 'apiConst'], functio
 				"name": "Time",
 				"type": "dimensions",
 				"threshold": 5,
+				"granularity": 3600000,
 				"filterselect": false,
 				"filtertype": "Relative",
 				"filteroptions": [],
