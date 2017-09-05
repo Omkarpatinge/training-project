@@ -24,6 +24,7 @@ define(['app','dataFactory','removeText','numberSuffix','apiConst'],function(app
 			var time={
 				"name":"Time",
 				"type":"dimensions",
+				"granularity":3600000,
 				"threshold":5,
 				"filterselect":false,
 				"filtertype":"Relative",

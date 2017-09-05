@@ -69,7 +69,7 @@ define(['app','jquery','moment','daterangepicker'],function(app,$,moment) {
 								    		startDate: moment(scope.date.startDate).format('YYYY-MM-DD HH:mm:ss'),endDate:moment(scope.date.endDate).format('YYYY-MM-DD HH:mm:ss')
 								    	});
 								    	$timeout(function() {
-											console.log(scope.lists[0].people[i].filterselect);
+											//console.log(scope.lists[0].people[i].filterselect);
 											scope.lists[0].people[i].filterselect=false;
 							
 										},0);
