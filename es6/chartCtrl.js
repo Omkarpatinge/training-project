@@ -59,7 +59,7 @@ define(['app','dataFactory','removeText','numberSuffix','apiConst'],function(app
     	$scope.$watch(function() {return  $rootScope.val.nFormat},function(list,old) {
 			format=list;
 			if(obj.status==1){
-	    		buildChart();
+	    		loadCharts();
 	    	}
 		})
 	   	function buildChart() {
