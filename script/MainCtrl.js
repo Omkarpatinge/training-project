@@ -468,7 +468,12 @@ define(["app", "moment", "jquery", 'bootstrap', "callserver", "thingTest", "sear
 				$timeout(function () {
 					$('#filterwrapper ul')[0].dispatchEvent(scope.collapseEvent);
 				}, 5);
-				console.log('new filter added/removed satte.go');
+			}
+			if (old.people.length > lists.people.length) {
+				$timeout(function () {
+					$('#filterwrapper ul')[0].dispatchEvent(scope.collapseEvent);
+				}, 5);
+				console.log('new filter removed satte.go');
 				$state.go($state.current.name, { req: JSON.stringify(scope.lists) });
 			}
 		}, true);
